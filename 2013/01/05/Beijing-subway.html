@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>好地段是怎么选出来的-从北京地铁看区域的重要性 | Beta</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">好地段是怎么选出来的-从北京地铁看区域的重要性</h1><a id="logo" href="/.">Beta</a><p class="description">It’s a beautiful thing when free data meets free algorithm.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/todo/"><i class="fa fa-flag"> TODO</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/history/"><i class="fa fa-book"> 历史</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">好地段是怎么选出来的-从北京地铁看区域的重要性</h1><div class="post-meta">2013-01-05<span> | </span><span class="category"><a href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/">玩数据</a></span></div><div class="post-content"><p>2012年最后一天，北京新开了四条地铁线，分别是6号线的一期、8号线一期的南段、9号线的北段、10号线二期。这几条地铁极大的方便了市民的出行。鉴于北京地方台1号一整天都在介绍地铁开通的情况，不写点东西有点对不起北京市民的称呼，于是胡言乱语了如下文字。</p>
+<p>增加这几条线路之后，北京地铁现在的形状是这样的：</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/f/ff/Beijing-Subway.png"></p>
+<h1 id="好地段是怎么度量的？"><a href="#好地段是怎么度量的？" class="headerlink" title="好地段是怎么度量的？"></a>好地段是怎么度量的？</h1><p>地段的好坏不是那么容易区分，如果你常和置业顾问（中介）打交道，他们一般会说会说有如下几大因素影响板块价值：</p>
+<ul>
+<li>学区，幼小初高</li>
+<li>临近医院，三甲</li>
+<li>交通方便，公交地铁</li>
+<li>社区成熟，配套完备</li>
+<li>空气好，水质好（上风上水上海淀）</li>
+<li>等</li>
+</ul>
+<p>这学区、医院、风水啥的暂时不在讨论范围内，社区成熟要实地去看，说白了没有足够的数据进行分析。交通的话，至少还可以从北京新开地铁线路的角度，来说明交通便利的这个因素。</p>
+<p>我们仔细琢磨一下这个事儿：</p>
+<ol>
+<li>如果从地铁网络中A点，到所有其他地铁站的“最短距离”的和最小的话，那这个站点一定是最便捷的，这种站点大致在脑海里可以勾勒出来，肯定是二环以内的，比如平安里站、西单站…… 这个指标是可以度量的，它的学术名称为 closeness，它反映的是网络中节点 i 到其他节点的平均最短距离。</li>
+<li>如果地铁网络中有这样一个站点 A，其他的站点都要通过A才能到达其他的站`，或者想象更为极端的情况，如果没有了站点A，那么你就不能从其站点到达另外一个站点。这种站可以简单的想象为换乘站，比如国贸站、建国门站等，如果没有这个站那么就不能从一条地铁线便利地换成到另外一条，比如现在坑爹的 10 号线豁口，只有公交摆渡，想想就麻烦。同样这个指标也是可度量的，学名为 betweenness。</li>
+<li>如果同 A 站点连接的站点都非常好，那么物以类聚，A站点也应该是一个很好的站点。是的，这个也有度量的办法，它就是大名鼎鼎的 Page Rank。可以简单理解为 A 点的重要程度是周围连接点重要程度的加权。</li>
+</ol>
+<h1 id="哪些区域值得我们关注？"><a href="#哪些区域值得我们关注？" class="headerlink" title="哪些区域值得我们关注？"></a>哪些区域值得我们关注？</h1><p>按照上述三个指标对 229 个地铁站进行聚类（8类），得到的结果如下：</p>
+<img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20201225154523.png"/>
+
+<p>我们最关注的第 5 类（一梯队），这些站点属于白富美，三项指标均较高。各站点分别为：</p>
+<blockquote>
+<p>六里桥站,公主坟站,知春路站,芍药居站,国贸站,角门西站,西直门站,军事博物馆站,<br>复兴门站,建国门站,东直门站,朝阳门站,崇文门站,宣武门站,车公庄站,白石桥南站</p>
+</blockquote>
+<p>接着是稍稍差一点的第二梯队（昌平线的缘故，回龙观站、龙泽站这些站地位比较高）：</p>
+<blockquote>
+<p>海淀黄庄站,北土城站,惠新西街南口站,三元桥站,呼家楼站,西二旗站,龙泽站,<br>回龙观站,霍营站,立水桥站,西单站,东单站,鼓楼大街站,安定门站,雍和宫站,平安里站,东四站</p>
+</blockquote>
+<p>然后是比较有意思的第 3 类，除了 Page Rank 较低以外，其他两项指标均较高。站点名为：</p>
+<blockquote>
+<p>知春里站,太阳宫站,大钟寺站,五道口站,光熙门站,柳芳站,木樨地站,南礼士路站,天安门西站,天安门东站,<br>王府井站,永安里站,积水潭站,东四十条站,北京站,前门站,和平门站,长椿街站,阜成门站,<br>国家图书馆站,动物园站,新街口站,菜市口站,陶然亭站,天坛东门站,磁器口站,北海北站,南锣鼓巷站,东大桥站,白堆子站,北京西站</p>
+</blockquote>
+<p>接下来是绿色的类，包括：</p>
+<blockquote>
+<p>西局站,莲花桥站,宋家庄站,石榴庄站,大红门站,角门东站,草桥站,纪家庙站,<br>首经贸站,丰台站,泥洼站,上地站,北苑站,望京西站,望京站,望京东站,崔各庄站,大望路站,<br>四惠站,北京南站,马家堡站,刘家窑站,蒲黄榆站,六里桥东站,七里庄站,丰台东大街站,丰台南路站,<br>四惠东站,高碑店站,公益西桥站,新宫站,肖村站,小红门站,旧宫站</p>
+</blockquote>
+<p>但这类有两个分的不太清的站，宋家庄站和望京西站，归到第一类也不为过：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">k           a          c        b    PageRank</span><br><span class="line">1     莲花桥站 0.08062235 2395.367 0.004195873</span><br><span class="line">1     宋家庄站 0.07574751 3915.258 0.004822161</span><br><span class="line">1     望京西站 0.07922168 3962.192 0.004297528</span><br><span class="line">1     望京东站 0.06930091 2180.000 0.003029334</span><br></pre></td></tr></table></figure>
+<p>对于其他 4 类站点篇幅限制，不介绍。全部的站点分类结果和三项得分请点击 <a target="_blank" rel="noopener" href="https://github.com/sunbjt/sunbjt.github.com/blob/master/upload/csv/subway.csv">这里</a>。</p>
+<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>如果用此法淘到好房子，记得叫我去大餐～～</p>
+<p><strong>还可以做的事情</strong>：</p>
+<ul>
+<li>对于个人来说，时常去的地区比较集中，因此这个网络实际是一个不等权的网络，关于权重可以使用一些其他方式间接计算，比如北京城区的移动电话通话密度，但我这里暂时还没有地铁的经纬度数据，还不能匹配二者</li>
+<li>可以在安居客这类房地产网站上爬取区域房产价格，这样价格洼地就显而易见了</li>
+</ul>
+<p><strong>数据说明</strong>：</p>
+<ul>
+<li>大兴线将公益西桥站、新宫站连接</li>
+<li>1号线未计算高井站、福寿岭站两个站点</li>
+<li>9号线、8号线、10号线已经补全，即暂时未开通的站点认为已经开通</li>
+</ul>
+<p><strong>数据来源</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/%E5%8C%97%E4%BA%AC%E5%9C%B0%E9%93%81%E8%BD%A6%E7%AB%99%E5%88%97%E8%A1%A8">http://zh.wikipedia.org/wiki/北京地铁车站列表</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.bjsubway.com/node/1820">http://www.bjsubway.com/node/1820</a></li>
+</ul>
+</div><div class="tags"><a href="/tags/sna/"><i class="fa fa-tag"></i>sna</a></div><div class="post-nav"><a class="pre" href="/2013/01/13/beamer-presentation.html">如何准备演讲-beamer版</a><a class="next" href="/2012/12/20/RHive-install.html">RHive的安装和用法</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://bjt.name"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/R-%E6%8A%80%E5%B7%A7/">R 技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/">不务正业的 R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%B2%E5%8E%86/">亲历</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/">工具技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/">数据思维</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A7%E9%97%BB/">旧闻</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84/">有意思的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/">玩数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AF%AE%E7%90%83/">篮球</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/value.html">你为什么可以被晋升？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/make-better.html">数据分析师的生存手记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/url-handle.html">在 R 中各种码的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/05/zhihu-reading.html">2019 年建议阅读书目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/china-gdp.html">建国以来人均 GDP 增长情况</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/28/secure-hash.html">利用 R 函数生成差异化密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/zoom.html">sharingan 自定义 CSS 特效</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/18/timeline.html">数据科学的时间轴</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/03/bpr.html">贝叶斯个性化排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/24/sharingan.html">写轮眼（sharingan)奇淫技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://cosx.org/" title="统计之都" target="_blank">统计之都</a><ul></ul><a href="https://hetal-cq.github.io/" title="hetal 的学习笔记" target="_blank">hetal 的学习笔记</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">Beta.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
