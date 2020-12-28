@@ -10,53 +10,57 @@
 </ul>
 <p>一言以蔽之：可以快速搭建灵活的高可用服务。比如说，对于线上预测的请求，大概在200毫秒左右，很多场景基本上也够用了。</p>
 <p>OpenCPU支持 GET 和POST 请求，对于Object和file目标响应不同：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">METHOD</th>
-<th align="left">TARGET</th>
-<th align="left">ACTION</th>
-<th align="left">ARGUMENTS</th>
-<th align="left">EXAMPLE</th>
+<th style="text-align:left">METHOD</th>
+<th style="text-align:left">TARGET</th>
+<th style="text-align:left">ACTION</th>
+<th style="text-align:left">ARGUMENTS</th>
+<th style="text-align:left">EXAMPLE</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">GET</td>
-<td align="left">object</td>
-<td align="left">read object</td>
-<td align="left">control output format</td>
-<td align="left">GET /ocpu/cran/MASS/data/cats/json</td>
+<tbody>
+<tr>
+<td style="text-align:left">GET</td>
+<td style="text-align:left">object</td>
+<td style="text-align:left">read object</td>
+<td style="text-align:left">control output format</td>
+<td style="text-align:left">GET /ocpu/cran/MASS/data/cats/json</td>
 </tr>
 <tr>
-<td align="left">POST</td>
-<td align="left">object</td>
-<td align="left">call function</td>
-<td align="left">function arguments</td>
-<td align="left">POST /ocpu/library/stats/R/rnorm</td>
+<td style="text-align:left">POST</td>
+<td style="text-align:left">object</td>
+<td style="text-align:left">call function</td>
+<td style="text-align:left">function arguments</td>
+<td style="text-align:left">POST /ocpu/library/stats/R/rnorm</td>
 </tr>
 <tr>
-<td align="left">GET</td>
-<td align="left">file</td>
-<td align="left">read file</td>
-<td align="left">-</td>
-<td align="left">GET /ocpu/cran/MASS/scripts/</td>
+<td style="text-align:left">GET</td>
+<td style="text-align:left">file</td>
+<td style="text-align:left">read file</td>
+<td style="text-align:left">-</td>
+<td style="text-align:left">GET /ocpu/cran/MASS/scripts/</td>
 </tr>
 <tr>
-<td align="left">POST</td>
-<td align="left">file</td>
-<td align="left">run script</td>
-<td align="left">control interpreter</td>
-<td align="left">POST /ocpu/cran/knitr/examples/minimal.Rmd</td>
+<td style="text-align:left">POST</td>
+<td style="text-align:left">file</td>
+<td style="text-align:left">run script</td>
+<td style="text-align:left">control interpreter</td>
+<td style="text-align:left">POST /ocpu/cran/knitr/examples/minimal.Rmd</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>一般来讲，线上服务我们期待通过传递参数的call funcion的方式，以下是该场景的极简示例。</p>
 <h1 id="opencpu在CentOS-7平台上的安装"><a href="#opencpu在CentOS-7平台上的安装" class="headerlink" title="opencpu在CentOS 7平台上的安装"></a>opencpu在CentOS 7平台上的安装</h1><p>不同平台的安装方式不同，这里使用了标配的CentOS 7，该平台需要自行编译rpm包，具体操作过程请参考<a target="_blank" rel="noopener" href="https://github.com/jeroen/opencpu-server/blob/master/rpm/buildscript.sh">这里</a>。</p>
 <p>安装结束后，请测试</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http:&#x2F;&#x2F;localhost&#x2F;ocpu&#x2F;library&#x2F;</span><br></pre></td></tr></table></figure>
 <p>返回了全部的R包列表，则表明安装成功。</p>
 <p>可能会涉及 opencpu 的重新启动，直接利用以下命令：</p>
-<pre><code>sudo apachectl restart</code></pre>
-<h1 id="利用RStudio快速创建服务"><a href="#利用RStudio快速创建服务" class="headerlink" title="利用RStudio快速创建服务"></a>利用RStudio快速创建服务</h1><p>使用RStudio做package check&amp;build非常方便，我们可以很轻松在CentOS7上安装一个Server版。<br>这里有一个小细节，RStudio安装完毕后，利用Web界面登陆（建议用Firefox），此时不能使用root账号直接登录，我们可以add一个名为 bjt 的账号登录，并创建名为 spampred 的包</p>
+<pre><code>sudo apachectl restart
+</code></pre><h1 id="利用RStudio快速创建服务"><a href="#利用RStudio快速创建服务" class="headerlink" title="利用RStudio快速创建服务"></a>利用RStudio快速创建服务</h1><p>使用RStudio做package check&amp;build非常方便，我们可以很轻松在CentOS7上安装一个Server版。<br>这里有一个小细节，RStudio安装完毕后，利用Web界面登陆（建议用Firefox），此时不能使用root账号直接登录，我们可以add一个名为 bjt 的账号登录，并创建名为 spampred 的包</p>
 <h1 id="利用线上redis缓存来做预测"><a href="#利用线上redis缓存来做预测" class="headerlink" title="利用线上redis缓存来做预测"></a>利用线上redis缓存来做预测</h1><h2 id="特征服务的模拟"><a href="#特征服务的模拟" class="headerlink" title="特征服务的模拟"></a>特征服务的模拟</h2><p>假设spam的特征数据是实时被写入到缓存的 hashmap，模拟操作利用了pipeline操作</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">library(ElemStatLearn)</span><br><span class="line">library(rredis)</span><br><span class="line">library(Matrix)</span><br><span class="line">redisConnect()</span><br><span class="line">redisSetPipeline(<span class="literal">TRUE</span>)</span><br><span class="line"></span><br><span class="line">tr &lt;- <span class="keyword">function</span>(x) charToRaw(<span class="built_in">as.character</span>(x))</span><br><span class="line">d &lt;- summary(as(as.matrix(spam[,-ncol(spam)]), <span class="string">&#x27;dgCMatrix&#x27;</span>))</span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span>:nrow(d))&#123;</span><br><span class="line">	redisHSet(<span class="built_in">as.character</span>(d[i,<span class="number">1</span>]), <span class="built_in">as.character</span>(d[i,<span class="number">2</span>]), tr(d[i,<span class="number">3</span>]))</span><br><span class="line">&#125;</span><br><span class="line">resp &lt;- redisGetResponse()</span><br></pre></td></tr></table></figure>
 <p>我们可以找一些values：</p>
@@ -67,8 +71,8 @@
  4) &quot;0.14&quot;
  5) &quot;0.28&quot;
  6) &quot;0.21&quot;
- 7) &quot;0.07&quot;</code></pre>
-<p>关于rredis的使用可以参考以前的<a href="/2014/06/r-redis">博文</a></p>
+ 7) &quot;0.07&quot;
+</code></pre><p>关于rredis的使用可以参考以前的<a href="/2014/06/r-redis">博文</a></p>
 <h2 id="模拟一个预测模型"><a href="#模拟一个预测模型" class="headerlink" title="模拟一个预测模型"></a>模拟一个预测模型</h2><p>利用xgboost和glmnet包：</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">library(xgboost)</span><br><span class="line">library(glmnet)</span><br><span class="line">library(ElemStatLearn)</span><br><span class="line">x &lt;- as.matrix(spam[, -ncol(spam)])</span><br><span class="line">y &lt;- <span class="built_in">as.numeric</span>(spam$spam) - <span class="number">1</span></span><br><span class="line">m &lt;- xgboost(data = x, label = y, nrounds = <span class="number">5</span>, objective = <span class="string">&#x27;binary:logistic&#x27;</span>)</span><br><span class="line">save(m, file=<span class="string">&quot;data/xgb.rda&quot;</span>)</span><br><span class="line">g &lt;- cv.glmnet(x = x, y = y, family = <span class="string">&#x27;binomial&#x27;</span>)</span><br><span class="line">save(g, file=<span class="string">&quot;data/glm.rda&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>保存模型的结果 <code>xgb.rda</code>至新建包的<code>data</code>目录下，保证lazyload可以直接使用该对象。</p>
@@ -87,11 +91,11 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;preload&quot;: [&quot;jsonlite&quot;,&quot;ggplot2&quot;,&quot;xgboost&quot;,&quot;glmnet&quot;,&quot;spampred&quot;, &quot;lattice&quot;,&quot;ocputest&quot;,&quot;randomForest&quot;,&quot;rredis&quot;]</span><br></pre></td></tr></table></figure>
 <p>增加参数之后，重启opencpu服务。</p>
 <p><code>Ctrl + Shift + E</code> check 一下包是否有问题。没有问题的话，可以选择 Build Binary Package。<br>返回服务器，在创建好的包目录执行</p>
-<pre><code>R CMD INSTALL spampred_0.1.0_R_x86_64-redhat-linux-gnu.tar.gz </code></pre>
-<p>此时我们的函数通过R包生效。</p>
+<pre><code>R CMD INSTALL spampred_0.1.0_R_x86_64-redhat-linux-gnu.tar.gz 
+</code></pre><p>此时我们的函数通过R包生效。</p>
 <h1 id="通过opencpu提供服务"><a href="#通过opencpu提供服务" class="headerlink" title="通过opencpu提供服务"></a>通过opencpu提供服务</h1><p>opencpu贴心的提供了测试页面，对于我来说是</p>
-<pre><code>http://47.92.114.121:8004/ocpu/test/</code></pre>
-<p>在 HTTP request options 中变更请求方式为post，Endpoint 为 <code>../library/spampred/R/spampred</code>，同时增加 Param Name 和 Param Value，<br>请求Ajax，看到</p>
+<pre><code>http://47.92.114.121:8004/ocpu/test/
+</code></pre><p>在 HTTP request options 中变更请求方式为post，Endpoint 为 <code>../library/spampred/R/spampred</code>，同时增加 Param Name 和 Param Value，<br>请求Ajax，看到</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;ocpu&#x2F;tmp&#x2F;x023b988e25&#x2F;R&#x2F;.val</span><br><span class="line">&#x2F;ocpu&#x2F;tmp&#x2F;x023b988e25&#x2F;stdout</span><br><span class="line">&#x2F;ocpu&#x2F;tmp&#x2F;x023b988e25&#x2F;source</span><br><span class="line">&#x2F;ocpu&#x2F;tmp&#x2F;x023b988e25&#x2F;console</span><br><span class="line">&#x2F;ocpu&#x2F;tmp&#x2F;x023b988e25&#x2F;info</span><br><span class="line">&#x2F;ocpu&#x2F;tmp&#x2F;x023b988e25&#x2F;files&#x2F;DESCRIPTION</span><br></pre></td></tr></table></figure>
 <p>说明服务是正常的。</p>
 <p>当然既然服务已就绪，在其他段上可以直接调用返回JSON结果，比如我的是</p>

@@ -10,19 +10,18 @@
 <p>尤其是第四点，完全没有抵抗力啊~</p>
 <h1 id="gollum-的安装"><a href="#gollum-的安装" class="headerlink" title="gollum 的安装"></a>gollum 的安装</h1><p>gollum的安装很简单，尤其是在ubuntu 14.04上：</p>
 <pre><code>sudo apt-get install ruby1.9.1 ruby1.9.1-dev make zlib1g-dev libicu-dev build-essential git
-sudo gem install gollum</code></pre>
-<p>或者选择源代码安装：</p>
+sudo gem install gollum
+</code></pre><p>或者选择源代码安装：</p>
 <pre><code>git clone https://github.com/gollum/gollum
 cd gollum
-bundle install</code></pre>
-<p>而后初始化git目录，在git的目录执行</p>
-<pre><code>gollum --css --allow-uploads --mathjax --h1-title    </code></pre>
-<p>以上使用了一些参数，分别是使用自定义 custom.css 文件（在git初始化目录），增加上传功能，支持 LaTeX 公式，markdown的一级标题为全文标题。</p>
+bundle install
+</code></pre><p>而后初始化git目录，在git的目录执行</p>
+<pre><code>gollum --css --allow-uploads --mathjax --h1-title    
+</code></pre><p>以上使用了一些参数，分别是使用自定义 custom.css 文件（在git初始化目录），增加上传功能，支持 LaTeX 公式，markdown的一级标题为全文标题。</p>
 <p>在浏览器中访问以下地址来创建wiki内容：</p>
-<pre><code>http://localhost:4567</code></pre>
-<p>我简单编辑了home页面，大概长得是这个样子：</p>
-<img width="795" height="529" src="/upload/pic/wikihome.png"/>
-
+<pre><code>http://localhost:4567
+</code></pre><p>我简单编辑了home页面，大概长得是这个样子：</p>
+<p><img width="795" height="529" src="/upload/pic/wikihome.png"/></p>
 <p>这个页面其实是markdown的文件</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># xxx部门的wiki</span></span><br><span class="line"></span><br><span class="line"><span class="section">## [[推荐系统|/RecHome]]</span></span><br><span class="line"></span><br><span class="line">Gollum is a simple wiki system built on top of Git. A Gollum Wiki is simply a git repository (either bare or regular) of a specific nature:</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> A Gollum repository&#x27;s contents are human-editable, unless the repository is bare. </span><br><span class="line"><span class="bullet">2.</span> Pages are unique text files which may be organized into directories any way you choose. </span><br><span class="line"><span class="bullet">3.</span> Other content can also be included, for example images, PDFs and headers/footers for your pages.</span><br><span class="line"></span><br><span class="line"><span class="section">## This is second</span></span><br></pre></td></tr></table></figure>
 <p>如图片所示，一般的功能诸如home，新建，重命名，编辑，历史，最近的改变等均有。</p>

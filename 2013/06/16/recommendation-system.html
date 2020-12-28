@@ -11,8 +11,7 @@
 <p>协同过滤领域主要的两种方式是最近邻（neighborhood）方法和潜在因子（latent factor）模型。最近邻方法主要集中在 item 的关系或者是 user 的关系，是比较基础的过滤引擎。而潜在因子模型并不是选取所有的关系，而是通过矩阵分解的技术将<code>共现矩阵</code>的分解，比如提取20-100个因子，来表示原始矩阵信息（可以对比上面提到的音乐基因，只不过潜在因子模型是通过计算机化的实现）。</p>
 <h1 id="近邻协同过滤"><a href="#近邻协同过滤" class="headerlink" title="近邻协同过滤"></a>近邻协同过滤</h1><p>矩阵分解技术稍稍复杂一点，暂不介绍，下面着重说一下 item_based 最近邻的协同过滤。</p>
 <p>对于一般的协同过滤引擎，首先会有一个 item-item 的相似矩阵 $S$，比如下图所示（来自于 recommenderlab 包的 vignette 文档），它记录了每两个 item 间的相似情况。但由于计算量和内存的考虑，一般在构建推荐引擎时不会这么暴力的存储全部的相似信息，而是使用部分信息。比如（按行来看）和 $i_1$ 最相关的三个item是 $ i_4, i_5, i_6 $，而另外的两个 item $i_2, i_8$ 则不参与计算。</p>
-<img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/item-based2.png"/>
-
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/item-based2.png"/></p>
 <p>介绍完相似矩阵，接下来就的最近邻协同过滤就非常简单了，假如用户 $ u_\alpha $ 对 $ i_1, i_5, i_8 $ 分别打了 2，4，5 分，根据相似阵 $S$ 中 item 的相似程度，来计算其余未打分的 item 的评分，即</p>
 <blockquote>
 <p>对于每个 item （相似）加权平均后的得分，再过滤已评分的 item</p>

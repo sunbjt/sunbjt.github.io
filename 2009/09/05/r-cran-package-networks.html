@@ -7,7 +7,7 @@
 <p>遍历所有的包，我们就看到了一个网络，一个 <a target="_blank" rel="noopener" href="http://www.r-project.org">R</a> 包的网络。</p>
 <p>为了简化起见，这里忽略了同其他包没有关系的包（当然并不是完全没有关系，所有的包都和 <a target="_blank" rel="noopener" href="http://www.r-project.org">R</a> 或 <a target="_blank" rel="noopener" href="http://www.r-project.org">R</a> 的基础包有关，如果这样计量的话，会导致所有的包都会指向 R）。</p>
 <p>首先截取了这个庞大网络的一部分：</p>
-<p><img src="/upload/pic/sna.png"></p>
+<p><img src="/upload/pic/sna.png" alt=""></p>
 <p>从上图我们可以看到，标记点为215、271的两个包是我们研究的包网络中的两个关键点，这两个包分别是lattice、mvtnorm。</p>
 <p>关于这两个包：</p>
 <ol>
@@ -18,10 +18,14 @@
 </ol>
 从 271（mvtnorm）向左上，又会有一个小的聚集。那个小的聚集中心（110），是 fBasics 包，如果各位对金融领域关注的话，应该知道它在其中的地位吧。
 
-<p>当然，由于抽取的是一个子网络，很多的连接都被生硬地隔断，因此出现了大量的孤立点。</p>
-<p>如果我们把 CRAN 上的1950个包都放到我们的网络中会是这样：</p>
-<p><img src="/upload/pic/sna_black.png"></p>
-<p>最后说明：</p>
+当然，由于抽取的是一个子网络，很多的连接都被生硬地隔断，因此出现了大量的孤立点。
+
+如果我们把 CRAN 上的1950个包都放到我们的网络中会是这样：
+
+![](/upload/pic/sna_black.png)
+
+
+最后说明：
 <ol>
     <li>第一张图的 包 id 换成 包名称 会导致 演示的视觉效果很差，网页又不支持 pdf 直接显示，只好把带包名的图放这（<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/sna300.pdf">pdf</a>）。</li>
     <li>带包名的 ，1950 个包的全图就算了吧，单绘图就得 2 分钟，更别提调整参数了 ……</li>

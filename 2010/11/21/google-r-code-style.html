@@ -2,8 +2,8 @@
 <p>规范这个东西平时多多注意一些还是有好处的，就和作文一样，漂亮的字体总能有不错的加分。这里就不翻译原文了，摘一些 tips 供大家参考：</p>
 <h2 id="R风格规范"><a href="#R风格规范" class="headerlink" title="R风格规范"></a>R风格规范</h2><h3 id="文件命名"><a href="#文件命名" class="headerlink" title="文件命名"></a>文件命名</h3><p>以 .R 结尾的文件必须有实际意义，比如</p>
 <pre><code>GOOD: predict_ad_revenue.R 
-BAD: foo.R</code></pre>
-<h3 id="变量名和函数名"><a href="#变量名和函数名" class="headerlink" title="变量名和函数名"></a>变量名和函数名</h3><ul>
+BAD: foo.R
+</code></pre><h3 id="变量名和函数名"><a href="#变量名和函数名" class="headerlink" title="变量名和函数名"></a>变量名和函数名</h3><ul>
 <li>变量名建议使用小写字母和dots，比如 <code>variable.name</code>，<code>variableName</code> 也是可以被接受的 </li>
 <li>函数名起始字母为大写，不能包含dots，如 <code>FunctionName</code></li>
 </ul>
@@ -14,8 +14,8 @@ BAD: foo.R</code></pre>
 <p>比如：</p>
 <pre><code>tab.prior &lt;- table(df[df$days.from.opt &lt; 0, &quot;campaign.id&quot;])
 total &lt;- sum(x[, 1])
-total &lt;- sum(x[1, ])</code></pre>
-<ul>
+total &lt;- sum(x[1, ])
+</code></pre><ul>
 <li>在左括号前应增加空格，除了 function call 情况</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># GOOD: </span><br><span class="line">if (debug)</span><br><span class="line"></span><br><span class="line"># BAD: </span><br><span class="line">if(debug)</span><br></pre></td></tr></table></figure>
@@ -26,20 +26,20 @@ total &lt;- sum(x[1, ])</code></pre>
    ylim = ylim,
    xlab = &quot;dates&quot;,
    ylab = metric,
-   main = (paste(metric, &quot; for 3 samples &quot;, sep = &quot;&quot;)))</code></pre>
-</li>
+   main = (paste(metric, &quot; for 3 samples &quot;, sep = &quot;&quot;)))
+</code></pre></li>
 </ul>
 <h3 id="大括号"><a href="#大括号" class="headerlink" title="大括号"></a>大括号</h3><p>左大括号不能独立成行，右大括号必须独立成行（除else情况），比如</p>
 <pre><code>if (is.null(ylim)) &#123;
   ylim &lt;- c(0, 0.06)
-&#125;</code></pre>
-<p>else情况的标准写法：</p>
+&#125;
+</code></pre><p>else情况的标准写法：</p>
 <pre><code>if (condition) &#123;
   one or more lines
 &#125; else &#123;
   one or more lines
-&#125;</code></pre>
-<h3 id="行长度"><a href="#行长度" class="headerlink" title="行长度"></a>行长度</h3><p>不应超过80个字符</p>
+&#125;
+</code></pre><h3 id="行长度"><a href="#行长度" class="headerlink" title="行长度"></a>行长度</h3><p>不应超过80个字符</p>
 <h3 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h3><p>严格使用两个空格，不能使用 tabs</p>
 <h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><p>尽量使用 <code>&lt;-</code>，而不要使用 <code>=</code></p>
 <h3 id="一般性声明"><a href="#一般性声明" class="headerlink" title="一般性声明"></a>一般性声明</h3><p>如果我们遵循一致的声明，对代码的阅读和理解会更快更准确。这里包含</p>
@@ -48,8 +48,8 @@ total &lt;- sum(x[1, ])</code></pre>
 3. File description comment, including purpose of program, inputs, and outputs
 4. source() and library() statements
 5. Function definitions
-6. Executed statements, if applicable (e.g., print, plot)</code></pre>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ul>
+6. Executed statements, if applicable (e.g., print, plot)
+</code></pre><h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><ul>
 <li>一定要注意在代码间增加你的注释。长注释以 # 开始，后跟一个空格</li>
 <li>短注释发生在代码后，两个空格间隔，# 开始，后跟一个空格</li>
 </ul>

@@ -4,12 +4,9 @@
 <p>直接查看帮助即可。</p>
 <p>没有接触过 R 的童鞋继续围观，下面会仔细介绍如何使用 R 实现 NBA 50位顶级球员指标表现热图：</p>
 <p>关于 heatmap，中文一般翻译为“热图”，其统计意义<a href="http://en.wikipedia.org/wiki/Heatmap" target="_blank">wiki</a>上解释的很清楚：</p>
-<blockquote>A <strong>heat map</strong> is a graphical representation of data where the values taken by a <a title="Variable (mathematics)" target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Variable_%28mathematics%29">variable</a> in a two-dimensional map are represented as colors.Heat maps originated in 2D displays of the values in a data matrix. Larger values were represented by small dark gray or black squares (pixels) and smaller values by lighter squares.</blockquote>
-下面这个图即是<a href="http://flowingdata.com/about/" target="_blank">Flowingdata</a>用一些 <a href="http://www.r-project.org" target="_blank">R</a> 函数对2008-2009 赛季NBA 50名顶级球员指标做的一个热图（点击参看<a href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png" target="_blank">大图</a>）：
-<p style="text-align: center;"><a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"></a></p>
-<p style="text-align: center;"><a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"><img class="aligncenter size-medium wp-image-10542" title="heatmap1" src="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1-300x289.png" alt="" width="300" height="289" /></a></p>
-<strong>先解释一下数据：</strong>
-
+<p><blockquote>A <strong>heat map</strong> is a graphical representation of data where the values taken by a <a title="Variable (mathematics)" target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Variable_%28mathematics%29">variable</a> in a two-dimensional map are represented as colors.Heat maps originated in 2D displays of the values in a data matrix. Larger values were represented by small dark gray or black squares (pixels) and smaller values by lighter squares.</blockquote><br>下面这个图即是<a href="http://flowingdata.com/about/" target="_blank">Flowingdata</a>用一些 <a href="http://www.r-project.org" target="_blank">R</a> 函数对2008-2009 赛季NBA 50名顶级球员指标做的一个热图（点击参看<a href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png" target="_blank">大图</a>）：</p>
+<p><p style="text-align: center;"><a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"></a></p></p>
+<p><p style="text-align: center;"><a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"><img class="aligncenter size-medium wp-image-10542" title="heatmap1" src="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1-300x289.png" alt="" width="300" height="289" /></a></p><br><strong>先解释一下数据：</strong></p>
 <p>这里共列举了50位球员，估计爱好篮球的童鞋对上图右边的每个名字都会耳熟能详。这些球员每个人会有19个指标，包括打了几场球（G)、上场几分钟（MIN)、得分（PTS)……这样就行成了一个50行×19列的矩阵。但问题是，数据有些多，需要使用一种比较好的办法来展示，So it comes, heatmap!</p>
 <p><strong>简单的说明：</strong></p>
 <p>比如从上面的热图上观察得分前3名（Wade、James、Bryant）PTS、FGM、FGA比较高，但Bryant的FTM、FTA和前两者就差一些；Wade在这三人中STL是佼佼者；而James的DRB和TRB又比其他两人好一些……</p>
@@ -21,8 +18,10 @@
 <p>R 可以支持网络路径，使用读取csv文件的函数read.csv。</p>
 <p>读取数据就这么简单：</p>
 <pre lang="rsplus">read.csv("http://datasets.flowingdata.com/ppg2008.csv", sep=",")</pre>
-<p><span style="color: #993366;">Step 2. Sort data</span></p>
-<p>按照球员得分，将球员从小到大排序：</p>
+<span style="color: #993366;">Step 2. Sort data</span>
+
+按照球员得分，将球员从小到大排序：
+
 <pre lang="rsplus">nba <- nba[order(nba$PTS),]</pre>
 
 <p><code>当然也可以选择MIN,BLK,STL之类指标</code></p>
