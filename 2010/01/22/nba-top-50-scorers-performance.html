@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>NBA联盟50位顶级球员的指标表现 | Beta</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">NBA联盟50位顶级球员的指标表现</h1><a id="logo" href="/.">Beta</a><p class="description">It’s a beautiful thing when free data meets free algorithm.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/todo/"><i class="fa fa-flag"> TODO</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">NBA联盟50位顶级球员的指标表现</h1><div class="post-meta">2010-01-22<script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" data-disqus-identifier="2010/01/22/nba-top-50-scorers-performance.html" href="/2010/01/22/nba-top-50-scorers-performance.html#disqus_thread"></a><div class="post-content"><p>有点标题党的嫌疑，实际是介绍如何使用 R 绘制 heatmap 的文章。</p>
+<p>今天无意间在<a href="http://flowingdata.com/about/" target="_blank">Flowingdata</a>看到一篇关于如何使用 R 来做 heatmap 的文章（请移步到<a href="http://flowingdata.com/2010/01/21/how-to-make-a-heatmap-a-quick-and-easy-solution/" target="_blank">这里</a>）。虽然 heatmap 只是 R 中一个很普通的图形函数，但这个例子使用了2008-2009赛季 NBA 50个顶级球员数据做了一个极佳的演示，效果非常不错。对 R 大致了解的童鞋可以直接在 R console 上敲</p>
+<p><strong>？heatmap</strong></p>
+<p>直接查看帮助即可。</p>
+<p>没有接触过 R 的童鞋继续围观，下面会仔细介绍如何使用 R 实现 NBA 50位顶级球员指标表现热图：</p>
+<p>关于 heatmap，中文一般翻译为“热图”，其统计意义<a href="http://en.wikipedia.org/wiki/Heatmap" target="_blank">wiki</a>上解释的很清楚：</p>
+<p><blockquote>A <strong>heat map</strong> is a graphical representation of data where the values taken by a <a title="Variable (mathematics)" target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Variable_%28mathematics%29">variable</a> in a two-dimensional map are represented as colors.Heat maps originated in 2D displays of the values in a data matrix. Larger values were represented by small dark gray or black squares (pixels) and smaller values by lighter squares.</blockquote><br>下面这个图即是<a href="http://flowingdata.com/about/" target="_blank">Flowingdata</a>用一些 <a href="http://www.r-project.org" target="_blank">R</a> 函数对2008-2009 赛季NBA 50名顶级球员指标做的一个热图（点击参看<a href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png" target="_blank">大图</a>）：</p>
+<p><p style="text-align: center;"><a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"></a></p></p>
+<p><p style="text-align: center;"><a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"><img class="aligncenter size-medium wp-image-10542" title="heatmap1" src="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1-300x289.png" alt="" width="300" height="289" /></a></p><br><strong>先解释一下数据：</strong></p>
+<p>这里共列举了50位球员，估计爱好篮球的童鞋对上图右边的每个名字都会耳熟能详。这些球员每个人会有19个指标，包括打了几场球（G)、上场几分钟（MIN)、得分（PTS)……这样就行成了一个50行×19列的矩阵。但问题是，数据有些多，需要使用一种比较好的办法来展示，So it comes, heatmap!</p>
+<p><strong>简单的说明：</strong></p>
+<p>比如从上面的热图上观察得分前3名（Wade、James、Bryant）PTS、FGM、FGA比较高，但Bryant的FTM、FTA和前两者就差一些；Wade在这三人中STL是佼佼者；而James的DRB和TRB又比其他两人好一些……</p>
+<p>姚明的3PP（3 Points Percentage）这条数据很有意思，非常出色！仔细查了一下这个数值，居然是100%。仔细回想一下，似乎那个赛季姚明好像投过一个3分，并且中了，然后再也没有3p。这样本可真够小的！</p>
+<p><strong>最后是如何做这个热图（做了些许修改）：</strong></p>
+<p><span style="color: #993366;">Step 0. Download R</span></p>
+<p>R 官网：<a target="_blank" rel="noopener" href="http://www.r-project.org">http://www.r-project.org</a>，它是免费的。官网上面提供了Windows,Mac,Linux版本（或源代码）的R程序。</p>
+<p><span style="color: #993366;">Step 1. Load the data</span></p>
+<p>R 可以支持网络路径，使用读取csv文件的函数read.csv。</p>
+<p>读取数据就这么简单：</p>
+<pre lang="rsplus">read.csv("http://datasets.flowingdata.com/ppg2008.csv", sep=",")</pre>
+<span style="color: #993366;">Step 2. Sort data</span>
+
+按照球员得分，将球员从小到大排序：
+
+<pre lang="rsplus">nba <- nba[order(nba$PTS),]</pre>
+
+<p><code>当然也可以选择MIN,BLK,STL之类指标</code></p>
+<p><span style="color: #993366;">Step 3. Prepare data</span></p>
+<p>把行号换成行名（球员名称）：</p>
+<pre lang="rsplus">row.names(nba) <- nba$Name</pre>
+
+<p><code>去掉第一列行号：</code></p>
+<pre lang="rsplus">nba <- nba[,2:20] # or nba <- nba[,-1]</pre>
+
+<p><span style="color: #993366;">Step 4. Prepare data, again</span></p>
+<p>把 data frame 转化为我们需要的矩阵格式：</p>
+<pre lang="rsplus">nba_matrix <- data.matrix(nba)</pre>
+
+<p><span style="color: #993366;">Step 5. Make a heatmap</span></p>
+<p>R 的默认还会在图的左边和上边绘制 dendrogram，使用Rowv=NA, Colv=NA去掉</p>
+<pre lang="rsplus">heatmap(nba_matrix, Rowv=NA, Colv=NA, col=cm.colors(256), revC=FALSE, scale='column')</pre>
+
+<p><code>这样就得到了上面的那张热图。</code></p>
+<p><span style="color: #993366;">Step 6. Color selection</span></p>
+<p>或者想把热图中的颜色换一下：</p>
+<pre lang="rsplus">heatmap(nba_matrix, Rowv=NA, Colv=NA, col=heat.colors(256), revC=FALSE, scale="column", margins=c(5,10))</pre>
+
+<p><code><strong>延伸阅读：</strong></code></p>
+<p><code>来自于kerimcan和<a target="_blank" rel="noopener" href="http://periscopic.com/">krees</a>这些人的讨论：</code></p>
+<p><code><strong><a rel="nofollow noopener" target="_blank" href="http://sekhon.polisci.berkeley.edu/stats/html/heatmap.html">http://sekhon.polisci.berkeley.edu/stats/html/heatmap.html</a><br><a rel="nofollow noopener" target="_blank" href="http://enotacoes.wordpress.com/2007/11/16/easy-guide-to-drawing-heat-maps-to-pdf-with-r-with-color-key/">http://enotacoes.wordpress.com/2007/11/16/easy-guide-to-drawing-heat-maps-to-pdf-with-r-with-color-key/</a></strong></code></p>
+<p><strong>补充：</strong></p>
+<p>早上起来发现 David Smith 同样更新了<a href="http://blog.revolution-computing.com/2010/01/how-to-make-a-heat-map-in-r.html" target="_blank">博客</a>。唉，这厮嗅觉也忒灵敏！哈哈</p>
+</div><div class="tags"><a href="/tags/heatmap/"><i class="fa fa-tag"></i>heatmap</a><a href="/tags/%E7%AF%AE%E7%90%83/"><i class="fa fa-tag"></i>篮球</a></div><div class="post-nav"><a class="pre" href="/2010/01/26/chinese-earthquake-visualization.html">中国及周边版图地震情况可视化</a><a class="next" href="/2010/01/16/rockets-heat-assists-network.html">火箭对热火比赛(20100116)中，火箭球员的助攻网络关系</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论（请确保 Disqus 可以正常加载）</button></div><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://bjt.name/2010/01/22/nba-top-50-scorers-performance.html';
+    this.page.identifier = '2010/01/22/nba-top-50-scorers-performance.html';
+    this.page.title = 'NBA联盟50位顶级球员的指标表现';
+  };</script><script type="text/javascript" id="disqus-lazy-load-script">$.ajax({
+url: 'https://disqus.com/next/config.json',
+timeout: 2500,
+type: 'GET',
+success: function(){
+  var d = document;
+  var s = d.createElement('script');
+  s.src = '//sunbjt.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', + new Date());
+  (d.head || d.body).appendChild(s);
+  $('.disqus_click_btn').css('display', 'none');
+},
+error: function() {
+  $('.disqus_click_btn').css('display', 'block');
+}
+});</script><script type="text/javascript" id="disqus-click-load">$('.btn_click_load').click(() => {  //click to load comments
+    (() => { // DON'T EDIT BELOW THIS LINE
+        var d = document;
+        var s = d.createElement('script');
+        s.src = '//sunbjt.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', + new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    $('.disqus_click_btn').css('display','none');
+});</script><script type="text/javascript" id="disqus-count-script">$(function() {
+     var xhr = new XMLHttpRequest();
+     xhr.open('GET', '//disqus.com/next/config.json', true);
+     xhr.timeout = 2500;
+     xhr.onreadystatechange = function () {
+       if (xhr.readyState === 4 && xhr.status === 200) {
+         $('.post-meta .post-comments-count').show();
+         var s = document.createElement('script');
+         s.id = 'dsq-count-scr';
+         s.src = 'https://sunbjt.disqus.com/count.js';
+         s.async = true;
+         (document.head || document.body).appendChild(s);
+       }
+     };
+     xhr.ontimeout = function () { xhr.abort(); };
+     xhr.send(null);
+   });
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://bjt.name"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/R-%E6%8A%80%E5%B7%A7/">R 技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/">不务正业的 R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%B2%E5%8E%86/">亲历</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/">工具技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/">数据思维</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A7%E9%97%BB/">旧闻</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84/">有意思的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/">玩数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AF%AE%E7%90%83/">篮球</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/value.html">你为什么可以被晋升？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/make-better.html">数据分析师的生存手记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/url-handle.html">在 R 中各种码的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/05/zhihu-reading.html">2019 年建议阅读书目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/china-gdp.html">建国以来人均 GDP 增长情况</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/28/secure-hash.html">利用 R 函数生成差异化密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/zoom.html">sharingan 自定义 CSS 特效</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/18/timeline.html">数据科学的时间轴</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/03/bpr.html">贝叶斯个性化排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/24/sharingan.html">写轮眼（sharingan)奇淫技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//sunbjt.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://cosx.org/" title="统计之都" target="_blank">统计之都</a><ul></ul><a href="https://hetal-cq.github.io/" title="hetal 的学习笔记" target="_blank">hetal 的学习笔记</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">Beta.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>

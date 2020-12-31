@@ -1,0 +1,68 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>法航被流星击中的概率 | Beta</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">法航被流星击中的概率</h1><a id="logo" href="/.">Beta</a><p class="description">It’s a beautiful thing when free data meets free algorithm.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/todo/"><i class="fa fa-flag"> TODO</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">法航被流星击中的概率</h1><div class="post-meta">2009-06-13<span> | </span><span class="category"><a href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" data-disqus-identifier="2009/06/13/france-flight-poisson.html" href="/2009/06/13/france-flight-poisson.html#disqus_thread"></a><div class="post-content"><p>以前由于职业的原因，经常全国各地的乱飞。虽说飞机的出事概率仅仅相当于陆上交通工具的百分之一，但每次上飞机前，总会怯怯的问自己：”这次上去能不能好好的下来？”上去的话，一般都是塞上耳机，打开笔记本—看 R。说实话，我还是更喜欢心灵的飞翔，而不是坐着飞机去感受加速度。</p>
+<p>一般商用喷气式飞机的稳定性很高，即使有突然事件造成损害，大部分飞机都能保证安全或部分安全地着陆。引发安全问题的事件可能是：</p>
+<ul>
+<li>skin or door failure leading to cabin pressure explosion</li>
+<li>gross upset leading to airspeeds and/or G loadings far in excess of design limits</li>
+<li>attack by military weapons <em> bird strike </em> flight through volcanic ash</li>
+<li>engine explosion</li>
+<li>collision with ground structures during takeoff</li>
+</ul>
+<p>但如果被流星击中呢？流星的速度可以达到 25,000 km/hr（约 7000m/s ），还是很可怕的。</p>
+<p>David Smith 在 <a href="http://blog.revolution-computing.com/2009/06/how-much-of-a-threat-are-meteors-to-aviation.html" target="_blank">How much of a threat are meteors to aviation?</a> 这篇博客里给出了，法航客机被流星击中的概率，计算方法比较科学：</p>
+<ol>
+<li>每小时有 125 颗流星”光临”地球，且都是超音速飞行的；</li>
+<li>平均飞机的面积占地球总面积的5.7e-13；</li>
+<li>法航 447 客机预计飞行的时间为 11 小时。</li>
+</ol>
+<p>这种小概率事件我们可以使用 Poisson 分布去拟合，那么飞机被击中的概率就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 - ppois(0,5.7e-13*125*11) </span><br><span class="line">[1] 7.8375e-10</span><br></pre></td></tr></table></figure>
+<p>飞机被流星击中的概率为7.8375e-10，即<span class="post-footers">第一位7前面有10个零。观众可能没有直观印象，举个例子：双色球的中一等奖的概率是 5.642994e-08</span>，飞机被流星击中的概率是它的百分之一，<span class="post-footers">相差两个数量级。</span></p>
+<p><span class="post-footers">David Smith 而后又给了一个今后 20 年，所有飞机至少有一架被击中的概率（他给的数据没看明白，直接引用 <a target="_blank" rel="noopener" href="http://blogs.discovermagazine.com/cosmicvariance/author/jconway/">John</a> 给的数据）：</span></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 - ppois(<span class="number">0</span>,<span class="number">720e6</span>*<span class="number">5.7e-13</span>*<span class="number">125</span>)</span><br><span class="line">[<span class="number">1</span>] <span class="number">0.05000637</span></span><br></pre></td></tr></table></figure>
+<p>很可怕吧！今后二十年，至少有一架被陨石击中的概率达到了 5% ！已经不是小概率事件了！</p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2009/06/24/prime-numbers-r.html">素数的求法</a><a class="next" href="/2009/06/03/real-estate-bubble-data-beijing.html">房地产泡沫？- 得瞅瞅了！</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论（请确保 Disqus 可以正常加载）</button></div><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://bjt.name/2009/06/13/france-flight-poisson.html';
+    this.page.identifier = '2009/06/13/france-flight-poisson.html';
+    this.page.title = '法航被流星击中的概率';
+  };</script><script type="text/javascript" id="disqus-lazy-load-script">$.ajax({
+url: 'https://disqus.com/next/config.json',
+timeout: 2500,
+type: 'GET',
+success: function(){
+  var d = document;
+  var s = d.createElement('script');
+  s.src = '//sunbjt.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', + new Date());
+  (d.head || d.body).appendChild(s);
+  $('.disqus_click_btn').css('display', 'none');
+},
+error: function() {
+  $('.disqus_click_btn').css('display', 'block');
+}
+});</script><script type="text/javascript" id="disqus-click-load">$('.btn_click_load').click(() => {  //click to load comments
+    (() => { // DON'T EDIT BELOW THIS LINE
+        var d = document;
+        var s = d.createElement('script');
+        s.src = '//sunbjt.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', + new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    $('.disqus_click_btn').css('display','none');
+});</script><script type="text/javascript" id="disqus-count-script">$(function() {
+     var xhr = new XMLHttpRequest();
+     xhr.open('GET', '//disqus.com/next/config.json', true);
+     xhr.timeout = 2500;
+     xhr.onreadystatechange = function () {
+       if (xhr.readyState === 4 && xhr.status === 200) {
+         $('.post-meta .post-comments-count').show();
+         var s = document.createElement('script');
+         s.id = 'dsq-count-scr';
+         s.src = 'https://sunbjt.disqus.com/count.js';
+         s.async = true;
+         (document.head || document.body).appendChild(s);
+       }
+     };
+     xhr.ontimeout = function () { xhr.abort(); };
+     xhr.send(null);
+   });
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://bjt.name"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/R-%E6%8A%80%E5%B7%A7/">R 技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/">不务正业的 R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%B2%E5%8E%86/">亲历</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/">工具技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/">数据思维</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A7%E9%97%BB/">旧闻</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84/">有意思的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/">玩数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AF%AE%E7%90%83/">篮球</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/value.html">你为什么可以被晋升？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/make-better.html">数据分析师的生存手记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/url-handle.html">在 R 中各种码的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/05/zhihu-reading.html">2019 年建议阅读书目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/china-gdp.html">建国以来人均 GDP 增长情况</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/28/secure-hash.html">利用 R 函数生成差异化密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/zoom.html">sharingan 自定义 CSS 特效</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/18/timeline.html">数据科学的时间轴</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/03/bpr.html">贝叶斯个性化排序</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/06/24/sharingan.html">写轮眼（sharingan)奇淫技巧</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//sunbjt.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://cosx.org/" title="统计之都" target="_blank">统计之都</a><ul></ul><a href="https://hetal-cq.github.io/" title="hetal 的学习笔记" target="_blank">hetal 的学习笔记</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2020 <a href="/." rel="nofollow">Beta.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
