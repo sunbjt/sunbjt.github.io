@@ -7,8 +7,10 @@ permalink: /todo/
 
 ## 最近在干嘛 #
 
+- 2020.12 胜任力模型
+- 2020.11 business leadership model
 - 2018.10 Language Assessment 服务于英语的个性化学习
-- 2018.06 基于用户行为的GloVe与BPFR-MF老师推荐
+- 2018.06 基于用户行为的 GloVe 与 BPFR-MF 老师推荐（Done）
 - 2018.04 青少英语启蒙理论(Done)
 - 2017.08 Computerized adaptive test (Done) 
 - 2017.07 TensorFlow in R (Pause)
