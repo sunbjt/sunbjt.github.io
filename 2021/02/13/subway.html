@@ -1,0 +1,267 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content=""><title>从北京地铁规划再看地段重要性 | Beta</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/normalize.css/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/pure-min.min.css"><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/purecss/build/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script><link rel="icon" mask="" sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><script type="text/javascript" src="//cdn.jsdelivr.net/npm/clipboard/dist/clipboard.min.js"></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.js"></script><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/codeseven/toastr/build/toastr.min.css"><meta name="generator" content="Hexo 5.3.0"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">从北京地铁规划再看地段重要性</h1><a id="logo" href="/.">Beta</a><p class="description">It’s a beautiful thing when free data meets free algorithm.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/todo/"><i class="fa fa-flag"> TODO</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">从北京地铁规划再看地段重要性</h1><div class="post-meta">2021-02-13<span> | </span><span class="category"><a href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/">玩数据</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span></div><a class="disqus-comment-count" data-disqus-identifier="2021/02/13/subway.html" href="/2021/02/13/subway.html#disqus_thread"></a><div class="post-content"><p>距离上一篇《好地段是怎么选出来的-从北京地铁看区域的重要性》已经过去八年有余，一直念叨着重新更新一些北京的地铁数据，这不今天她来了。</p>
+<p>本文要解决什么问题呢？</p>
+<ol>
+<li>重新更新 2024 年北京地铁规划数据，给出关键的北京地铁节点</li>
+<li>获取这些关键地段的二手房产信息，方便大家首套或改善</li>
+</ol>
+<h1 id="构建地铁的网络"><a href="#构建地铁的网络" class="headerlink" title="构建地铁的网络"></a>构建地铁的网络</h1><p>首先是获取全面的北京地铁数据，主要数据源自<a target="_blank" rel="noopener" href="http://map.amap.com/subway/index.html">高德地图的贡献</a>。高德不但提供了北京的所有地铁的经纬度数据，还包含了上海、广州、武汉、深圳等地信息，非常方便。既然有了数据源，我们可以很容易写一段很短的定向爬虫，建出以下数据集：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">subwaynames</th>
+<th style="text-align:left">terminal</th>
+<th style="text-align:left">longitude</th>
+<th style="text-align:left">latitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">409</td>
+<td style="text-align:left">亦庄线</td>
+<td style="text-align:left">荣昌东街</td>
+<td style="text-align:left">39.782832</td>
+<td style="text-align:left">116.521688</td>
+</tr>
+<tr>
+<td style="text-align:left">410</td>
+<td style="text-align:left">亦庄线</td>
+<td style="text-align:left">同济南路</td>
+<td style="text-align:left">39.772962</td>
+<td style="text-align:left">116.539901</td>
+</tr>
+<tr>
+<td style="text-align:left">411</td>
+<td style="text-align:left">亦庄线</td>
+<td style="text-align:left">经海路</td>
+<td style="text-align:left">39.783673</td>
+<td style="text-align:left">116.562321</td>
+</tr>
+<tr>
+<td style="text-align:left">412</td>
+<td style="text-align:left">亦庄线</td>
+<td style="text-align:left">次渠南</td>
+<td style="text-align:left">39.795118</td>
+<td style="text-align:left">116.581357</td>
+</tr>
+<tr>
+<td style="text-align:left">413</td>
+<td style="text-align:left">亦庄线</td>
+<td style="text-align:left">次渠</td>
+<td style="text-align:left">39.803500</td>
+<td style="text-align:left">116.591502</td>
+</tr>
+<tr>
+<td style="text-align:left">414</td>
+<td style="text-align:left">亦庄线</td>
+<td style="text-align:left">亦庄火车站</td>
+<td style="text-align:left">39.812607</td>
+<td style="text-align:left">116.601913</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>有了这份数据之后，我们就可以描述每个地铁站在全网络的作用，度量方式同《好地段是怎么选出来的-从北京地铁看区域的重要性》，使用了三个指标：</p>
+<ol>
+<li>Betweenness：如果地铁网络中有这样一个站点 A，其他的站点都要通过 A 才能到达其他的站，或者想象更为极端的情况，如果没有了站点A，那么你就不能从其站点到达另外一个站点。</li>
+<li>PageRank：如果同 A 站点连接的站点都非常好，那么物以类聚，A 站点也应该是一个很好的站点。可以简单理解为 A 点的重要程度是周围连接点重要程度的加权。</li>
+<li>Closeness：如果从地铁网络中 A 点，到所有其他地铁站的“最短距离”的和最小的话，那这个站点一定是最便捷的，它反映的是网络中节点 A 到其他节点的平均最短距离。</li>
+</ol>
+<p>当然这里面有一些细节，比如地铁网络的边是有权重的，比如我定义成了<strong>两个站点距离的倒数</strong>。当然有个小悲剧的地方，高德地图并没有把全部的在建地铁信息全部加进来，比如传说中的 3 号线，8 号线的中段，14 号线中段，16 号线南段，12、17、19 号线（我也是仔细看地图才知道北京在建地铁数量众多）。这些站点只好手工补入，且他们的边权重统一设置为全部边的平均权重。</p>
+<p>这个工作准备结束后，我们计算出了 394 个站点的三个核心指标：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:right">betweeness</th>
+<th style="text-align:right">pagerank</th>
+<th style="text-align:right">closeness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">巴沟</td>
+<td style="text-align:right">0.000</td>
+<td style="text-align:right">0.0004558</td>
+<td style="text-align:right">5638</td>
+</tr>
+<tr>
+<td style="text-align:left">苏州街</td>
+<td style="text-align:right">287.000</td>
+<td style="text-align:right">0.0006495</td>
+<td style="text-align:right">5254</td>
+</tr>
+<tr>
+<td style="text-align:left">海淀黄庄</td>
+<td style="text-align:right">2980.150</td>
+<td style="text-align:right">0.0029220</td>
+<td style="text-align:right">4872</td>
+</tr>
+<tr>
+<td style="text-align:left">知春里</td>
+<td style="text-align:right">750.000</td>
+<td style="text-align:right">0.0016977</td>
+<td style="text-align:right">4887</td>
+</tr>
+<tr>
+<td style="text-align:left">知春路</td>
+<td style="text-align:right">6704.395</td>
+<td style="text-align:right">0.0035589</td>
+<td style="text-align:right">4587</td>
+</tr>
+<tr>
+<td style="text-align:left">西土城</td>
+<td style="text-align:right">2884.795</td>
+<td style="text-align:right">0.0019683</td>
+<td style="text-align:right">4626</td>
+</tr>
+<tr>
+<td style="text-align:left">牡丹园</td>
+<td style="text-align:right">2862.795</td>
+<td style="text-align:right">0.0021288</td>
+<td style="text-align:right">4418</td>
+</tr>
+<tr>
+<td style="text-align:left">健德门</td>
+<td style="text-align:right">1337.128</td>
+<td style="text-align:right">0.0013605</td>
+<td style="text-align:right">4648</td>
+</tr>
+<tr>
+<td style="text-align:left">北土城</td>
+<td style="text-align:right">4166.823</td>
+<td style="text-align:right">0.0029922</td>
+<td style="text-align:right">4676</td>
+</tr>
+<tr>
+<td style="text-align:left">安贞门</td>
+<td style="text-align:right">1386.423</td>
+<td style="text-align:right">0.0017275</td>
+<td style="text-align:right">4746</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="如何聚类"><a href="#如何聚类" class="headerlink" title="如何聚类"></a>如何聚类</h1><p>第一个问题是要聚成多少个类合适，还好这个问题统计学家已经给我们很多方法了，比如 R. Tibshirani, G. Walther, and T. Hastie (Standford University, 2001) 给的 Gap Statistic Method 就很好用，原理这里不介绍了，直接看结果：建议分为 9 个类较为合适。</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210214005451.png" width="500"/></p>
+<p>那 9 各类的中心点如何呢？</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; k &lt;- kmeans(scale(dat[,-<span class="number">1</span>]), <span class="number">9</span>)</span><br><span class="line">&gt; k$centers <span class="comment"># 观察中心点</span></span><br><span class="line">           b          p         cl</span><br><span class="line">1  <span class="number">2.6421189</span>  <span class="number">1.1224895</span> -<span class="number">1.0326201</span></span><br><span class="line">2  <span class="number">1.2718746</span>  <span class="number">2.6561390</span> -<span class="number">0.6577006</span></span><br><span class="line">3 -<span class="number">0.8680897</span> -<span class="number">1.1574194</span>  <span class="number">2.1859281</span></span><br><span class="line">4 -<span class="number">0.7672379</span> -<span class="number">1.2515663</span> -<span class="number">0.1490786</span></span><br><span class="line">5 -<span class="number">0.3992137</span> -<span class="number">0.3147626</span> -<span class="number">0.5037379</span></span><br><span class="line">6  <span class="number">0.9584859</span>  <span class="number">0.3296670</span>  <span class="number">1.4605652</span></span><br><span class="line">7  <span class="number">0.8722235</span> -<span class="number">0.1408826</span> -<span class="number">0.6668896</span></span><br><span class="line">8  <span class="number">0.3187653</span>  <span class="number">1.0763290</span> -<span class="number">0.6557846</span></span><br><span class="line">9 -<span class="number">0.6761033</span> -<span class="number">0.1844796</span>  <span class="number">0.6418721</span></span><br><span class="line">&gt; k$size</span><br><span class="line">[<span class="number">1</span>]  <span class="number">23</span>  <span class="number">21</span>  <span class="number">32</span>  <span class="number">35</span> <span class="number">109</span>  <span class="number">20</span>  <span class="number">35</span>  <span class="number">43</span>  <span class="number">78</span></span><br></pre></td></tr></table></figure>
+<p>从刚才三个指标的描述上看，betweeness 和 page rank 越大越好，closeness 我取了倒数，所以越小越好。从中心点上看，第一类（23 个）和第二类（21 个）是我们需要重点关注的站点区域。</p>
+<p>为了直观起见，我将这两类的所有站点，按照 betweeness 和 page rank 两个值做了可视化：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210214010348.png"/></p>
+<ol>
+<li>两类的 betweeness 和 page rank 都很高，但</li>
+<li>第一类的 betweeness 更高，第二类的 page rank 更高</li>
+</ol>
+<h1 id="价值洼地"><a href="#价值洼地" class="headerlink" title="价值洼地"></a>价值洼地</h1><p>这 44 个地方本身就是地铁网络中相对便捷的节点，如果我们还能够知道这些区域的房价信息和房产供应量，那大家上车的姿势就可以确定了。</p>
+<p>这个数据看官感兴趣可以看<a target="_blank" rel="noopener" href="https://map.ke.com/map/110000/ESF/">贝壳</a>，这里忍不住要赞一下贝壳，二手房的基础数据整理的真完备！比如这是获取的一个片段数据（西二旗附近）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">name</th>
+<th style="text-align:left">price</th>
+<th style="text-align:right">count</th>
+<th style="text-align:right">longitude</th>
+<th style="text-align:right">latitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">领秀慧谷C区</td>
+<td style="text-align:left">57595</td>
+<td style="text-align:right">23</td>
+<td style="text-align:right">116.3105</td>
+<td style="text-align:right">40.10650</td>
+</tr>
+<tr>
+<td style="text-align:left">领秀慧谷B区</td>
+<td style="text-align:left">48309</td>
+<td style="text-align:right">11</td>
+<td style="text-align:right">116.3087</td>
+<td style="text-align:right">40.10320</td>
+</tr>
+<tr>
+<td style="text-align:left">领秀慧谷D区</td>
+<td style="text-align:left">55930</td>
+<td style="text-align:right">8</td>
+<td style="text-align:right">116.3065</td>
+<td style="text-align:right">40.10525</td>
+</tr>
+<tr>
+<td style="text-align:left">领秀慧谷A区</td>
+<td style="text-align:left">48422</td>
+<td style="text-align:right">7</td>
+<td style="text-align:right">116.3106</td>
+<td style="text-align:right">40.10314</td>
+</tr>
+<tr>
+<td style="text-align:left">TBD住总万科天地</td>
+<td style="text-align:left">42256</td>
+<td style="text-align:right">3</td>
+<td style="text-align:right">116.3225</td>
+<td style="text-align:right">40.10905</td>
+</tr>
+<tr>
+<td style="text-align:left">领秀慧谷D2区</td>
+<td style="text-align:left">51769</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">116.3049</td>
+<td style="text-align:right">40.10625</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>当然有很多小细节，比如其中的一个是我为了保证步行 10 分钟内能走到地铁站，所有获取的小区是在该站点纬度正负 0.02201548/4 区间，经度正负 0.04132205/4 区间。该地域的二手房均价我使用的是加权平均，并未考虑几居室的问题（只有这个数据）。</p>
+<p>将区域的二手房均价和二手房供应量放在一张图上就清楚很多了：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210214012430.png"/></p>
+<p>这张图绘制出来我还是有些诧异的，比如立水桥和九龙山从来就没有在我的视野之内，但从 2024 年北京地铁规划的角度，需要多给一些关注。当然每位看官诧异点应该还不一样，反正我能帮到大家的就到这里了。不论是新上车还是改善需求，大家有行动也记得给我一些反馈。</p>
+<p>全文完毕，收工！</p>
+</div><div class="tags"></div><div class="post-nav"><a class="next" href="/2020/04/12/value.html">你为什么可以被晋升？</a></div><div id="disqus_thread"><div class="btn_click_load"><button class="disqus_click_btn">阅读评论（请确保 Disqus 可以正常加载）</button></div><script type="text/javascript">var disqus_config = function () {
+    this.page.url = 'http://bjt.name/2021/02/13/subway.html';
+    this.page.identifier = '2021/02/13/subway.html';
+    this.page.title = '从北京地铁规划再看地段重要性';
+  };</script><script type="text/javascript" id="disqus-lazy-load-script">$.ajax({
+url: 'https://disqus.com/next/config.json',
+timeout: 2500,
+type: 'GET',
+success: function(){
+  var d = document;
+  var s = d.createElement('script');
+  s.src = '//sunbjt.disqus.com/embed.js';
+  s.setAttribute('data-timestamp', + new Date());
+  (d.head || d.body).appendChild(s);
+  $('.disqus_click_btn').css('display', 'none');
+},
+error: function() {
+  $('.disqus_click_btn').css('display', 'block');
+}
+});</script><script type="text/javascript" id="disqus-click-load">$('.btn_click_load').click(() => {  //click to load comments
+    (() => { // DON'T EDIT BELOW THIS LINE
+        var d = document;
+        var s = d.createElement('script');
+        s.src = '//sunbjt.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', + new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+    $('.disqus_click_btn').css('display','none');
+});</script><script type="text/javascript" id="disqus-count-script">$(function() {
+     var xhr = new XMLHttpRequest();
+     xhr.open('GET', '//disqus.com/next/config.json', true);
+     xhr.timeout = 2500;
+     xhr.onreadystatechange = function () {
+       if (xhr.readyState === 4 && xhr.status === 200) {
+         $('.post-meta .post-comments-count').show();
+         var s = document.createElement('script');
+         s.id = 'dsq-count-scr';
+         s.src = 'https://sunbjt.disqus.com/count.js';
+         s.async = true;
+         (document.head || document.body).appendChild(s);
+       }
+     };
+     xhr.ontimeout = function () { xhr.abort(); };
+     xhr.send(null);
+   });
+</script></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"/><input type="hidden" name="sitesearch" value="http://bjt.name"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/R-%E6%8A%80%E5%B7%A7/">R 技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/">不务正业的 R</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%BA%B2%E5%8E%86/">亲历</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/">工具技巧</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/">数据思维</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A7%E9%97%BB/">旧闻</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84/">有意思的</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/">玩数据</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AF%AE%E7%90%83/">篮球</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2021/02/13/subway.html">从北京地铁规划再看地段重要性</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/12/value.html">你为什么可以被晋升？</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/05/make-better.html">数据分析师的生存手记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/21/url-handle.html">在 R 中各种码的转换</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/05/zhihu-reading.html">2019 年建议阅读书目</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/02/china-gdp.html">建国以来人均 GDP 增长情况</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/28/secure-hash.html">利用 R 函数生成差异化密码</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/zoom.html">sharingan 自定义 CSS 特效</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/18/timeline.html">数据科学的时间轴</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/03/bpr.html">贝叶斯个性化排序</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-comment-o"> 最近评论</i></div><script type="text/javascript" src="//sunbjt.disqus.com/recent_comments_widget.js?num_items=5&amp;hide_avatars=1&amp;avatar_size=32&amp;excerpt_length=20&amp;hide_mods=1"></script></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="https://cosx.org/" title="统计之都" target="_blank">统计之都</a><ul></ul><a href="https://hetal-cq.github.io/" title="hetal 的学习笔记" target="_blank">hetal 的学习笔记</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2021 <a href="/." rel="nofollow">Beta.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox/dist/jquery.fancybox.min.css"><script type="text/javascript" src="/js/copycode.js" successtext="复制成功!"></script><link rel="stylesheet" type="text/css" href="/css/copycode.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
