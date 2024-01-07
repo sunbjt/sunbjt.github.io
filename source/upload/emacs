@@ -1,0 +1,157 @@
+
+;;外观设置
+;;(menu-bar-mode nil)
+;;不要滚动栏，现在都用滚轴鼠标了，可以不用滚动栏了
+(scroll-bar-mode nil)
+
+;;字符集设置
+(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding (Chinese/Japanese/Korean characters)
+(set-language-environment 'utf-8)
+(set-keyboard-coding-system 'utf-8-mac) ; For old Carbon emacs on OS X only
+(setq locale-coding-system 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(unless (eq system-type 'windows-nt)
+(set-selection-coding-system 'utf-8))
+(prefer-coding-system 'utf-8)
+
+;;关闭自动换行
+
+
+;;设置开启的窗口大小
+(setq default-frame-alist 
+'((height . 55) (width . 100) (menu-bar-lines . 20) (tool-bar-lines . 0)))
+
+;;修改中文文本的行距,3个象素就可以了吧
+(setq-default line-spacing 3)
+;;启用C-x,C-v,C-s这些通用设置
+;(cua-mode t)
+
+;;auctex编译使用xelatex引擎
+(add-hook 'LaTeX-mode-hook (lambda()
+                              (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+                              (setq TeX-command-default "XeLaTeX")
+                                 (setq TeX-save-query  nil )
+                                  (setq TeX-show-compilation t)
+                                                               ))
+
+;;在win7下可以使用中文目录
+(prefer-coding-system 'utf-8)
+(setq file-name-coding-system 'gbk)
+
+
+;;颜色主题
+(setq load-path (cons "E:/software/emacs" load-path))
+(require 'color-theme)
+;(color-theme-deep-blue)
+(color-theme-shaman)
+;(color-theme-jsc-dark)
+
+;;设置markdown相关参数，需要在search目录下有 markdown-mode.el
+	(autoload 'markdown-mode "markdown-mode"
+		"Major mode for editing Markdown files" t)
+	(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+	(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+	(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+	(add-to-list 'auto-mode-alist '("\\.Rmd\\'" . markdown-mode))
+
+
+;;markdown table
+(require'table)
+(autoload 'table-insert "table" "WYGIWYS table editor")
+
+;; Setting English Font
+(set-face-attribute
+  'default nil :font "Courier New 11")
+ 
+;; Chinese Font
+(dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font)
+                      charset
+                      (font-spec :family "Microsoft Yahei" :size 16)))
+
+;; 支持emacs和外部程序的粘贴
+(setq x-select-enable-clipboard t)
+
+;; 去掉工具栏
+(tool-bar-mode nil)
+
+;;去掉烦人的警告铃声
+(setq visible-bell nil)
+
+
+;;去掉Emacs和gnus启动时的引导界面
+(setq inhibit-startup-message t)
+(setq gnus-inhibit-startup-message t)
+
+;;当指针到一个括号时，自动显示所匹配的另一个括号
+(show-paren-mode 1)
+
+;;所有的问题用y/n方式，不用yes/no方式。有点懒，只想输入一个字母
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(setq
+    backup-by-copying t ; 自动备份
+    backup-directory-alist
+    '(("." . "D:/bak")) ; 自动备份在目录"D:/bak"下
+    delete-old-versions t ; 自动删除旧的备份文件
+    kept-new-versions 6 ; 保留最近的6个备份文件
+    kept-old-versions 2 ; 保留最早的2个备份文件
+    version-control t) ; 多次备份
+
+;;格式化整个文件函数
+(defun indent-whole ()
+  (interactive)
+	(save-excursion
+	(indent-region (point-min) (point-max) nil))
+  (message "format successfully"))
+  
+;;绑定到F7键
+(global-set-key [f7] 'indent-whole)
+
+;;自动格式化代码
+;;(setq ess-default-style 'C++)
+(dolist (command '(yank yank-pop))
+  (eval
+   `(defadvice ,command (after indent-region activate)
+      (and (not current-prefix-arg)
+           (member major-mode
+                   '(emacs-lisp-mode
+                     lisp-mode
+                     clojure-mode
+                     scheme-mode
+                     haskell-mode
+                     ruby-mode
+                     rspec-mode
+                     python-mode
+                     c-mode
+                     r-mode
+                     c++-mode
+                     objc-mode
+                     latex-mode
+                     js-mode
+                     plain-tex-mode))
+           (let ((mark-even-if-inactive transient-mark-mode))
+             (indent-region (region-beginning) (region-end) nil))))))
+             
+
+;;markdown的customize-mode设置
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(markdown-command "pandoc -s -c E:/github/sunbjt.github.io/upload/style.css --toc --highlight-style espresso -N --self-contained --gladtex")
+	;; use local math environment
+	;; '(markdown-command "pandoc -s -c style.css --toc --latexmathml --highlight-style espresso -N --self-contained --data-dir=D:/Dropbox/configure/emacs/")
+ '(markdown-enable-math t)
+ '(show-paren-mode t)
+ '(text-mode-hook (quote (text-mode-hook-identify)))
+ '(tool-bar-mode nil))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(put 'upcase-region 'disabled nil)
