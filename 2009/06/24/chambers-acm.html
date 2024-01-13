@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="以前用过几个国内的数据分析（挖掘）软件，每次溜达到商家主页，基本介绍都是诸如：  某某公司依托某某大学…… 某某指定专用数据分析软件  这时候我就会想，这些商家怎么不仔细瞅瞅 R 官网的 Members&amp;Donor，看看那几十所 Supporting Institutions ，或者20位 R 的核心团队成员的资料。不过回头一想，这些数据分析软件商家不这么说的话，又能说点啥。 R News">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于数据分析工具">
+<meta property="og:url" content="http://bjt.name/2009/06/24/chambers-acm.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="以前用过几个国内的数据分析（挖掘）软件，每次溜达到商家主页，基本介绍都是诸如：  某某公司依托某某大学…… 某某指定专用数据分析软件  这时候我就会想，这些商家怎么不仔细瞅瞅 R 官网的 Members&amp;Donor，看看那几十所 Supporting Institutions ，或者20位 R 的核心团队成员的资料。不过回头一想，这些数据分析软件商家不这么说的话，又能说点啥。 R News">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2009-06-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.286Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="John Chambers">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2009/06/24/chambers-acm.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2009/06/24/chambers-acm.html","path":"2009/06/24/chambers-acm.html","title":"关于数据分析工具"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>关于数据分析工具 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/06/24/chambers-acm.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="关于数据分析工具 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          关于数据分析工具
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2009-06-24T00:00:00+08:00">2009-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A7%E9%97%BB/" itemprop="url" rel="index"><span itemprop="name">旧闻</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>以前用过几个国内的数据分析（挖掘）软件，每次溜达到商家主页，基本介绍都是诸如：</p>
+<ol type="1">
+<li>某某公司依托某某大学……</li>
+<li>某某指定专用数据分析软件</li>
+</ol>
+<p>这时候我就会想，这些商家怎么不仔细瞅瞅
+<a target="_blank" rel="noopener" href="http://www.r-project.org/">R</a> 官网的
+<a target="_blank" rel="noopener" href="http://www.r-project.org/foundation/memberlist.html">Members&amp;Donor</a>，看看那几十所
+Supporting Institutions ，或者20位
+<a target="_blank" rel="noopener" href="http://www.r-project.org/">R</a>
+的核心团队成员的资料。不过回头一想，这些数据分析软件商家不这么说的话，又能说点啥。</p>
+<p>R News 正式更名为 R Journal 后的第一篇文章是
+<a target="_blank" rel="noopener" href="http://journal.r-project.org/2009-1/RJournal_2009-1_Chambers.pdf">Facets
+of R</a>，作者 John M. Chambers 可不是一般人物，虽然在 R
+的官网上只能看到他是 R 核心团队之一，但仔细查一查就会发现--他可是 R
+的老祖宗。</p>
+<p>John M. Chambers 自 1966 年供职于贝尔实验室，在 1981-83 年间 head of
+the Advanced Software Department , and from 1983-88, head of the Data
+Analysis and Statistics Research Department，J.M. Chambers 在1998 年因为
+S 语言（R 语言的前身）获得 ACM（Association for Computing Machinery）
+系统奖。这个奖项每年评选一次，一般由 IBM 提供10,000$
+的奖金（<a target="_blank" rel="noopener" href="http://en.wikipedia.org/">wiki</a>
+上给的似乎有错误）。</p>
+<p>这个奖项有着广泛而深远的影响，下面列举了一些我们熟悉的项目：</p>
+<ul>
+<li>1983 Unix</li>
+<li>1986 TeX</li>
+<li>1989 PostScript</li>
+<li>1991 TCP/IP</li>
+<li>1995 World-Wid-Web</li>
+<li>1997 Tcl/Tk</li>
+<li>1998 <strong>S</strong></li>
+<li>1999 The Apache Group</li>
+<li>2002 Java</li>
+</ul>
+<p>基本都不用介绍吧，几乎每天我的工作、生活、学习都会涉及到这些软件系统。</p>
+<p>最后引用 ACM Software System Award 对 John.M.Chambers 以及 S
+语言的评价：</p>
+<blockquote>
+<p>The ACM's citation notes that Dr. Chambers's work will forever alter
+the way people analyze, visualize, and manipulate data . . . S is an
+elegant, widely accepted, and enduring software system, with conceptual
+integrity, thanks to the insight, taste, and effort of John
+Chambers.</p>
+</blockquote>
+<p>参考：</p>
+<ul>
+<li>John.M.Chambers 的wiki 词条及其链接；</li>
+<li>谢益辉博士的 《R 语言的 历史-背景、发展历程及现状》</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/John-Chambers/" rel="tag"># John Chambers</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2009/06/24/prime-numbers-r.html" rel="prev" title="素数的求法">
+                  <i class="fa fa-angle-left"></i> 素数的求法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2009/07/26/welfare-lottery-justice.html" rel="next" title="从一等奖出现的概率看中国福利彩票的公正性">
+                  从一等奖出现的概率看中国福利彩票的公正性 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

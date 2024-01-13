@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="R 2.14.0 版本以后，parallel 包被作为核心包引入 R，这个包主要建立在 multicore 和 snow 包的工作基础之上，包含了这两个包大部分功能函数，以及集成了随机数发生器。 实际上对于R来说，并行化可以在不同的层级上实现：比如，在最底层，现在的多核CPU可以实现一些基础的数值运算（比如整数和浮点算数）； 高级一点的，一些扩展 BLAS 包使用多线程并行处理向量和矩阵的操作，甚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="并行化你的运算-初识 parallel 包">
+<meta property="og:url" content="http://bjt.name/2012/07/06/parallel-computing-r.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="R 2.14.0 版本以后，parallel 包被作为核心包引入 R，这个包主要建立在 multicore 和 snow 包的工作基础之上，包含了这两个包大部分功能函数，以及集成了随机数发生器。 实际上对于R来说，并行化可以在不同的层级上实现：比如，在最底层，现在的多核CPU可以实现一些基础的数值运算（比如整数和浮点算数）； 高级一点的，一些扩展 BLAS 包使用多线程并行处理向量和矩阵的操作，甚">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2012-07-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.290Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2012/07/06/parallel-computing-r.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2012/07/06/parallel-computing-r.html","path":"2012/07/06/parallel-computing-r.html","title":"并行化你的运算-初识 parallel 包"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>并行化你的运算-初识 parallel 包 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2012/07/06/parallel-computing-r.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="并行化你的运算-初识 parallel 包 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          并行化你的运算-初识 parallel 包
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2012-07-06 00:00:00" itemprop="dateCreated datePublished" datetime="2012-07-06T00:00:00+08:00">2012-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R-%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">R 技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>R 2.14.0 版本以后，parallel 包被作为核心包引入 R，这个包主要建立在
+multicore 和 snow
+包的工作基础之上，包含了这两个包大部分功能函数，以及集成了随机数发生器。</p>
+<p>实际上对于R来说，并行化可以在不同的层级上实现：比如，在最底层，现在的多核CPU可以实现一些基础的数值运算（比如整数和浮点算数）；
+高级一点的，一些扩展 BLAS
+包使用多线程并行处理向量和矩阵的操作，甚至有些R扩展包，通过调用
+OpenMP（注释1）或 pthreads 来使用C 级别的多线程方式。</p>
+<span id="more"></span>
+<p>本文的主角，parallel
+包却是从另外角度的实现，简单说是一种“粗粒度”的并行化方式。在我们的日常工作中会遇到一下情况：</p>
+<ul>
+<li>在不同的数据集上应用相同的 R 函数</li>
+<li>bootstrap 计算</li>
+</ul>
+<p>对于第一种情况，一般会采用显式循环或隐式循环的方式，但可惜的是 R
+并不能识别这是并行计算，依旧按照串行的方式进行处理。
+第二种情况，如蒙特卡洛模拟，但在同一个 R
+进程中，所有的运算都是按顺序进行的，唯一能做的就是多开几个
+R，将各个运算人工分配，最后手工合并结果，囧</p>
+<p>我们再仔细考虑一下第一种情况（第二种情况也类似），关键在于这些计算并不关联，或者说不需要进行通讯。这样的计算过程可以使用如下方式来表述：</p>
+<ol type="1">
+<li>启动 M 个附属进程，并初始化</li>
+<li>针对于任务，为每个附属进程分发所有的数据</li>
+<li>将任务粗略的分为M个块儿（chunks），并将这些块儿发送到附属进程（包含需要的R代码）</li>
+<li>等待所有的附属进程完成计算任务，并返回结果</li>
+<li>对于其他任务也同样重复 2-4</li>
+<li>关闭附属进程</li>
+</ol>
+<p>对于上述的并行化方式，附属进程可以使用如下方式构建：</p>
+<ul>
+<li>通过system("Rscript")或类似方式，原理即在同一台或类似的机器上开启一个完全相同的
+R 安装程序，而后在主、副进程间通过 sockets
+通讯。这种方式在所有的R平台上都可以使用，snow 包就实现了这种方式。</li>
+<li>通过forking。Fork 是可移植操作系统（POSIX operating
+system）上的概念，这种方式适用于除 Windows
+以外的所有平台。它的做法是创建一个新的完全拷贝主进程的副进程，包括workspace以及其他状态（如随机数流）。这种拷贝方式在内存页面发生变化前是共享内存的，因此速度很快。但这种方式也有缺点，它共享了整个进程，甚至包括GUI元素。这可能会导致一些bug。multicore
+包则实现了这种方式。</li>
+</ul>
+<p>当然，对于这两种并行化方式，最新的 R 自带的 parallel 包都有支持。
+还有一种是通过 OS 级的通讯方式，比如PVM (`parallel virtual
+machine')，以及 SGE
+等，同样有相关的技术和包来支持，这里不再展开讨论。</p>
+<p>我们现在说一些实际的，如何在实际项目应用中使用并行化计算方式来提高我们的工作效率。
+在 parallel 包里，对应上述两种并行化方式有如下两个核心函数（针对于
+lapply 函数的并行化，mclapply 在windows 上不能使用）：</p>
+<ul>
+<li>parLapply(cl, x, FUN, ...)</li>
+<li>mclapply(X, FUN, ..., mc.cores)</li>
+</ul>
+<p>考虑
+lapply这个函数，这种隐式循环函数，它实际就是对不同的数据应用了相同的函数，是可以并行化的。首先看一个例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">doit <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="operator">^</span><span class="number">2</span> <span class="operator">+</span> <span class="number">2</span><span class="operator">*</span>x</span><br><span class="line">system.time<span class="punctuation">(</span>res <span class="operator">&lt;-</span> lapply<span class="punctuation">(</span><span class="number">1</span><span class="operator">:</span><span class="number">5000000</span><span class="punctuation">,</span>  doit<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">user system elapsed</span><br><span class="line"><span class="number">24.05</span> <span class="number">0.05</span> <span class="number">24.20</span></span><br></pre></td></tr></table></figure>
+<p>上述lapply的表达同一个for循环没什么两样，但由于数据集比较大，500w，所以消耗的时间相对较长。我们使用parallel包来加速：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>parallel<span class="punctuation">)</span></span><br><span class="line">cl <span class="operator">&lt;-</span> makeCluster<span class="punctuation">(</span>getOption<span class="punctuation">(</span><span class="string">&quot;cl.cores&quot;</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment"># use 3 cores</span></span><br><span class="line">system.time<span class="punctuation">(</span>res <span class="operator">&lt;-</span> parLapply<span class="punctuation">(</span>cl<span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">5000000</span><span class="punctuation">,</span>  doit<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">user system elapsed</span><br><span class="line"><span class="number">6.54</span> <span class="number">0.34</span> <span class="number">19.95</span></span><br><span class="line">stopCluster<span class="punctuation">(</span>cl<span class="punctuation">)</span> <span class="comment"># close clusters</span></span><br></pre></td></tr></table></figure>
+<p>运行parLapply
+的时候，处理器三个核心瞬间占满，很快就将结果返回。不过这个函数有两点要注意：</p>
+<ul>
+<li>首先要先用 detectCores 函数确定系统核心数目，对于 Window 系统下的
+Intel I5或I7 处理器，一般使用detectCores(logical =
+F)来获得实际的物理核心数量。</li>
+<li>由于这个函数使用的是调用 Rscript
+的方式，这个例子里，对象被复制了三份，因此内存会吃的很厉害，在大数据条件就要小心使用</li>
+</ul>
+<p>在Linux下使用mclapply函数的效果如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mc <span class="operator">&lt;-</span> getOption<span class="punctuation">(</span><span class="string">&quot;mc.cores&quot;</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">)</span></span><br><span class="line">system.time<span class="punctuation">(</span>res <span class="operator">&lt;-</span> mclapply<span class="punctuation">(</span><span class="number">1</span><span class="operator">:</span><span class="number">5000000</span><span class="punctuation">,</span>  doit<span class="punctuation">,</span> mc.cores <span class="operator">=</span> mc<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">user system elapsed</span><br><span class="line"><span class="number">6.657</span> <span class="number">0.500</span> <span class="number">7.181</span></span><br></pre></td></tr></table></figure>
+<p>除了对于 lapply，sapply 这类函数的并行化外，parallel 包还有针对于
+apply 的并行化函数，比如 parApply， 以及各类动态平衡的函数如
+parLapplyLB，请参见 parallel 包的帮助文档。</p>
+<p>注释1：OpenMPOpen Multiprocessing is an <a
+href="href=%22http://en.wikipedia.org/wiki/Application_programming_interface">API</a>
+that supports multi-platform <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Shared_memory">Shared memory</a> <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Multiprocessing">Multiprocessing</a>
+programming in <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/C_(programming_language)">C
+(programming language)</a>, <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/C%2B%2B">C++</a>, <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Fortran">Fortran</a> on most <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Processor_architecture">Processor
+architecture</a> and <a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Operating_system">Operating
+system</a>.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/05/31/2012-datamining-software.html" rel="prev" title="2012年数据挖掘软件使用调查">
+                  <i class="fa fa-angle-left"></i> 2012年数据挖掘软件使用调查
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/09/04/ming-dynasty.html" rel="next" title="明朝那些事儿的那些事儿">
+                  明朝那些事儿的那些事儿 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="距离上一篇《好地段是怎么选出来的-从北京地铁看区域的重要性》已经过去八年有余，一直念叨着重新更新一下北京的地铁数据。话说 deadline 是第一生产力，春节前立了 flag，今天利利索索地把它拔了。 读者可以从本文得到什么信息呢？  从全新的 2024 年北京地铁规划，识别以北京（地铁）交通便利视角的关键区域。 获取这些关键地段的二手房产信息，通过供给量和均价两个角度，帮助大家找到可能的价值洼地">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从北京地铁规划再看地段的重要性">
+<meta property="og:url" content="http://bjt.name/2021/02/13/subway.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="距离上一篇《好地段是怎么选出来的-从北京地铁看区域的重要性》已经过去八年有余，一直念叨着重新更新一下北京的地铁数据。话说 deadline 是第一生产力，春节前立了 flag，今天利利索索地把它拔了。 读者可以从本文得到什么信息呢？  从全新的 2024 年北京地铁规划，识别以北京（地铁）交通便利视角的关键区域。 获取这些关键地段的二手房产信息，通过供给量和均价两个角度，帮助大家找到可能的价值洼地">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210214144227.png">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210216190838.png">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210217150635.png">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210217161616.png">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210217225022.png">
+<meta property="article:published_time" content="2021-02-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.294Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210214144227.png">
+
+
+<link rel="canonical" href="http://bjt.name/2021/02/13/subway.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2021/02/13/subway.html","path":"2021/02/13/subway.html","title":"从北京地铁规划再看地段的重要性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从北京地铁规划再看地段的重要性 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2021/02/13/subway.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从北京地铁规划再看地段的重要性 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从北京地铁规划再看地段的重要性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-02-13 00:00:00" itemprop="dateCreated datePublished" datetime="2021-02-13T00:00:00+08:00">2021-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">玩数据</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>距离上一篇《好地段是怎么选出来的-从北京地铁看区域的重要性》已经过去八年有余，一直念叨着重新更新一下北京的地铁数据。话说
+deadline 是第一生产力，春节前立了 flag，今天利利索索地把它拔了。</p>
+<p>读者可以从本文得到什么信息呢？</p>
+<ol type="1">
+<li>从全新的 2024
+年北京地铁规划，识别以北京（地铁）交通便利视角的关键区域。</li>
+<li>获取这些关键地段的二手房产信息，通过供给量和均价两个角度，帮助大家找到可能的价值洼地。</li>
+</ol>
+<h1 id="构建地铁的网络">1. 构建地铁的网络</h1>
+<p>首先重新认识一下 2024 年的北京地铁线路规划图：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210214144227.png"/></p>
+<p>至 2024 年全北京一共 422 个地铁站点（约数，有些懒得调整，比如 13
+号线会拆分，没有做调整）。回想二十年前北京只有1号线、2号线两条地铁线，北京的发展速度也确实让人咂舌（回龙观最初房价
+2000，一声叹息）。</p>
+<span id="more"></span>
+<p>这 422 个站点信息如何获得，可以分为两步来进行：</p>
+<ol type="1">
+<li>通过<a
+target="_blank" rel="noopener" href="http://map.amap.com/subway/index.html">高德地图的网页</a>中获取正在运营地铁站点的经纬度和隶属信息。</li>
+<li>补齐缺失了 8 号线的中段，14 号线中段，16 号线南段信息；补充了
+3、11、12、17、19、22、28 号线的全部站点信息（无经纬度）</li>
+</ol>
+<p>高德地图不但提供了北京地铁数据，还非常贴心地提供了上海、广州、武汉、深圳等地地铁运营数据。一段很短的定向爬虫，拿下这份数据（示例）：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">names</th>
+<th style="text-align: left;">terminal</th>
+<th style="text-align: left;">longitude</th>
+<th style="text-align: left;">latitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">亦庄线</td>
+<td style="text-align: left;">荣昌东街</td>
+<td style="text-align: left;">39.782832</td>
+<td style="text-align: left;">116.521688</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">亦庄线</td>
+<td style="text-align: left;">同济南路</td>
+<td style="text-align: left;">39.772962</td>
+<td style="text-align: left;">116.539901</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">亦庄线</td>
+<td style="text-align: left;">经海路</td>
+<td style="text-align: left;">39.783673</td>
+<td style="text-align: left;">116.562321</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">亦庄线</td>
+<td style="text-align: left;">次渠南</td>
+<td style="text-align: left;">39.795118</td>
+<td style="text-align: left;">116.581357</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">亦庄线</td>
+<td style="text-align: left;">次渠</td>
+<td style="text-align: left;">39.803500</td>
+<td style="text-align: left;">116.591502</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">亦庄线</td>
+<td style="text-align: left;">亦庄火车站</td>
+<td style="text-align: left;">39.812607</td>
+<td style="text-align: left;">116.601913</td>
+</tr>
+</tbody>
+</table>
+<p>这里面有一些细节，比如地铁网络的边是有权重的。一种做法是将站点和站点之间的权重用<strong>两个站点距离的倒数</strong>来度量（距离越近关联性性越强），没有经纬度的站点之间的权重统一设置为全部边的平均值。但考虑地铁出行的实际体验，以及真实的两站之间的关联性（想象一下在知春路，从十号线换乘十三号线的换乘感受），这个距离一般还真不一定是关键因素，所以我粗暴地去掉了边权重这个指标，认为两站之间的权重一致。</p>
+<p>有了站点数据后，就可以构建北京地铁的网络拓扑图，进而度量和描述每个地铁站在全网络的作用。可问题又来了，我们应该用什么指标来衡量呢？重新查阅了相关资料后，了解到中心度大概有三十几种，有些还不太好解释，所以度量方式依然采用了《好地段是怎么选出来的-从北京地铁看区域的重要性》中的三个指标：</p>
+<ol type="1">
+<li>Betweenness centrality：如果地铁网络中有这样一个站点
+A，其他的站点都要通过 A
+才能到达其他的站，那么这个站点越重要。想象极端的情况，如果没有了站点
+A，你需要绕行很大一段，才能从一个站点到达另一个站点。</li>
+<li>PageRank centrality：如果同 A
+站点连接的站点都非常好，那么物以类聚，A
+站点也应该是一个很好的站点。简单地可以理解为 A
+点的重要程度是周围连接点重要程度的加权。</li>
+<li>Closeness centrality：如果从地铁网络中 A
+点，到所有其他地铁站的“最短距离”的和最小的话，那这个站点一定是最便捷的，它反映的是网络节点
+A 到其他节点的平均最短距离。</li>
+</ol>
+<p>这个工作准备结束后，我们计算出了 422 个站点的三个核心指标：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">betweenness</th>
+<th style="text-align: right;">pagerank</th>
+<th style="text-align: right;">closeness</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">巴沟</td>
+<td style="text-align: right;">2080.0000</td>
+<td style="text-align: right;">0.0022162</td>
+<td style="text-align: right;">6122</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">苏州街</td>
+<td style="text-align: right;">2490.0000</td>
+<td style="text-align: right;">0.0020500</td>
+<td style="text-align: right;">5712</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">海淀黄庄</td>
+<td style="text-align: right;">3942.2897</td>
+<td style="text-align: right;">0.0035418</td>
+<td style="text-align: right;">5304</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">知春里</td>
+<td style="text-align: right;">815.0526</td>
+<td style="text-align: right;">0.0018323</td>
+<td style="text-align: right;">5323</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">知春路</td>
+<td style="text-align: right;">6412.0152</td>
+<td style="text-align: right;">0.0034080</td>
+<td style="text-align: right;">5001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">西土城</td>
+<td style="text-align: right;">1178.9848</td>
+<td style="text-align: right;">0.0018085</td>
+<td style="text-align: right;">5044</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">牡丹园</td>
+<td style="text-align: right;">2657.0143</td>
+<td style="text-align: right;">0.0025725</td>
+<td style="text-align: right;">4818</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">健德门</td>
+<td style="text-align: right;">2124.6522</td>
+<td style="text-align: right;">0.0017950</td>
+<td style="text-align: right;">5074</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">北土城</td>
+<td style="text-align: right;">4253.7759</td>
+<td style="text-align: right;">0.0033441</td>
+<td style="text-align: right;">5084</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">安贞门</td>
+<td style="text-align: right;">1738.8012</td>
+<td style="text-align: right;">0.0017301</td>
+<td style="text-align: right;">5136</td>
+</tr>
+</tbody>
+</table>
+<p>直接描述 422
+个站点信息是没有意义的，我们需要将他们聚成几个类，辅助我们理解这些站点的表现。</p>
+<h1 id="相似地域的聚类">2. 相似地域的聚类</h1>
+<blockquote>
+<p>聚类是一种统计方法。如果我们将样本分为多个类，聚类方法可以保证类和类之间的差异度足够大，而类间的差异则足够小。这样我们就可以只看这几个类，他们代表所有样本信息。</p>
+</blockquote>
+<p>如果每个站点可以用以上三个指标来表达，那这 422
+个地铁站点（区域）可以简单的认为是几类？这个问题统计学家已经给我们很多方法了，比如
+R. Tibshirani, G. Walther, and T. Hastie (Standford University, 2001)
+给的 Gap Statistic Method 就很好用，原理这里不介绍了，直接看结果：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210216190838.png" width="500"/></p>
+<p>建议是 1 类，这显然不合理，我们不能不分类。从图上看，如果切分为 5
+类也是很不错的选择，所以将这 422 个站点分为五类看效果：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> size <span class="operator">&lt;-</span> 5</span><br><span class="line"><span class="operator">&gt;</span> k <span class="operator">&lt;-</span> kmeans<span class="punctuation">(</span>scale<span class="punctuation">(</span>dat<span class="punctuation">[</span><span class="punctuation">,</span><span class="operator">-</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">,</span> size<span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> k<span class="operator">$</span>centers <span class="comment"># 观察中心点</span></span><br><span class="line">           b         PR          <span class="built_in">c</span></span><br><span class="line"><span class="number">1</span> <span class="operator">-</span><span class="number">0.3289514</span> <span class="operator">-</span><span class="number">0.7113196</span> <span class="operator">-</span><span class="number">0.5270072</span></span><br><span class="line"><span class="number">2</span> <span class="operator">-</span><span class="number">0.4928851</span> <span class="operator">-</span><span class="number">0.0680553</span>  <span class="number">2.1105316</span></span><br><span class="line"><span class="number">3</span> <span class="operator">-</span><span class="number">0.3164911</span> <span class="operator">-</span><span class="number">0.1204436</span>  <span class="number">0.5436801</span></span><br><span class="line"><span class="number">4</span>  <span class="number">0.4761036</span>  <span class="number">1.5785205</span> <span class="operator">-</span><span class="number">0.6878083</span></span><br><span class="line"><span class="number">5</span>  <span class="number">2.9584748</span>  <span class="number">0.8770382</span> <span class="operator">-</span><span class="number">0.9454840</span></span><br><span class="line"><span class="operator">&gt;</span> k<span class="operator">$</span>size <span class="comment"># 类大小</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">165</span>  <span class="number">47</span> <span class="number">113</span>  <span class="number">70</span>  <span class="number">27</span></span><br></pre></td></tr></table></figure>
+<p>从刚才三个指标的描述上看，betweenness 和 page rank
+越大越好，closeness 我取了倒数，越小越好。从中心点上看，第 4 类（有 70
+个）和第 5 类（有 27
+个）是我们需要重点关注的站点类别。这两类的三个指标表现都是最优秀的，当然第
+5 类显著好于第 4 类。</p>
+<p>如果将所有的站点进行（主成分）二维展示的话，是这个样子的：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210217150635.png"/></p>
+<p>为了更直观，我将这两类的所有站点，按照 betweenness 和 page rank
+两个值做了可视化：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210217161616.png"/></p>
+<ol type="1">
+<li>两类的 betweeness 和 page rank 都很高</li>
+<li>第 4 类的 page rank 更高，第 5 类的 betweeness
+更高（网络中的瓶颈点）</li>
+</ol>
+<h1 id="寻求价值洼地">3. 寻求价值洼地</h1>
+<p>这 97 个站点占据了全部 422
+个地铁站点中相对关键的位置，如果我们还能够知道这些区域的房产均价和二手房供应量信息，那大家上车的姿势就可以确定了。</p>
+<p>这个数据可以从<a
+target="_blank" rel="noopener" href="https://map.ke.com/map/110000/ESF/">贝壳网页端</a>的 API
+中获取（很容易找到）。这里忍不住要赞一下贝壳，二手房的基础数据整理的非常完备！比如这是获取的一个片段数据（西二旗附近）：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: left;">price</th>
+<th style="text-align: right;">count</th>
+<th style="text-align: right;">longitude</th>
+<th style="text-align: right;">latitude</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">领秀慧谷C区</td>
+<td style="text-align: left;">57595</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">116.3105</td>
+<td style="text-align: right;">40.10650</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">领秀慧谷B区</td>
+<td style="text-align: left;">48309</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">116.3087</td>
+<td style="text-align: right;">40.10320</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">领秀慧谷D区</td>
+<td style="text-align: left;">55930</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">116.3065</td>
+<td style="text-align: right;">40.10525</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">领秀慧谷A区</td>
+<td style="text-align: left;">48422</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">116.3106</td>
+<td style="text-align: right;">40.10314</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TBD住总万科天地</td>
+<td style="text-align: left;">42256</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">116.3225</td>
+<td style="text-align: right;">40.10905</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">领秀慧谷D2区</td>
+<td style="text-align: left;">51769</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">116.3049</td>
+<td style="text-align: right;">40.10625</td>
+</tr>
+</tbody>
+</table>
+<p>有个两个小细节：</p>
+<ol type="1">
+<li>我为了保证步行 10
+分钟内能走到地铁站，所有获取的小区是在该站点纬度正负 0.02201548/4
+区间，经度正负 0.04132205/4 区间。</li>
+<li>该地域的二手房均价我采用的是区域房价的加权平均值，并未考虑几居室分布的问题（贝壳暂时只有这个数据）。</li>
+</ol>
+<p>将区域的二手房均价和二手房供应量放在一张图上就清楚很多了：</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/20210217225022.png"/></p>
+<p>这张图的信息量有点略大，比如：</p>
+<ol type="1">
+<li>有些二环外，如东城区的一些地方也不是不能考虑，当然还要具体看楼龄和学区情况；</li>
+<li>立水桥、九龙山这些地方从来都不在视野之内，未来应该多给一些关注；</li>
+<li>首经贸、管庄、草桥隶属于第五类，本应属于高攀不起的那一波，但可以再咂摸咂摸；</li>
+<li>200 套以上，均价在 75000
+以下在图的左上方，说明的是选择空间大，预算相对可控；</li>
+<li>可以把具体某个站点的数据单拎出来细看，包括三个核心中心度指标和二手房小区信息。</li>
+</ol>
+<p>然，每位看官关注点必然不同，我也就能帮到这里了。未来不论各位是新上车还是需求改善，有行动也记得给我一些反馈。</p>
+<p>获取数据，数据预处理，作图、注释，总计代码量共计 190
+行，见后文。全文完毕，收工！</p>
+<h1 id="代码">4. 代码</h1>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 获取北京地铁数据，源自于`http://map.amap.com/subway/index.html`</span></span><br><span class="line">library<span class="punctuation">(</span>jsonlite<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>magrittr<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>igraph<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>dplyr<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">url <span class="operator">&lt;-</span></span><br><span class="line">  <span class="string">&#x27;http://map.amap.com/service/subway?_1612711668721&amp;srhdata=1100_drw_beijing.json&#x27;</span></span><br><span class="line">x <span class="operator">&lt;-</span> fromJSON<span class="punctuation">(</span>url<span class="punctuation">)</span></span><br><span class="line"><span class="built_in">names</span><span class="punctuation">(</span>x<span class="punctuation">)</span> <span class="comment"># x$l 是关键数据对象</span></span><br><span class="line">subwaynames <span class="operator">&lt;-</span> <span class="built_in">rep</span><span class="punctuation">(</span>x<span class="operator">$</span>l<span class="operator">$</span>ln<span class="punctuation">,</span> times <span class="operator">=</span> sapply<span class="punctuation">(</span>x<span class="operator">$</span>l<span class="operator">$</span>st<span class="punctuation">,</span> nrow<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">subwaydata <span class="operator">&lt;-</span> do.call<span class="punctuation">(</span>rbind<span class="punctuation">,</span> x<span class="operator">$</span>l<span class="operator">$</span>st<span class="punctuation">)</span></span><br><span class="line">titude <span class="operator">&lt;-</span> do.call<span class="punctuation">(</span>rbind<span class="punctuation">,</span> strsplit<span class="punctuation">(</span>subwaydata<span class="operator">$</span>sl<span class="punctuation">,</span> <span class="string">&#x27;,&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 得到各个站点的名称和经纬度，包括隶属于几号线</span></span><br><span class="line">subway <span class="operator">&lt;-</span></span><br><span class="line">  data.frame<span class="punctuation">(</span></span><br><span class="line">    subwaynames<span class="punctuation">,</span></span><br><span class="line">    terminal <span class="operator">=</span> subwaydata<span class="operator">$</span>n<span class="punctuation">,</span></span><br><span class="line">    longitude <span class="operator">=</span> titude<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    latitude <span class="operator">=</span> titude<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 构造函数处理 json 里面的数据，得到带边权重的 graph</span></span><br><span class="line">weight_graph <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  line_names <span class="operator">&lt;-</span> x<span class="operator">$</span>terminal</span><br><span class="line">  n <span class="operator">&lt;-</span> <span class="built_in">length</span><span class="punctuation">(</span>line_names<span class="punctuation">)</span></span><br><span class="line">  a <span class="operator">&lt;-</span> 1<span class="operator">:</span><span class="punctuation">(</span>n <span class="operator">-</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">  b <span class="operator">&lt;-</span> 2<span class="operator">:</span>n</span><br><span class="line">  m <span class="operator">&lt;-</span> cbind<span class="punctuation">(</span>a<span class="punctuation">,</span> b<span class="punctuation">)</span></span><br><span class="line">  distance <span class="operator">&lt;-</span> x<span class="punctuation">[</span><span class="punctuation">,</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;longitude&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;latitude&#x27;</span><span class="punctuation">)</span><span class="punctuation">]</span> <span class="operator">%&gt;%</span> dist<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  weight_g_df <span class="operator">&lt;-</span></span><br><span class="line">    data.frame<span class="punctuation">(</span>from <span class="operator">=</span> line_names<span class="punctuation">[</span>a<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">               to <span class="operator">=</span> line_names<span class="punctuation">[</span>b<span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">               w <span class="operator">=</span> as.matrix<span class="punctuation">(</span>distance<span class="punctuation">)</span><span class="punctuation">[</span>m<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span>weight_g_df<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 获得构建北京地铁 graph 的 data frame</span></span><br><span class="line">d1 <span class="operator">&lt;-</span></span><br><span class="line">  by<span class="punctuation">(</span>subway<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">2</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">]</span><span class="punctuation">,</span> subway<span class="operator">$</span>subwaynames<span class="punctuation">,</span> weight_graph<span class="punctuation">)</span> <span class="operator">%&gt;%</span> do.call<span class="punctuation">(</span>rbind<span class="punctuation">,</span> .<span class="punctuation">)</span></span><br><span class="line">mean_weight <span class="operator">&lt;-</span> mean<span class="punctuation">(</span>d1<span class="operator">$</span>w<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## d1[grep(&#x27;16号线&#x27;, rownames(d1)),] # 看是否有遗漏</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 增加 2024 年未来规划的线路</span></span><br><span class="line"><span class="comment">## 包括补充了 8 号线中段，14 号线中段，16 号线南段</span></span><br><span class="line"><span class="comment">## https://upload.wikimedia.org/wikipedia/commons/a/a2/Beijing-Subway-Plan.png</span></span><br><span class="line">line3 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;东四十条&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;工人体育场&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;团结湖&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;朝阳公园&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;石佛营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;星火站&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;朝阳体育中心&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;平房村&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;东坝中街&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;东风&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;楼梓庄桥西&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;楼梓庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;高辛庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;曹各庄北&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line8 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;中国美术馆&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;金鱼胡同&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;王府井&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;前门&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;珠市口&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line11 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;模式口&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;金安桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北辛安&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;新首钢&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line12 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;四季青&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;远大路&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;长春桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;苏州桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;人民大学&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;大钟寺&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;蓟门桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北太平庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;马甸&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;安华桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;安贞桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;和平西桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;光熙门&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;西坝河&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;三元桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;芳园里&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;高家园&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;酒仙桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北岗子&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;东风&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;管庄路&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line14 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;西局&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;东管头&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;丽泽商务区&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;菜户营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;西铁营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;景风门&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北京南站&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;永定门外&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line16 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;国家图书馆&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;二里沟&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;甘家口&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;玉渊潭东门&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;木樨地&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;达官营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;红莲南里&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;丽泽商务区&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;东管头南&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;丰台站&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;丰台南路&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;富丰桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;看丹&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;榆树庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;宛平城&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line17 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;未来各科技城&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;天通苑东&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;清河营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;勇士营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;望京西&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;太阳宫&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;西坝河&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;香河园&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;工人体育场&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;东大桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;永安里&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;广渠门外&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;潘家园西&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;十里河&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;十八里店&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;朝阳港&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北神树&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;次渠北&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;次渠&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;亦庄站前区南&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line19 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;牡丹园&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北太平庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;积水潭&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;平安里&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;金融街&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;牛街&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;景风门&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;草桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;新发地&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;新宫&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line22 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;东大桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;金台夕照&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;红庙&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;慈云寺桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;甘露园&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;定福庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;管庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;永顺&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;通州北关&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;运河商务区&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;副中心站&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;政务中心&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;政务中心东&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;燕郊镇&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;神威大街&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;潮白大街&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;高楼&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;齐心庄&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;马坊&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;马昌营&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;平谷&#x27;</span><span class="punctuation">)</span></span><br><span class="line">line28 <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;东大桥&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;金台夕照&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;光华路&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;核心区&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;大望路&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;北京东站&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;大郊亭&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;广渠路&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;广渠东路&#x27;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">line_graph <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">,</span> w <span class="operator">=</span> mean_weight<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  n <span class="operator">&lt;-</span> <span class="built_in">length</span><span class="punctuation">(</span>x<span class="punctuation">)</span></span><br><span class="line">  a <span class="operator">&lt;-</span> 1<span class="operator">:</span><span class="punctuation">(</span>n<span class="operator">-</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">  b <span class="operator">&lt;-</span> 2<span class="operator">:</span>n</span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span>data.frame<span class="punctuation">(</span>from <span class="operator">=</span> x<span class="punctuation">[</span>a<span class="punctuation">]</span><span class="punctuation">,</span> to <span class="operator">=</span> x<span class="punctuation">[</span>b<span class="punctuation">]</span><span class="punctuation">,</span> w <span class="operator">=</span> w<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">l3 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line3<span class="punctuation">)</span></span><br><span class="line">l8 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line8<span class="punctuation">)</span></span><br><span class="line">l11 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line11<span class="punctuation">)</span></span><br><span class="line">l12 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line12<span class="punctuation">)</span></span><br><span class="line">l14 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line14<span class="punctuation">)</span></span><br><span class="line">l16 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line16<span class="punctuation">)</span></span><br><span class="line">l17 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line17<span class="punctuation">)</span></span><br><span class="line">l19 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line19<span class="punctuation">)</span></span><br><span class="line">l22 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line22<span class="punctuation">)</span></span><br><span class="line">l28 <span class="operator">&lt;-</span> line_graph<span class="punctuation">(</span>line28<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 合并无权重的图数据</span></span><br><span class="line">dd <span class="operator">&lt;-</span> unique<span class="punctuation">(</span>rbind<span class="punctuation">(</span>d1<span class="punctuation">,</span> l3<span class="punctuation">,</span> l8<span class="punctuation">,</span> l11<span class="punctuation">,</span> l12<span class="punctuation">,</span> l14<span class="punctuation">,</span> l16<span class="punctuation">,</span> l17<span class="punctuation">,</span> l19<span class="punctuation">,</span> l22<span class="punctuation">,</span> l28<span class="punctuation">)</span><span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">g <span class="operator">&lt;-</span> graph_from_data_frame<span class="punctuation">(</span>dd<span class="punctuation">,</span> directed <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## E(g)$weight &lt;- sqrt(1/subway_graph_dataframe$w)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 观察中心度相关指标是否合理</span></span><br><span class="line">data.frame<span class="punctuation">(</span>name <span class="operator">=</span> V<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="operator">$</span>name<span class="punctuation">,</span> v <span class="operator">=</span> betweenness<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  arrange<span class="punctuation">(</span>desc<span class="punctuation">(</span>v<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> head<span class="punctuation">(</span><span class="number">20</span><span class="punctuation">)</span></span><br><span class="line">data.frame<span class="punctuation">(</span>name <span class="operator">=</span> V<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="operator">$</span>name<span class="punctuation">,</span> v <span class="operator">=</span> <span class="number">1</span> <span class="operator">/</span> closeness<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  arrange<span class="punctuation">(</span>desc<span class="punctuation">(</span>v<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> tail<span class="punctuation">(</span><span class="number">20</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 聚类，确定聚多少类</span></span><br><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggsci<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggrepel<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>factoextra<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>cluster<span class="punctuation">)</span></span><br><span class="line">set.seed<span class="punctuation">(</span><span class="number">123</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">dat <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span></span><br><span class="line">  name <span class="operator">=</span> V<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="operator">$</span>name<span class="punctuation">,</span></span><br><span class="line">  b <span class="operator">=</span> betweenness<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  PR <span class="operator">=</span> page_rank<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="operator">$</span>vector<span class="punctuation">,</span></span><br><span class="line">  <span class="built_in">c</span> <span class="operator">=</span> <span class="number">1</span><span class="operator">/</span>closeness<span class="punctuation">(</span>g<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">gap_stat <span class="operator">&lt;-</span> clusGap<span class="punctuation">(</span>scale<span class="punctuation">(</span>dat<span class="punctuation">[</span><span class="punctuation">,</span><span class="operator">-</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">,</span> FUN <span class="operator">=</span> kmeans<span class="punctuation">,</span> nstart <span class="operator">=</span> <span class="number">25</span><span class="punctuation">,</span> K.max <span class="operator">=</span> <span class="number">10</span><span class="punctuation">,</span> B <span class="operator">=</span> <span class="number">50</span><span class="punctuation">)</span></span><br><span class="line">fviz_gap_stat<span class="punctuation">(</span>gap_stat<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">size <span class="operator">&lt;-</span> 5</span><br><span class="line">k <span class="operator">&lt;-</span> kmeans<span class="punctuation">(</span>scale<span class="punctuation">(</span>dat<span class="punctuation">[</span><span class="punctuation">,</span><span class="operator">-</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">,</span> size<span class="punctuation">)</span> <span class="comment"># 每次结果可能略有不同</span></span><br><span class="line">k<span class="operator">$</span>centers <span class="comment"># 观察中心点</span></span><br><span class="line">k<span class="operator">$</span>size <span class="comment"># 类大小</span></span><br><span class="line">fviz_cluster<span class="punctuation">(</span>k<span class="punctuation">,</span> data <span class="operator">=</span> scale<span class="punctuation">(</span>dat<span class="punctuation">[</span><span class="punctuation">,</span><span class="operator">-</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">k4 <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>n <span class="operator">=</span> V<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="operator">$</span>name<span class="punctuation">,</span> k <span class="operator">=</span> k<span class="operator">$</span>cluster<span class="punctuation">)</span> <span class="operator">%&gt;%</span> subset<span class="punctuation">(</span>k <span class="operator">==</span> <span class="number">4</span><span class="punctuation">)</span></span><br><span class="line">k5 <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>n <span class="operator">=</span> V<span class="punctuation">(</span>g<span class="punctuation">)</span><span class="operator">$</span>name<span class="punctuation">,</span> k <span class="operator">=</span> k<span class="operator">$</span>cluster<span class="punctuation">)</span> <span class="operator">%&gt;%</span> subset<span class="punctuation">(</span>k <span class="operator">==</span> <span class="number">5</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 绘制第一类和第二类的 betweeness 和 PageRank 图</span></span><br><span class="line">library<span class="punctuation">(</span>showtext<span class="punctuation">)</span></span><br><span class="line">showtext_auto<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">font_add<span class="punctuation">(</span><span class="string">&quot;Noto Sans SC&quot;</span><span class="punctuation">,</span> <span class="string">&quot;/Users/liusizhe/Library/Fonts/NotoSansSC-Regular.otf&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">p4 <span class="operator">&lt;-</span> dat<span class="punctuation">[</span>dat<span class="operator">$</span>name <span class="operator">%in%</span> k4<span class="operator">$</span>n<span class="punctuation">,</span><span class="punctuation">]</span> <span class="operator">%&gt;%</span></span><br><span class="line">ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span>b<span class="punctuation">,</span> PR<span class="punctuation">,</span> label <span class="operator">=</span> name<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span>color <span class="operator">=</span> <span class="string">&quot;red&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_text_repel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  theme<span class="punctuation">(</span>text <span class="operator">=</span> element_text<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;k = 4&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  theme<span class="punctuation">(</span>axis.text.y<span class="operator">=</span>element_text<span class="punctuation">(</span>angle <span class="operator">=</span> <span class="number">90</span><span class="punctuation">,</span> vjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">p5 <span class="operator">&lt;-</span> dat<span class="punctuation">[</span>dat<span class="operator">$</span>name <span class="operator">%in%</span> k5<span class="operator">$</span>n<span class="punctuation">,</span><span class="punctuation">]</span> <span class="operator">%&gt;%</span></span><br><span class="line">ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span>b<span class="punctuation">,</span> PR<span class="punctuation">,</span> label <span class="operator">=</span> name<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span>color <span class="operator">=</span> <span class="string">&quot;red&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_text_repel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>text <span class="operator">=</span> element_text<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;k = 5&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  theme<span class="punctuation">(</span>axis.text.y<span class="operator">=</span>element_text<span class="punctuation">(</span>angle <span class="operator">=</span> <span class="number">90</span><span class="punctuation">,</span> vjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">library<span class="punctuation">(</span>gridExtra<span class="punctuation">)</span></span><br><span class="line">grid.arrange<span class="punctuation">(</span>p4<span class="punctuation">,</span> p5<span class="punctuation">,</span> nrow <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 从贝壳获取房源和价格信息，来定义该区域是否有价值洼地。</span></span><br><span class="line"><span class="comment">## 需要看附近房价的地铁站</span></span><br><span class="line">subway <span class="operator">&lt;-</span> unique<span class="punctuation">(</span>subway<span class="punctuation">[</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">k4_5 <span class="operator">&lt;-</span> rbind.data.frame<span class="punctuation">(</span>k4<span class="punctuation">,</span>k5<span class="punctuation">)</span></span><br><span class="line"><span class="built_in">names</span><span class="punctuation">(</span>k4_5<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;terminal&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;n&#x27;</span><span class="punctuation">)</span></span><br><span class="line">subway_price_list <span class="operator">&lt;-</span> inner_join<span class="punctuation">(</span>subway<span class="punctuation">,</span> k4_5<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">lat_minmax_diff <span class="operator">&lt;-</span> 0.02201548<span class="operator">/</span><span class="number">4</span> <span class="comment"># 经纬度查询数据的区间</span></span><br><span class="line">longi_minmax_diff <span class="operator">&lt;-</span> 0.04132205<span class="operator">/</span><span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 构造获取贝壳的区域数据源</span></span><br><span class="line">price <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">bubbleList <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">steps <span class="operator">&lt;-</span> nrow<span class="punctuation">(</span>subway_price_list<span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>steps<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  longitude <span class="operator">&lt;-</span> subway_price_list<span class="punctuation">[</span>i<span class="punctuation">,</span> <span class="string">&#x27;longitude&#x27;</span><span class="punctuation">]</span> <span class="operator">%&gt;%</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  latitude <span class="operator">&lt;-</span> subway_price_list<span class="punctuation">[</span>i<span class="punctuation">,</span> <span class="string">&#x27;latitude&#x27;</span><span class="punctuation">]</span> <span class="operator">%&gt;%</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  url <span class="operator">&lt;-</span></span><br><span class="line">    sprintf<span class="punctuation">(</span></span><br><span class="line">      <span class="string">&quot;https://map.ke.com/proxyApi/i.c-pc-webapi.ke.com/map/bubblelist?cityId=110000&amp;dataSource=ESF&amp;condition=&amp;id=&amp;groupType=community&amp;maxLatitude=%s&amp;minLatitude=%s&amp;maxLongitude=%s&amp;minLongitude=%s&quot;</span><span class="punctuation">,</span></span><br><span class="line">      longitude <span class="operator">+</span> lat_minmax_diff<span class="punctuation">,</span></span><br><span class="line">      longitude <span class="operator">-</span> lat_minmax_diff<span class="punctuation">,</span></span><br><span class="line">      latitude <span class="operator">+</span> longi_minmax_diff<span class="punctuation">,</span></span><br><span class="line">      latitude <span class="operator">-</span> longi_minmax_diff</span><br><span class="line">    <span class="punctuation">)</span></span><br><span class="line">  house_raw_data <span class="operator">&lt;-</span> fromJSON<span class="punctuation">(</span>url<span class="punctuation">)</span></span><br><span class="line">  bubbleListData <span class="operator">&lt;-</span></span><br><span class="line">    house_raw_data<span class="operator">$</span>data<span class="operator">$</span>bubbleList<span class="punctuation">[</span><span class="punctuation">,</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;name&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;price&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;count&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;longitude&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;latitude&#x27;</span><span class="punctuation">)</span><span class="punctuation">]</span></span><br><span class="line">  bubbleList<span class="punctuation">[[</span>i<span class="punctuation">]</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> bubbleListData</span><br><span class="line">  ave <span class="operator">&lt;-</span></span><br><span class="line">    bubbleListData <span class="operator">%&gt;%</span></span><br><span class="line">    transform<span class="punctuation">(</span>price <span class="operator">=</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span>price<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    summarise<span class="punctuation">(</span>aveprice <span class="operator">=</span> <span class="built_in">round</span><span class="punctuation">(</span><span class="built_in">sum</span><span class="punctuation">(</span>price <span class="operator">*</span> count<span class="punctuation">)</span> <span class="operator">/</span> <span class="built_in">sum</span><span class="punctuation">(</span>count<span class="punctuation">)</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">              countsum <span class="operator">=</span> <span class="built_in">sum</span><span class="punctuation">(</span>count<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  price<span class="punctuation">[[</span>i<span class="punctuation">]</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> ave</span><br><span class="line">  Sys.sleep<span class="punctuation">(</span>runif<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  cat<span class="punctuation">(</span><span class="string">&#x27;This is the&#x27;</span><span class="punctuation">,</span> i<span class="punctuation">,</span> <span class="string">&#x27;step of&#x27;</span><span class="punctuation">,</span> steps<span class="punctuation">,</span> <span class="string">&#x27;total steps&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;\n&#x27;</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">price_count <span class="operator">&lt;-</span> price <span class="operator">%&gt;%</span> do.call<span class="punctuation">(</span>rbind<span class="punctuation">,</span> .<span class="punctuation">)</span> <span class="operator">%&gt;%</span> </span><br><span class="line">  data.frame<span class="punctuation">(</span>subway_price_list<span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  mutate<span class="punctuation">(</span>n <span class="operator">=</span> <span class="built_in">as.character</span><span class="punctuation">(</span>n<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">ggplot<span class="punctuation">(</span>price_count<span class="punctuation">,</span> aes<span class="punctuation">(</span>aveprice<span class="punctuation">,</span> countsum<span class="punctuation">,</span> color <span class="operator">=</span> n<span class="punctuation">,</span> label <span class="operator">=</span> terminal<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_text_repel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>text <span class="operator">=</span> element_text<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_color_d3<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ggtitle<span class="punctuation">(</span><span class="string">&quot;第 4 和 5 类区域的二手房价格和供给量情况&quot;</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  xlab<span class="punctuation">(</span><span class="string">&#x27;均价&#x27;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  ylab<span class="punctuation">(</span><span class="string">&#x27;房源供给量&#x27;</span><span class="punctuation">)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/04/12/value.html" rel="prev" title="你为什么可以被晋升？">
+                  <i class="fa fa-angle-left"></i> 你为什么可以被晋升？
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/28/statistician.html" rel="next" title="数据科学家能力素质模型">
+                  数据科学家能力素质模型 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

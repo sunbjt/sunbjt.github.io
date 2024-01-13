@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="国庆期间闲逛知乎，恰巧碰到一则问题 2019年你的书单有什么书？，这个问题有  988 个回答，18326 个关注者，284 万的浏览量  接近 1000 个回答，全部翻完且不说时间会爆炸，脑子里能不能记住这些信息更是问题。如果能抓取每个回答列出来的书名，汇总以后便是这 988 个回答者的书目投票。方法虽说暴力，但也算是变相了解大家在 2019 年的阅读倾向。工具呢？当然是我擅长使用的 R 了，哈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2019 年建议阅读书目">
+<meta property="og:url" content="http://bjt.name/2019/10/05/zhihu-reading.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="国庆期间闲逛知乎，恰巧碰到一则问题 2019年你的书单有什么书？，这个问题有  988 个回答，18326 个关注者，284 万的浏览量  接近 1000 个回答，全部翻完且不说时间会爆炸，脑子里能不能记住这些信息更是问题。如果能抓取每个回答列出来的书名，汇总以后便是这 988 个回答者的书目投票。方法虽说暴力，但也算是变相了解大家在 2019 年的阅读倾向。工具呢？当然是我擅长使用的 R 了，哈">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.293Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="reading">
+<meta property="article:tag" content="crawler">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2019/10/05/zhihu-reading.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2019/10/05/zhihu-reading.html","path":"2019/10/05/zhihu-reading.html","title":"2019 年建议阅读书目"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2019 年建议阅读书目 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2019/10/05/zhihu-reading.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2019 年建议阅读书目 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2019 年建议阅读书目
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-10-05 00:00:00" itemprop="dateCreated datePublished" datetime="2019-10-05T00:00:00+08:00">2019-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84/" itemprop="url" rel="index"><span itemprop="name">有意思的</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>国庆期间闲逛知乎，恰巧碰到一则问题 <a
+target="_blank" rel="noopener" href="https://www.zhihu.com/question/306249128">2019年你的书单有什么书？</a>，这个问题有</p>
+<blockquote>
+<p>988 个回答，18326 个关注者，284 万的浏览量</p>
+</blockquote>
+<p>接近 1000
+个回答，全部翻完且不说时间会爆炸，脑子里能不能记住这些信息更是问题。如果能抓取每个回答列出来的书名，汇总以后便是这
+988 个回答者的书目投票。方法虽说暴力，但也算是变相了解大家在 2019
+年的阅读倾向。工具呢？当然是我擅长使用的 R 了，哈哈！</p>
+<p>闲话不多说，直接给出结果（大于 10 位回答者提及的书目）：</p>
+<span id="more"></span>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">书名</th>
+<th style="text-align: right;">提到的数量</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">《人类简史》</td>
+<td style="text-align: right;">35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《乌合之众》</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《三体》</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《如何阅读一本书》</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《白夜行》</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《红楼梦》</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《平凡的世界》</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《霍乱时期的爱情》</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《百年孤独》</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《亲密关系》</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《非暴力沟通》</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《月亮与六便士》</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《活着》</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《围城》</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《人间失格》</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《毛泽东选集》</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《浮生六记》</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《挪威的森林》</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《小王子》</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《未来简史》</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《少有人走的路》</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《白鹿原》</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《苏菲的世界》</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《原则》</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《万历十五年》</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《国富论》</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《金字塔原理》</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《我们仨》</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《局外人》</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《西方哲学史》</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《乡土中国》</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《影响力》</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《穷查理宝典》</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《诗经》</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《1984》</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《娱乐至死》</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《菊与刀》</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《自控力》</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《自卑与超越》</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《人性的弱点》</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《房思琪的初恋乐园》</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《学会提问》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《全球通史》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《雪国》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《今日简史》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《道德经》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《社会心理学》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《史记》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《许三观卖血记》</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《薛兆丰经济学讲义》</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《瓦尔登湖》</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《黄金时代》</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">《杀死一只知更鸟》</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">《月亮和六便士》</td>
+<td style="text-align: right;">10</td>
+</tr>
+</tbody>
+</table>
+<p>这份书单我大概都知道名字，但真正读完的不超过
+1/4，比如很早就读完的《1984》、《史记》、《人性的弱点》，《人类简史》、《金字塔原理》、《穷查理宝典》。但像《三体》拖拉了很久，买了该有
+5、6
+年了，依然还在垫显示器。有些书看过一些影视作品，比如《活着》、《平凡的世界》、《红楼梦》等。</p>
+<p>《如何阅读一本书》读了两遍，确实值得细细的品读。《毛泽东选集》被人推荐了好几年，今年才算开始了正式的阅读，收获真的很大。包括《薛兆丰经济学讲义》、《原则》，这些是近两年内读的，内容非常不错。综上，这个书单的质量还是非常不错的。通过这个书单对比一下脑海里感兴趣的内容，接下来几个月的阅读计划顺次是：</p>
+<ol type="1">
+<li>《国富论》</li>
+<li>《西方哲学史》</li>
+<li>《菊与刀》</li>
+<li>《自控力》</li>
+<li>《自卑与超越》</li>
+<li>《学会提问》</li>
+</ol>
+<p>大约会在过年前完成这个计划。</p>
+<p>最后再说一下这个知乎 R 爬虫，代码量很少，全部代码 95
+行，核心代码不超过 40 行。基本的思路如下：</p>
+<ol type="1">
+<li>找到知乎返回内容的 api，这个稍稍会花一些时间</li>
+<li>通过了解 api 的结果设计爬虫的逻辑</li>
+<li>用<code>《*?》</code> 的正则表达式，解析每篇'回答'中的所有书名</li>
+<li>统计所有书名出现的次数，完工</li>
+</ol>
+<p>当然也可以通过书和书之间的协同关系给出网络图，谁有兴趣可以提供我一下后续内容，我暂时没时间，这里就省略了。</p>
+<h2 id="附代码">附代码：</h2>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">library<span class="punctuation">(</span>magrittr<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>jsonlite<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>stringi<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>futile.logger<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>utils<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>purrr<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 重定义 retry 函数</span></span><br><span class="line">retry <span class="operator">&lt;-</span></span><br><span class="line">  <span class="keyword">function</span><span class="punctuation">(</span>expr<span class="punctuation">,</span></span><br><span class="line">           isError <span class="operator">=</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span></span><br><span class="line">             <span class="string">&quot;try-error&quot;</span> <span class="operator">%in%</span> <span class="built_in">class</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">           maxErrors <span class="operator">=</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">           sleep <span class="operator">=</span> rnorm<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">8</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">    attempts <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">    retval <span class="operator">=</span> try<span class="punctuation">(</span>eval<span class="punctuation">(</span>expr<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">    <span class="keyword">while</span> <span class="punctuation">(</span>isError<span class="punctuation">(</span>retval<span class="punctuation">)</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">      attempts <span class="operator">=</span> attempts <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">      <span class="keyword">if</span> <span class="punctuation">(</span>attempts <span class="operator">&gt;=</span> maxErrors<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">        msg <span class="operator">=</span> sprintf<span class="punctuation">(</span><span class="string">&quot;retry: too many retries [[%s]]&quot;</span><span class="punctuation">,</span> capture.output<span class="punctuation">(</span>str<span class="punctuation">(</span>retval<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">        flog.fatal<span class="punctuation">(</span>msg<span class="punctuation">)</span></span><br><span class="line">        stop<span class="punctuation">(</span>msg<span class="punctuation">)</span></span><br><span class="line">      <span class="punctuation">&#125;</span> <span class="keyword">else</span> <span class="punctuation">&#123;</span></span><br><span class="line">        msg <span class="operator">=</span> sprintf<span class="punctuation">(</span></span><br><span class="line">          <span class="string">&quot;retry: error in attempt %i/%i [[%s]]&quot;</span><span class="punctuation">,</span></span><br><span class="line">          attempts<span class="punctuation">,</span></span><br><span class="line">          maxErrors<span class="punctuation">,</span></span><br><span class="line">          capture.output<span class="punctuation">(</span>str<span class="punctuation">(</span>retval<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">        <span class="punctuation">)</span></span><br><span class="line">        flog.error<span class="punctuation">(</span>msg<span class="punctuation">)</span></span><br><span class="line">        warning<span class="punctuation">(</span>msg<span class="punctuation">)</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">      <span class="keyword">if</span> <span class="punctuation">(</span>sleep <span class="operator">&gt;</span> <span class="number">0</span><span class="punctuation">)</span></span><br><span class="line">        Sys.sleep<span class="punctuation">(</span>sleep<span class="punctuation">)</span></span><br><span class="line">      retval <span class="operator">=</span> try<span class="punctuation">(</span>eval<span class="punctuation">(</span>expr<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="built_in">return</span><span class="punctuation">(</span>retval<span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">## 构造从内容到书名的函数</span></span><br><span class="line"><span class="comment">## 简单的想法是获取书名号中的内容</span></span><br><span class="line"><span class="comment">## 如果不在书名号中，则会导致失效</span></span><br><span class="line"><span class="comment">## 重构 read_html 和 html_text 函数，增加稳定性</span></span><br><span class="line">read_html_beta <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  x <span class="operator">&lt;-</span> try<span class="punctuation">(</span>read_html<span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">html_text_beta <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  x <span class="operator">&lt;-</span> try<span class="punctuation">(</span>html_text<span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">Content2tittle <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>content<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  title <span class="operator">&lt;-</span> content <span class="operator">%&gt;%</span></span><br><span class="line">    purrr<span class="operator">::</span>map_chr<span class="punctuation">(</span><span class="string">&#x27;content&#x27;</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    map<span class="punctuation">(</span>read_html_beta<span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    map<span class="punctuation">(</span>html_text_beta<span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    stri_extract_all_regex<span class="punctuation">(</span><span class="string">&#x27;《.*?》&#x27;</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    map<span class="punctuation">(</span>unique<span class="punctuation">)</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span>title<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">raw_data <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 获取知乎的 API 接口数据</span></span><br><span class="line">url <span class="operator">&lt;-</span> <span class="string">&#x27;https://www.zhihu.com/api/v4/questions/306249128/answers?data[*].author.follower_count,badge[*].topics=&amp;data[*].mark_infos[*].url=&amp;include=data[*].is_normal,admin_closed_comment,reward_info,is_collapsed,annotation_action,annotation_detail,collapse_reason,is_sticky,collapsed_by,suggest_edit,comment_count,can_comment,content,editable_content,voteup_count,reshipment_settings,comment_permission,created_time,updated_time,review_info,relevant_info,question,excerpt,relationship.is_authorized,is_author,voting,is_thanked,is_nothelp,is_labeled,is_recognized,paid_info,paid_info_content&amp;limit=10&amp;offset=0&amp;platform=desktop&amp;sort_by=default&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 循环获取所有数据</span></span><br><span class="line">i <span class="operator">&lt;-</span> 1</span><br><span class="line">is_end <span class="operator">&lt;-</span> <span class="literal">FALSE</span></span><br><span class="line"><span class="keyword">while</span> <span class="punctuation">(</span><span class="operator">!</span>is_end<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  m <span class="operator">&lt;-</span> retry<span class="punctuation">(</span>readLines<span class="punctuation">(</span>url<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    fromJSON<span class="punctuation">(</span>simplifyVector <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line">  content <span class="operator">&lt;-</span> m<span class="operator">$</span>data</span><br><span class="line">  next_url <span class="operator">&lt;-</span> m<span class="operator">$</span>paging<span class="operator">$</span><span class="string">&#x27;next&#x27;</span> <span class="comment"># 接下来需要解析的 url</span></span><br><span class="line">  url <span class="operator">&lt;-</span> next_url</span><br><span class="line">  raw_data<span class="punctuation">[[</span>i<span class="punctuation">]</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> Content2tittle<span class="punctuation">(</span>content<span class="punctuation">)</span></span><br><span class="line">  is_end <span class="operator">&lt;-</span> m<span class="operator">$</span>paging<span class="operator">$</span>is_end <span class="comment"># 利用 is_end 来判断是否结束</span></span><br><span class="line">  cat<span class="punctuation">(</span><span class="string">&#x27;This is &#x27;</span><span class="punctuation">,</span> i<span class="punctuation">,</span> <span class="string">&#x27;round&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;\n&#x27;</span><span class="punctuation">)</span></span><br><span class="line">  i <span class="operator">&lt;-</span> i <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">  Sys.sleep<span class="punctuation">(</span>runif<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">,</span> <span class="number">10</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 踢掉一些没有信息的 answer</span></span><br><span class="line">removed_data <span class="operator">&lt;-</span> raw_data<span class="punctuation">[</span>raw_data <span class="operator">%&gt;%</span> map<span class="punctuation">(</span><span class="built_in">length</span><span class="punctuation">)</span> <span class="operator">!=</span> <span class="number">0</span><span class="punctuation">]</span></span><br><span class="line">nid <span class="operator">&lt;-</span> raw_data <span class="operator">%&gt;%</span> map<span class="punctuation">(</span><span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span>map<span class="punctuation">(</span>x<span class="punctuation">,</span> <span class="built_in">length</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> unlist<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">fnid <span class="operator">&lt;-</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">1</span><span class="operator">:</span><span class="built_in">length</span><span class="punctuation">(</span>nid<span class="punctuation">)</span><span class="punctuation">,</span> times <span class="operator">=</span> nid<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 返回所有的书目</span></span><br><span class="line">data <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span> title <span class="operator">=</span> unlist<span class="punctuation">(</span>removed_data<span class="punctuation">)</span><span class="punctuation">,</span> id <span class="operator">=</span> fnid<span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  transform<span class="punctuation">(</span>title <span class="operator">=</span> <span class="built_in">as.character</span><span class="punctuation">(</span>title<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  na.omit<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  subset<span class="punctuation">(</span>nchar<span class="punctuation">(</span>title<span class="punctuation">)</span> <span class="operator">&lt;=</span> <span class="number">20</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">library<span class="punctuation">(</span>data.table<span class="punctuation">)</span></span><br><span class="line">data <span class="operator">&lt;-</span> data.table<span class="punctuation">(</span>data<span class="punctuation">)</span></span><br><span class="line">data<span class="punctuation">[</span><span class="punctuation">,</span> .N<span class="punctuation">,</span> title<span class="punctuation">]</span><span class="punctuation">[</span>order<span class="punctuation">(</span><span class="operator">-</span>N<span class="punctuation">)</span><span class="punctuation">]</span><span class="punctuation">[</span>N <span class="operator">&gt;=</span> <span class="number">10</span><span class="punctuation">]</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/reading/" rel="tag"># reading</a>
+              <a href="/tags/crawler/" rel="tag"># crawler</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/02/china-gdp.html" rel="prev" title="建国以来人均 GDP 增长情况">
+                  <i class="fa fa-angle-left"></i> 建国以来人均 GDP 增长情况
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/10/21/url-handle.html" rel="next" title="在 R 中各种码的转换">
+                  在 R 中各种码的转换 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="深圳福彩3000万巨奖诈骗案发生后，好多朋友开始质疑中国福利彩票的公正性，并向我询问福利彩票是不是真的如传闻那样--福利彩票自产自销？。由于身在中福彩的原因，很多支持福彩公正的内情不太合适发布在网上，但--数据一汇总，上帝也会发笑。这篇博文从一等奖中奖概率分布的角度给各位童鞋聊聊福彩的公正性。 现在每一期的福彩双色球销售额大概是2亿左右（已持续很长时间），每注双色球为2元，就是说每期双色球的销售大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从一等奖出现的概率看中国福利彩票的公正性">
+<meta property="og:url" content="http://bjt.name/2009/07/26/welfare-lottery-justice.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="深圳福彩3000万巨奖诈骗案发生后，好多朋友开始质疑中国福利彩票的公正性，并向我询问福利彩票是不是真的如传闻那样--福利彩票自产自销？。由于身在中福彩的原因，很多支持福彩公正的内情不太合适发布在网上，但--数据一汇总，上帝也会发笑。这篇博文从一等奖中奖概率分布的角度给各位童鞋聊聊福彩的公正性。 现在每一期的福彩双色球销售额大概是2亿左右（已持续很长时间），每注双色球为2元，就是说每期双色球的销售大">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/1.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/thunderball2.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/2.png">
+<meta property="article:published_time" content="2009-07-25T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.286Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="datamining">
+<meta property="article:tag" content="彩票">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/1.png">
+
+
+<link rel="canonical" href="http://bjt.name/2009/07/26/welfare-lottery-justice.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2009/07/26/welfare-lottery-justice.html","path":"2009/07/26/welfare-lottery-justice.html","title":"从一等奖出现的概率看中国福利彩票的公正性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>从一等奖出现的概率看中国福利彩票的公正性 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/07/26/welfare-lottery-justice.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="从一等奖出现的概率看中国福利彩票的公正性 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从一等奖出现的概率看中国福利彩票的公正性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-07-26 00:00:00" itemprop="dateCreated datePublished" datetime="2009-07-26T00:00:00+08:00">2009-07-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">数据思维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><a
+target="_blank" rel="noopener" href="http://news.sina.com.cn/s/2009-07-08/215318181309.shtml">深圳福彩3000万巨奖诈骗案</a>发生后，好多朋友开始质疑中国福利彩票的公正性，并向我询问福利彩票是不是真的如传闻那样--福利彩票自产自销？。由于身在中福彩的原因，很多支持福彩公正的内情不太合适发布在网上，但--数据一汇总，上帝也会发笑。这篇博文从一等奖中奖概率分布的角度给各位童鞋聊聊福彩的公正性。</p>
+<p>现在每一期的福彩双色球销售额大概是2亿左右（已持续很长时间），每注双色球为2元，就是说每期双色球的销售大概会有1亿人次参与。</p>
+<p>在随机选择，且每次抽取都是等概率的的假定条件下，理论的重复彩票注数的分布（0注至41注）如下：</p>
+<p><img src="/upload/pic/1.png" /></p>
+<p>一等奖是完全随机出现的，那么在假设条件下，一等奖同时出现五注的概率最高，六注、四注其次，再次为七注、三注，类推……当然理论上，没有中奖（0注）和中12注以上的概率相比其他情形低了很多。</p>
+<p>那么我们再看一看福利彩票双色球每期中一等奖（2008年1月1日至2009年7月23日）的实际分布情况：</p>
+<p><img src="/upload/pic/thunderball2.png" /></p>
+<p>有童鞋看出端倪了：实际数据的分布同理论上的分布是不一致的！理论上的一等奖出现概率最大在出现五注的位置，而实际上一等奖出现的最大概率出现在了两注的位置。</p>
+<p>为什么会出现这样的情况？主要是因为我们最开始的假设是有问题。</p>
+<p>双色球每期销售会有1亿人次的彩民参与？不可能！双色球的覆盖度没有那么大。</p>
+<p>一些彩民为了提高中奖概率（或者说迷信一些选号方法），会采用"复式"、"胆拖"、"倍投"等方式投注，当然大部分彩民还是会老老实实的买一注。综合考虑到这些因素以后，凭经验估计样本量应该为现在的一半左右，即5000万。这样看来较为合理的一等奖中奖概率理论上分布为：</p>
+<p><img src="/upload/pic/2.png" /></p>
+<p>此时理论分布同实际分布已经非常相似。</p>
+<p>实际双色球一等奖分布的右边尾巴上恰恰显示了"复式"、"胆拖"、"倍投"的投注效果。</p>
+<p>再插一句：</p>
+<p><a
+target="_blank" rel="noopener" href="http://news.sina.com.cn/c/2009-07-25/035216009956s.shtml">深圳福彩3000万大奖诈骗犯身份曝光</a>一文中提到：</p>
+<blockquote>
+<p>警方调查发现，程某先是编写了一个可以自动运行的木马软件，然后利用与福彩中心合作的机会，进入福彩中心机房，植入自动运行的木马程序。一旦摇奖结果出来，这个程序会自动将程某所购买的彩票修改成一等奖的号码。</p>
+</blockquote>
+<p>这里可以推测程某天真地以为满足兑大奖的条件为：</p>
+<ul>
+<li>数据库里的数据正确；</li>
+<li>实体彩票存在。</li>
+</ul>
+<p>恩，没有问题！但，这两个条件可是通过<strong>很多很多很多</strong>的手段来监管的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/datamining/" rel="tag"># datamining</a>
+              <a href="/tags/%E5%BD%A9%E7%A5%A8/" rel="tag"># 彩票</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2009/06/24/chambers-acm.html" rel="prev" title="关于数据分析工具">
+                  <i class="fa fa-angle-left"></i> 关于数据分析工具
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2009/07/29/ibm-spss-acquisition.html" rel="next" title="IBM 花费 12 亿美元收购 SPSS">
+                  IBM 花费 12 亿美元收购 SPSS <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

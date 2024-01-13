@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="三月底参加了中国人民大学统计学院海峡两岸数据挖掘研讨会，和大家简单聊了聊R语言在京东商城的数据挖掘应用。本来想接着写篇博文说明一下， 一直也没腾出时间，今天补上。 1. 为什么要使用R语言 在互联网企业，在分析端使用闭源的商用软件几乎是不可能的，原因很简单：成本太高，不管是使用，还是研发及维护。 但我个人觉得这可能还不是最主要的原因，对于互联网企业来说，数据虽然获取更容易，但环境更为复杂。开源软件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="R 语言企业级数据挖掘应用">
+<meta property="og:url" content="http://bjt.name/2013/05/11/big-data-r-application.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="三月底参加了中国人民大学统计学院海峡两岸数据挖掘研讨会，和大家简单聊了聊R语言在京东商城的数据挖掘应用。本来想接着写篇博文说明一下， 一直也没腾出时间，今天补上。 1. 为什么要使用R语言 在互联网企业，在分析端使用闭源的商用软件几乎是不可能的，原因很简单：成本太高，不管是使用，还是研发及维护。 但我个人觉得这可能还不是最主要的原因，对于互联网企业来说，数据虽然获取更容易，但环境更为复杂。开源软件">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/Rdata.png">
+<meta property="article:published_time" content="2013-05-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.290Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="bigdata">
+<meta property="article:tag" content="business">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/Rdata.png">
+
+
+<link rel="canonical" href="http://bjt.name/2013/05/11/big-data-r-application.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2013/05/11/big-data-r-application.html","path":"2013/05/11/big-data-r-application.html","title":"R 语言企业级数据挖掘应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>R 语言企业级数据挖掘应用 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2013/05/11/big-data-r-application.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="R 语言企业级数据挖掘应用 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          R 语言企业级数据挖掘应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2013-05-11T00:00:00+08:00">2013-05-11</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>三月底参加了中国人民大学统计学院海峡两岸数据挖掘研讨会，和大家简单聊了聊R语言在京东商城的数据挖掘应用。本来想接着写篇博文说明一下，
+一直也没腾出时间，今天补上。</p>
+<h1 id="为什么要使用r语言">1. 为什么要使用R语言</h1>
+<p>在互联网企业，在分析端使用闭源的商用软件几乎是不可能的，原因很简单：成本太高，不管是使用，还是研发及维护。
+但我个人觉得这可能还不是最主要的原因，对于互联网企业来说，数据虽然获取更容易，但环境更为复杂。开源软件可以根据业务的变化
+进行调整，但商业的闭源软件则很难做到。</p>
+<span id="more"></span>
+<h1 id="r能不能处理大数据">2. R能不能处理大数据</h1>
+<p>好多人问过我这个问题，我会说你有多大内存就能处理多大数据，这话显然不负责任。这个问题确实不太好回答，因为每个人心中的大数据是不一样的。
+比如有人觉得几百万就是大数据，有些人觉得没个几亿就不算大数据，甚至有人说你处理不了的就是大数据（擦！？）。这些还只是从记录
+数（数据存储）的角度来看的，我们换个角度想想：建模工程师要做的事情无非是将用户和产品进行合理匹配，那最细粒度就是用户维（或产品维）。
+试问你有超过千万的用户数据分析建模么？对于一般的分析（工程）师来说，常见的情况还是几十万甚或百万级别。这个量级对于R来说就很容易了，
+比如我刚刚的工作就是在自己的PC上载入了一个50000000×3的数据框。</p>
+<p>接着我们在说说速度，曾经有太多的人抱怨R的运行速度太慢，甚至堂而皇之的公开表明观点。但我发现大部分人是因为不熟悉R语言的编程，
+而是直接套用C或Java的编程方式，因而导致无法快速得到结果。举两个例子：</p>
+<blockquote>
+<p>有次在微博上一位朋友抱怨说R做了一个几千乘几千的相关矩阵花了他1天时间，我当时就愕然了，然后默默地给了一个几秒钟搞定的脚本。</p>
+</blockquote>
+<blockquote>
+<p>还有一次更具有代表性：我的项目组有个R的项目需要上线，于是直接把原始代码交予了一位项目成员，嘱咐他稍作改动即可上线。
+但他发现需要3个小时才能将线上的数据计算完毕，于是又找到我帮忙优化。我看了一下，果不其然，Java风格的R代码，向量化编程的思想
+一点都没有用。改之，3分钟结束计算。</p>
+</blockquote>
+<p>R语言的向量化运算几乎可以和底层语言的速度一较高下，并且向量化是天然的并行化方式，如果条件允许，R的向量化编程可以很方便的转化为并行框架，
+这也就是为什么说<code>R + Hadoop</code>是大数据的发展方向的理由之一。</p>
+<p>再说个例子：试问100万行，20万列的数据是大数据么（你没看错，是200000维）？恩，R能够处理，而且可以在这类数据上构建模型。</p>
+<h1 id="再看看大数据的流动">3. 再看看大数据的流动</h1>
+<p>对于管理者来说，合适的人出现合适的岗位是衡量管理者是否合格的重要标准之一。对于数据分析人员，合适的工具匹配合适的数据则是是否胜任工作的
+基本素质之一。R并不是通吃所有的数据场景，它只是在出现在该出现的分析建模环节。</p>
+<p>R的位置在哪里？先让我们看看所谓的<code>大数据</code>是如何从企业中传递的（摘自本次人大的演讲材料）</p>
+<p><img src="/upload/pic/Rdata.png"/></p>
+<ul>
+<li>从最底层的原始数据来看，PB级数据确实不是R所擅长，但这些数据有Hadoop或者其他高性能存储和处理系统；</li>
+<li>向上是针对于不同业务场景的数据集市，经过清洗后，数据的规模则下降到了TB级；</li>
+<li>再向上则是针对于特定任务的分析和挖掘模块，数据已经被整理到了GB级，这时候R的处理则是非常方便</li>
+<li>R分析的结果则是MB级的输出，比如图表、得分，或者是规则。比如规则很容易在数据集市这段做并行化计算</li>
+</ul>
+<p>我的团队在大量使用R作为分析建模工具，看似比较另类，但其实Google、Facebook、Linkedin等公司已经有大量的直接使用R做分析挖掘的应用，
+只是大家不太留意罢了。</p>
+<hr />
+<p>一句话总结：<code>R并不是在象牙塔里供科研人员玩耍的玩具，而是实实在在工业界使用的便捷环境。</code></p>
+<p>当然，这里还有很多问题没有展开，比如：</p>
+<ul>
+<li>R语言的数据挖掘应该在并行化环境完成还是在单台机器的计算环境完成？</li>
+<li>抽样可否解决大数据挖掘问题？</li>
+<li>生产中直接实施R环境是否可行？</li>
+</ul>
+<p>我们有时间再聊～</p>
+<p>附下载：<a
+href="/upload/pdf/bigdata_r_application.pdf">R语言数据挖掘@京东商城</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/bigdata/" rel="tag"># bigdata</a>
+              <a href="/tags/business/" rel="tag"># business</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/01/13/beamer-presentation.html" rel="prev" title="如何准备演讲-beamer版">
+                  <i class="fa fa-angle-left"></i> 如何准备演讲-beamer版
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/05/20/china-r-conference.html" rel="next" title="第六届中国 R 语言会议流水帐">
+                  第六届中国 R 语言会议流水帐 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="今天看到老同学@JulieJulieJulieJulie 的浪漫求婚，真的很浪漫、很唯美、很感动。正如评论说的，我们又相信爱情了！于是，小兴奋，睡不着，爬起来补一篇文章。  正文开始 最近在数据挖掘专业网站 KDnuggets 上刊出了2011年度关于数据挖掘&#x2F;分析语言流行度的调查，不出意料R、SQL、Python果然排在了前三位。当然有看官说了，参与调查的样本数量太少，而且以登录KDnugget">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据挖掘之R与SQL">
+<meta property="og:url" content="http://bjt.name/2011/08/18/r-and-sql-datamining.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="今天看到老同学@JulieJulieJulieJulie 的浪漫求婚，真的很浪漫、很唯美、很感动。正如评论说的，我们又相信爱情了！于是，小兴奋，睡不着，爬起来补一篇文章。  正文开始 最近在数据挖掘专业网站 KDnuggets 上刊出了2011年度关于数据挖掘&#x2F;分析语言流行度的调查，不出意料R、SQL、Python果然排在了前三位。当然有看官说了，参与调查的样本数量太少，而且以登录KDnugget">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/5044.png">
+<meta property="article:published_time" content="2011-08-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.289Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="datamining">
+<meta property="article:tag" content="Oracle">
+<meta property="article:tag" content="SQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/5044.png">
+
+
+<link rel="canonical" href="http://bjt.name/2011/08/18/r-and-sql-datamining.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2011/08/18/r-and-sql-datamining.html","path":"2011/08/18/r-and-sql-datamining.html","title":"数据挖掘之R与SQL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据挖掘之R与SQL | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2011/08/18/r-and-sql-datamining.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据挖掘之R与SQL | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据挖掘之R与SQL
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2011-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2011-08-18T00:00:00+08:00">2011-08-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>今天看到老同学<a href="http://weibo.com/n/JulieJulieJulieJulie" target="_blank"><span
+class="citation"
+data-cites="JulieJulieJulieJulie">@JulieJulieJulieJulie</span></a>
+的<a href="http://www.tudou.com/programs/view/g52FYAg63Kg/" target="_blank">浪漫求婚</a>，真的很浪漫、很唯美、很感动。正如评论说的，我们又相信爱情了！于是，小兴奋，睡不着，爬起来补一篇文章。</p>
+<hr />
+<p>正文开始</p>
+<p>最近在数据挖掘专业网站 KDnuggets
+上刊出了2011年度关于数据挖掘/分析语言流行度的<a href="http://www.kdnuggets.com/2011/08/poll-languages-for-data-mining-analytics.html" target="_blank">调查</a>，不出意料R、SQL、Python果然排在了前三位。当然有看官说了，参与调查的样本数量太少，而且以登录KDnuggets网站的用户为主，样本的信息显然是有偏的。实话说，我也对KDnuggets网站的Poll持保留态度，但它的结果毕竟代表了某一类人群的使用偏好，尤其是在语言角度。</p>
+<p><img class="aligncenter" title="data mining survey" src="/upload/pic/5044.png" /></p>
+<p>我们看排名前5位的语言：</p>
+<ul>
+<li><code>R</code>：世界范围内的标准统计语言，以快速更新的算法，灵活的编程，广泛的扩展，绚丽的图形著称，遵循GPL协议的开源软件</li>
+<li><code>SQL</code>：大部分企业使用的，数据仓库、集市的通用查询语言，在大型数据应用上有极大的优势，同时也是数据分析/挖掘的基础</li>
+<li><code>Python</code>：传说中的Google的三大开发语言，适用于粘合一些复杂应用，我这里工作暂时没有涉及过</li>
+<li><code>Java</code>：太多的应用都基于Java的，不然Oracle也不会花上74亿美元收购SUN了</li>
+<li><code>SAS</code>：曾经的数据分析领域老大，当然现在市场份额依旧非常高。但SAS昂贵的使用费用迫使更多的分析工作者转到了开源领域，比如R</li>
+</ul>
+<p>后四种语言同R语言还都有一些关系，闲扯起来还真是没完没了，这里就不再赘述，各位可以在搜索引擎上搜索R+XXX。
+如果我们将范围限制在数据挖掘这个主题，R同SQL的关系则变得非常非常紧密。</p>
+<p>众所周知，R的强项在于灵活的算法，以及开发速度，但其所有的计算都是在内存中进行，一旦数据量达到了内存上限，基本上就是叫天天不灵，
+叫地地不应了。所以在使用R做数据挖掘时，就必须考虑使用其他的数据工具弥补R在这方面的劣势。尤其是在商业应用上，
+不能搭建R环境的条件下，SQL语言是提供挖掘结果的不二选择。</p>
+<p>支持SQL的商用数据库比如Oracle、DB2性能优异，但对系统的占用非常厉害，假如本地装了Oracle，又开了点其他应用，2G的内存很快就会吃到1.5G甚至以上，
+再想用R做分析那只能用“捉襟见肘”这个词来形容了。当然如果在办公条件下有相应的服务器环境最好，
+在某些应用环境下，甚至可以通过本地多开R进程来达到并行计算的目的。</p>
+<p>或者本地分析比较多，但数据量又时常上到百兆，虽然R也能够处理，但依然建议将数据移植到本地构建的轻量数据库环境，比如MySQL环境。
+从我的经验上看，虽然MySQL对比Oracle、DB2来说小巧很多，但在同R语言配合的本地应用上，性能更加有保证。</p>
+<p>有了支持SQL的数据库环境，就要聊一聊R语言到底和SQL有什么关系：</p>
+<ul>
+<li>
+各大数据库厂商已经开发了相关的支持R语言的数据挖掘套件，比如Oracle的<a target="_blank" rel="noopener" href="http://ftp.ctex.org/mirrors/CRAN/web/packages/RODM/index.html">RODM</a>，Teradata的
+<a id="download-6865-7769-0" target="_blank" rel="noopener" href="https://downloads.teradata.com/download/applications/teradata-r/1.0">teradataR</a>等。
+</li>
+<li>
+R本身就可以通过扩展包来对数据库执行SQL，这时你可以把R语言作为调度环境。R的计算过程结果可以直接作为参数传递到数据库中，并将相应的结果返回，供R环境使用。
+</li>
+<li>
+通过sqldf包，在R内部使用标准SQL对数据进行预处理，包括group by，order
+by，join，where等操作。
+</li>
+<li>
+当然R最重要的用途是将数据挖掘的结果转义为标准SQL语言，利用数据库来实现挖掘结果。当然有人说了，不是有pmml可以将模型嵌入到数据库么？！扯！到现在我也没见pmml成为应用标准，老老实实的将模型结果转义到SQL才是王道。比如用于概率预测的Logistic回归或者分类模型的Tree-based
+Models，这些模型的转义工作都不难，这样最终的工程实施都脱离了R环境，更具通用性，且利用了数据库的高速性能。
+</li>
+</ul>
+<hr />
+<p>说句题外话：不知道哪位看官见过70万字符长度的庞大SQL语句——是的，你没看错，70w，R转义的，可以执行，对于数据库而言不过是半分钟的事情。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/datamining/" rel="tag"># datamining</a>
+              <a href="/tags/Oracle/" rel="tag"># Oracle</a>
+              <a href="/tags/SQL/" rel="tag"># SQL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2011/07/17/money-supply-motion-char.html" rel="prev" title="2006年至今国内货币供应量的Motion Chart">
+                  <i class="fa fa-angle-left"></i> 2006年至今国内货币供应量的Motion Chart
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2011/11/29/conference-all-the-time.html" rel="next" title="最近会议不断">
+                  最近会议不断 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

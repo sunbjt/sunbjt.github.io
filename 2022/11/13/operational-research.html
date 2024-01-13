@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="运筹学（Operational Research）是一门应用于管理有组织系统的科学，最早的朴素思想在中国的古文献中多有记载，比如耳熟能详的田忌赛马的故事。运筹的一般思想是：在各项资源条件优先的情况下，如何确定一个方案，使得预期目标最优；或者为了达到预期目标，确定资源消耗最小的方案。在二次世界大战之后，组织和企业的活动规模更大，信息系统化空前完备（想象一下水晶报表的诞生多么让人兴奋），加之各类数学算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混合整数规划常用方法 R 实现">
+<meta property="og:url" content="http://bjt.name/2022/11/13/operational-research.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="运筹学（Operational Research）是一门应用于管理有组织系统的科学，最早的朴素思想在中国的古文献中多有记载，比如耳熟能详的田忌赛马的故事。运筹的一般思想是：在各项资源条件优先的情况下，如何确定一个方案，使得预期目标最优；或者为了达到预期目标，确定资源消耗最小的方案。在二次世界大战之后，组织和企业的活动规模更大，信息系统化空前完备（想象一下水晶报表的诞生多么让人兴奋），加之各类数学算">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.294Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2022/11/13/operational-research.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2022/11/13/operational-research.html","path":"2022/11/13/operational-research.html","title":"混合整数规划常用方法 R 实现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>混合整数规划常用方法 R 实现 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2022/11/13/operational-research.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="混合整数规划常用方法 R 实现 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          混合整数规划常用方法 R 实现
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-11-13 00:00:00" itemprop="dateCreated datePublished" datetime="2022-11-13T00:00:00+08:00">2022-11-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>运筹学（Operational
+Research）是一门应用于管理有组织系统的科学，最早的朴素思想在中国的古文献中多有记载，比如耳熟能详的田忌赛马的故事。运筹的一般思想是：在各项资源条件优先的情况下，如何确定一个方案，使得预期目标最优；或者为了达到预期目标，确定资源消耗最小的方案。在二次世界大战之后，组织和企业的活动规模更大，信息系统化空前完备（想象一下水晶报表的诞生多么让人兴奋），加之各类数学算法模型层出不穷，研究如何做好决策的运筹学也有了极大的发展。</p>
+<p>运筹学方向很多，比如线性规划、非线性规划、整数规划、目标规划、动态规划、排队论、对策论等。笔者偷个懒，找一些在整数规划体系下的例子，让大家感受一下在日常企业中这些方法的应用。</p>
+<h1 id="一个简化问题">1. 一个简化问题</h1>
+<p>公司有 4 条生产线，每条生产线的月产量分别为 0.56, 3.11, 3.04,
+2.11。近期因为经济不景气，需要将月产量总和控制在 5
+以内，但出于总成本摊销的考虑，又要保证产出尽可能的大，那么哪几条产线需要被关闭。我们盲猜结果：3
+和 4
+需要被关闭。当然这个问题手指头可以掰过来，超过十个手指头怎么办？</p>
+<span id="more"></span>
+<p>我们先约定一些参数的数学表达：</p>
+<ol type="1">
+<li>每条生产线的月产量为 <span class="math inline">\(w_i\)</span></li>
+<li>产线是否开启用 <span class="math inline">\(x_i\)</span> 表示，要么是
+0 要么是 1</li>
+</ol>
+<p>那这个问题就可以用统一框架结构化表述该问题。</p>
+<ol type="1">
+<li>设置决策变量 <span class="math inline">\(x_{i} \in \{0, 1\}, i =
+1,2,3,4\)</span></li>
+<li>目标：最大化 <span class="math inline">\(\sum x_i w_i\)</span></li>
+<li>约束条件：<span class="math inline">\(\sum x_i w_i \le
+5\)</span></li>
+<li>求解 <span class="math inline">\(x_i\)</span></li>
+</ol>
+<p>我们尝试使用 R 包 <a
+target="_blank" rel="noopener" href="https://cran.r-project.org/package=ompr">ompr</a>
+来实现上述过程（Optimization Modeling Package）：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>ompr<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ompr.roi<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ROI.plugin.glpk<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">max_capacity <span class="operator">&lt;-</span> 5</span><br><span class="line">n <span class="operator">&lt;-</span> 4</span><br><span class="line">weights <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.56</span><span class="punctuation">,</span> <span class="number">3.11</span><span class="punctuation">,</span> <span class="number">3.04</span><span class="punctuation">,</span> <span class="number">2.11</span><span class="punctuation">)</span></span><br><span class="line">m <span class="operator">&lt;-</span> MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;binary&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>weights<span class="punctuation">[</span>i<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;max&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>weights<span class="punctuation">[</span>i<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">)</span> <span class="operator">&lt;=</span> max_capacity<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> m</span><br><span class="line">  variable i value</span><br><span class="line"><span class="number">1</span>        x <span class="number">1</span>     <span class="number">1</span></span><br><span class="line"><span class="number">2</span>        x <span class="number">2</span>     <span class="number">1</span></span><br><span class="line"><span class="number">3</span>        x <span class="number">3</span>     <span class="number">0</span></span><br><span class="line"><span class="number">4</span>        x <span class="number">4</span>     <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>果然和我们猜想一样，3 和 4 需要被关闭。</p>
+<p>P.S.</p>
+<p>ompr
+这个包非常优秀，将设置决策变量、最优化目标、约束条件，以及求解四个步骤，很清晰地通过管道操作来表达。具体细节各位看官可以参考官方文档。</p>
+<h1 id="排班">2. 排班</h1>
+<p>假设某培训机构，周一到周日所需要的老师数为3782, 3718, 2580, 2912,
+4112, 7862, 7007，设为 <span
+class="math inline">\(b\)</span>，且要保证老师每周有连续两天的休息，有两个问题需要回答：</p>
+<ol type="1">
+<li>机构需要准备多少老师</li>
+<li>这些老师该如何排班</li>
+</ol>
+<p>首先生成所有的排班可能 <span
+class="math inline">\(A_{ij}\)</span>，表示第<span
+class="math inline">\(i\)</span>天的第 <span
+class="math inline">\(j\)</span> 个班型需要的人数，同时假设第 <span
+class="math inline">\(i\)</span> 天的工作人数为 <span
+class="math inline">\(x_{i}\)</span>，那么满足</p>
+<p><span class="math display">\[
+\min z= \sum_{i} x_i \\
+\]</span></p>
+<p><span class="math display">\[
+s.t. \sum_i\sum_j x_i A_{i,j} \le b_i
+\]</span></p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 周一到周日所需要的分配老师数</span></span><br><span class="line">b <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">3782</span><span class="punctuation">,</span> <span class="number">3718</span><span class="punctuation">,</span> <span class="number">2580</span><span class="punctuation">,</span> <span class="number">2912</span><span class="punctuation">,</span> <span class="number">4112</span><span class="punctuation">,</span> <span class="number">7862</span><span class="punctuation">,</span> <span class="number">7007</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 老师每周需要有连续 2 天的休息</span></span><br><span class="line">A <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> nrow <span class="operator">=</span> <span class="number">7</span><span class="punctuation">,</span> ncol <span class="operator">=</span> <span class="number">7</span><span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">7</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  A<span class="punctuation">[</span>i<span class="punctuation">,</span> i <span class="operator">%%</span> <span class="number">7</span> <span class="operator">+</span> <span class="number">1</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="number">0</span>; A<span class="punctuation">[</span>i<span class="punctuation">,</span> <span class="punctuation">(</span>i <span class="operator">+</span> <span class="number">1</span><span class="punctuation">)</span> <span class="operator">%%</span> <span class="number">7</span> <span class="operator">+</span> <span class="number">1</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="number">0</span>;</span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">m <span class="operator">&lt;-</span> MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">7</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;integer&quot;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">7</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>A<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">7</span><span class="punctuation">)</span> <span class="operator">&gt;=</span> b<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">7</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> m</span><br><span class="line">  variable i value</span><br><span class="line"><span class="number">1</span>        x <span class="number">1</span>   <span class="number">757</span></span><br><span class="line"><span class="number">2</span>        x <span class="number">2</span>   <span class="number">744</span></span><br><span class="line"><span class="number">3</span>        x <span class="number">3</span>   <span class="number">516</span></span><br><span class="line"><span class="number">4</span>        x <span class="number">4</span>   <span class="number">583</span></span><br><span class="line"><span class="number">5</span>        x <span class="number">5</span>   <span class="number">823</span></span><br><span class="line"><span class="number">6</span>        x <span class="number">6</span>  <span class="number">1573</span></span><br><span class="line"><span class="number">7</span>        x <span class="number">7</span>  <span class="number">1402</span></span><br></pre></td></tr></table></figure>
+<p>排班的班型和结果如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">周1</th>
+<th style="text-align: right;">周2</th>
+<th style="text-align: right;">周3</th>
+<th style="text-align: right;">周4</th>
+<th style="text-align: right;">周5</th>
+<th style="text-align: right;">周6</th>
+<th style="text-align: right;">周7</th>
+<th style="text-align: right;">数量</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">757</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">744</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">516</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">583</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">823</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1573</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1402</td>
+</tr>
+</tbody>
+</table>
+<p>看一下差异有多大</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> m<span class="operator">$</span>value <span class="operator">*</span> A <span class="operator">|&gt;</span> colSums<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">3785</span> <span class="number">3720</span> <span class="number">2580</span> <span class="number">2915</span> <span class="number">4115</span> <span class="number">7865</span> <span class="number">7010</span></span><br><span class="line"><span class="operator">&gt;</span> b</span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">3782</span> <span class="number">3718</span> <span class="number">2580</span> <span class="number">2912</span> <span class="number">4112</span> <span class="number">7862</span> <span class="number">7007</span></span><br></pre></td></tr></table></figure>
+<h1 id="装箱问题">3. 装箱问题</h1>
+<p>有一堆物品长度分别为 <span
+class="math inline">\(w_i\)</span>，若干长度为 <span
+class="math inline">\(C\)</span> 的箱子（<span class="math inline">\(w_i
+\le C\)</span>）。问：最少需要几个箱子才能把所有物品全部装进箱子？</p>
+<p>最坏的情况是一个箱子装一个物品，最好的情况是物品恰好可以完美的放入在箱子内，那么箱子数为<span
+class="math inline">\(\sum
+w_i/C\)</span>，所以说取值应该在这两个值之间。抽象一下这个问题，我们希望最小化箱子数量，设</p>
+<ol type="1">
+<li><span class="math inline">\(y_i = 1\)</span>，表示第 <span
+class="math inline">\(i\)</span> 个箱子被使用</li>
+<li><span class="math inline">\(x_{ij} = 1\)</span>，表示 第 <span
+class="math inline">\(j\)</span> 个物品被放入了第 <span
+class="math inline">\(i\)</span> 个箱子中</li>
+</ol>
+<p>那么优化的目标是：</p>
+<p><span class="math display">\[
+\min z = \sum_{i=1}^{n} y_i
+\]</span> 约束条件是：</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{j=1}^n w_i x_{i j} \leq C y_i, \quad i=1,2, \ldots, n\\
+&amp;\sum_{i=1}^n x_{i j}=1, \quad j=1,2, \ldots, n\\
+&amp;y_i \in\{0,1\}, \quad i=1,2, \ldots, n\\
+&amp;x_{i j} \in\{0,1\}, \quad i, j=1,2, \ldots, n
+\end{aligned}
+\]</span> 用一个例子来说明：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">max_bins <span class="operator">&lt;-</span> 10 <span class="comment"># 箱子的最大个数</span></span><br><span class="line">bin_size <span class="operator">&lt;-</span> 3 <span class="comment"># 每个箱子的size</span></span><br><span class="line">n <span class="operator">&lt;-</span> 10 <span class="comment"># 有多少个物品</span></span><br><span class="line">weights <span class="operator">&lt;-</span> runif<span class="punctuation">(</span>n<span class="punctuation">,</span> <span class="built_in">max</span> <span class="operator">=</span> bin_size<span class="punctuation">)</span> <span class="comment"># 随机生成物品的大小，不大于 bin_size</span></span><br><span class="line"><span class="comment">## 按照上面的模型设置参数</span></span><br><span class="line">MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>y<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>max_bins<span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;binary&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span> j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>max_bins<span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;binary&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>y<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>max_bins<span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>weights<span class="punctuation">[</span>j<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">,</span> j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">)</span> <span class="operator">&lt;=</span> y<span class="punctuation">[</span>i<span class="punctuation">]</span> <span class="operator">*</span> bin_size<span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>max_bins<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span> j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>max_bins<span class="punctuation">)</span> <span class="operator">==</span> <span class="number">1</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">,</span> verbose <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span> j<span class="punctuation">]</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  filter<span class="punctuation">(</span>value <span class="operator">&gt;</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  arrange<span class="punctuation">(</span>i<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<h1 id="指派问题">4. 指派问题</h1>
+<p>指派的标准问题是，有 <span class="math inline">\(n\)</span> 个人和
+<span class="math inline">\(n\)</span> 件事，已知第 <span
+class="math inline">\(i\)</span> 个人做第 <span
+class="math inline">\(j\)</span> 个事的费用为 <span
+class="math inline">\(C_{ij}\)</span>，要求确定人和事之间的关系，使得这
+<span class="math inline">\(n\)</span> 件事情的总费用最小。</p>
+<p>数学模型可以写成：</p>
+<p><span class="math display">\[
+\min z=\sum\limits_{i=1}^n\sum\limits_{j=1}^n c_{ij}x_{ij}
+\]</span></p>
+<p><span class="math display">\[
+\mathrm{s.t}
+\begin{cases}
+\sum\limits_{i=1}^n x_{ij}=1,\quad i=1,2,\cdots,n  \\
+\sum\limits_{j=1}^n x_{ij}=1,\quad j=1,2,\cdots,n  \\
+x_{ij} \in \{0,1\}, \quad i,j=1,2,\cdots,n  \end{cases}
+\]</span></p>
+<p>模拟一个示例做演示：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">set.seed<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">cost <span class="operator">&lt;-</span> rnorm<span class="punctuation">(</span><span class="number">16</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="built_in">round</span><span class="punctuation">(</span><span class="number">2</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> matrix<span class="punctuation">(</span><span class="number">4</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">)</span></span><br><span class="line">m <span class="operator">&lt;-</span> MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;binary&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>cost<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span> j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">)</span> <span class="operator">==</span> <span class="number">1</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span> j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">)</span> <span class="operator">==</span> <span class="number">1</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> cost</span><br><span class="line">     <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">3.37</span> <span class="number">4.33</span> <span class="number">4.58</span> <span class="number">3.38</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">2</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">4.18</span> <span class="number">3.18</span> <span class="number">3.69</span> <span class="number">1.79</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">3</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">3.16</span> <span class="number">4.49</span> <span class="number">5.51</span> <span class="number">5.12</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">5.60</span> <span class="number">4.74</span> <span class="number">4.39</span> <span class="number">3.96</span></span><br><span class="line"><span class="operator">&gt;</span> z <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">&gt;</span> z<span class="punctuation">[</span>cbind<span class="punctuation">(</span>m<span class="operator">$</span>i<span class="punctuation">,</span> m<span class="operator">$</span>j<span class="punctuation">)</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> m<span class="operator">$</span>value</span><br><span class="line"><span class="operator">&gt;</span> z <span class="comment"># 人和事的分配关系</span></span><br><span class="line">     <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>    <span class="number">1</span>    <span class="number">0</span>    <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">2</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">1</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">3</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">1</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">1</span>    <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h1 id="最优传输问题">5. 最优传输问题</h1>
+<p>最优传输比指派问题稍复杂一点点：假如有 6 个生产点和 8
+个销售点，他们之间的存在距离成本矩阵。且约束条件有：</p>
+<ul>
+<li>A1-A6 的产量是：60,55,51,43,41,52</li>
+<li>B1-B8 的销量是：35,37,22,32,41,32,43,38</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">costs<span class="operator">&lt;-</span>matrix<span class="punctuation">(</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">6</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">9</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">9</span><span class="punctuation">,</span></span><br><span class="line"><span class="number">2</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">9</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span><span class="number">8</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">9</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">8</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">8</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span></span><br><span class="line"><span class="number">9</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">)</span><span class="punctuation">,</span> nrow <span class="operator">=</span> <span class="number">6</span><span class="punctuation">)</span> <span class="comment"># 运费矩阵</span></span><br><span class="line"></span><br><span class="line">n_row <span class="operator">&lt;-</span> nrow<span class="punctuation">(</span>costs<span class="punctuation">)</span></span><br><span class="line">n_col <span class="operator">&lt;-</span> ncol<span class="punctuation">(</span>costs<span class="punctuation">)</span></span><br><span class="line">row.rhs <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">60</span><span class="punctuation">,</span><span class="number">55</span><span class="punctuation">,</span><span class="number">51</span><span class="punctuation">,</span><span class="number">43</span><span class="punctuation">,</span><span class="number">41</span><span class="punctuation">,</span><span class="number">52</span><span class="punctuation">)</span> <span class="comment"># 产量约束向量</span></span><br><span class="line">col.rhs <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">35</span><span class="punctuation">,</span><span class="number">37</span><span class="punctuation">,</span><span class="number">22</span><span class="punctuation">,</span><span class="number">32</span><span class="punctuation">,</span><span class="number">41</span><span class="punctuation">,</span><span class="number">32</span><span class="punctuation">,</span><span class="number">43</span><span class="punctuation">,</span><span class="number">38</span><span class="punctuation">)</span> <span class="comment"># 销量约束向量</span></span><br></pre></td></tr></table></figure>
+<p>构建传输模型，假设生产点的产量为 <span
+class="math inline">\(P_i\)</span>, 销售点的预期销量为 <span
+class="math inline">\(S_j\)</span>，生产点到销售点运费矩阵为 <span
+class="math inline">\(C_{ij}\)</span>，不考虑对于每次传输的限制，销售点的需求必须满足：</p>
+<p><span class="math display">\[
+\begin{gathered}
+min \sum_i \sum_j C_{ij} X_{ij} \\
+s.t. \\
+\sum_{i}\sum_j X_{ij} \le P_i;i = 1,2...,M \\
+\sum_{i}\sum_j X_{ij} = S_j;j = 1,2,...,N \\
+\end{gathered}
+\]</span></p>
+<p>构建混合整数规划模型：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">tm <span class="operator">&lt;-</span> MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  <span class="comment"># 添加长度为 i * j 变量组  </span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_row<span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_col<span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;integer&quot;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>costs<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_row<span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_col<span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_col<span class="punctuation">)</span> <span class="operator">&lt;=</span> row.rhs<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_row<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_row<span class="punctuation">)</span> <span class="operator">==</span> col.rhs<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span>n_col<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">m <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> n_row<span class="punctuation">,</span> n_col<span class="punctuation">)</span></span><br><span class="line">index <span class="operator">&lt;-</span> cbind<span class="punctuation">(</span>tm<span class="operator">$</span>i<span class="punctuation">,</span> tm<span class="operator">$</span>j<span class="punctuation">)</span></span><br><span class="line">m<span class="punctuation">[</span>index<span class="punctuation">]</span> <span class="operator">&lt;-</span> tm<span class="operator">$</span>value</span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> m</span><br><span class="line">     <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">8</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>   <span class="number">19</span>    <span class="number">0</span>    <span class="number">0</span>   <span class="number">41</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">2</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">1</span>    <span class="number">0</span>    <span class="number">0</span>   <span class="number">32</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">3</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>   <span class="number">11</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>   <span class="number">40</span>    <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">5</span>    <span class="number">0</span>   <span class="number">38</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">5</span><span class="punctuation">,</span><span class="punctuation">]</span>   <span class="number">34</span>    <span class="number">7</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span>    <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">6</span><span class="punctuation">,</span><span class="punctuation">]</span>    <span class="number">0</span>    <span class="number">0</span>   <span class="number">22</span>    <span class="number">0</span>    <span class="number">0</span>   <span class="number">27</span>    <span class="number">3</span>    <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h1 id="分货优化">6. 分货优化</h1>
+<p>最优传输问题是一个相对简化的模型，我们将这个问题更一般化。假设有 M
+个大仓，N 个门店。第 <span class="math inline">\(i\)</span>
+个大仓的分货限额为 <span
+class="math inline">\(C_i=1,2,3,...,M\)</span>，需要将 <span
+class="math inline">\(C_i\)</span> 分配给各个门店，第 <span
+class="math inline">\(i\)</span> 个门店分得 <span
+class="math inline">\(X_{ij},
+i=1,2,3,...,M,j=1,2,...,N\)</span>，使得</p>
+<p><span class="math display">\[
+min(OBJ)
+\]</span></p>
+<p>约束条件为</p>
+<p><span class="math display">\[
+\sum_{j}^{N} X_{i, j} \leq C_{i}, i=1,2, \ldots, M
+\]</span></p>
+<p>这里的 OBJ
+是某种可以衡量分货策略好坏的函数，分货策略越好，该函数值越小。举个简单的例子，OBJ
+可以是该分货策略的预期缺货量，那么显然，缺货量越小，说明分货策略越好。当然，在实际生产决策中，衡量分货策略好坏往往是从多个维度来考量，诸如现货率、补货次数、补货周期等核心优化指标均要纳入考虑。</p>
+<h2 id="传输优先级">6.1. 传输优先级</h2>
+<p>构建最简化的模型，仅仅考虑一个约束条件，传输的优先级（该情况即为最优传输模型）。<span
+class="math inline">\(j\)</span> 个门店的库存为 0，完全达成门店要求。
+此时抽象的公式为：</p>
+<p><span class="math display">\[
+min \sum_{i}\sum_{j} P_{ij} X_{ij}
+\]</span> 设门店的目标要求为 <span
+class="math inline">\(V_j\)</span>，约束条件为：</p>
+<p><span class="math display">\[
+\begin{gathered}
+\sum_{j}^{M} X_{i, j} \leq C_{i}, i=1,2, \ldots, M \\
+\sum_{i}^{N} X_{i, j} = V_{j}, j=1,2, \ldots, N
+\end{gathered}
+\]</span></p>
+<p>构建模型，及结果是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">## 大仓总量</span><br><span class="line">wh_capacity &lt;- c(100, 300)</span><br><span class="line">## 门店目标库存水平</span><br><span class="line">store_target &lt;- c(100, 80, 120)</span><br><span class="line">## 大仓优先级</span><br><span class="line">priority &lt;- matrix(c(0.9, 0.1, 0.9, 0.1, 0.05, 0.95), 2, 3)</span><br><span class="line">## 构建模型</span><br><span class="line">tm1 &lt;- MIPModel() |&gt;</span><br><span class="line">  # 添加长度为 i * j 变量组  </span><br><span class="line">  add_variable(x[i,j], i = 1:2, j = 1:3, type = &quot;integer&quot;, lb = 0) |&gt;</span><br><span class="line">  ## 设置目标函数</span><br><span class="line">  set_objective(sum_over(priority[i,j] * x[i,j], i = 1:2, j = 1:3), &quot;min&quot;) |&gt;</span><br><span class="line">  ## 增加约束</span><br><span class="line">  add_constraint(sum_over(x[i,j], j = 1:3) &lt;= wh_capacity[i], i = 1:2) |&gt;</span><br><span class="line">  add_constraint(sum_over(x[i,j], i = 1:2) == store_target[j], j = 1:3) |&gt;</span><br><span class="line">  solve_model(with_ROI(solver = &quot;glpk&quot;)) |&gt;</span><br><span class="line">  get_solution(x[i,j])</span><br><span class="line"></span><br><span class="line">&gt; tm1</span><br><span class="line">  variable i j value</span><br><span class="line">1        x 1 1     0</span><br><span class="line">4        x 2 1   100</span><br><span class="line">2        x 1 2     0</span><br><span class="line">5        x 2 2    80</span><br><span class="line">3        x 1 3   100</span><br><span class="line">6        x 2 3    20</span><br></pre></td></tr></table></figure>
+<h2 id="考虑实际库存">6.2. 考虑实际库存</h2>
+<p>上面的抽象模型显然太过于理想化，事实上门店显然是有库存的。</p>
+<p>假设目标库存车辆数是 <span class="math inline">\(Tar_j \ge
+0\)</span>，当前库存数车辆数为 <span class="math inline">\(Inv_j \ge
+0\)</span>，<span class="math inline">\(X_{ij} \ge 0\)</span> 为从 <span
+class="math inline">\(i\)</span> 位置到 <span
+class="math inline">\(j\)</span> 站点的调度量，<span
+class="math inline">\(S_j \ge 0\)</span> 为站点 <span
+class="math inline">\(j\)</span>
+取得调度量之后的未满足量。那么则有这样的限制条件：</p>
+<p><span class="math display">\[
+Inv_j + \sum_j^N X_{ij} + S_j \ge Tar_j
+\]</span></p>
+<p>显然我们希望<code>未满足量</code>最小：</p>
+<p><span class="math display">\[
+min \sum_j^N S_j
+\]</span> 也就是说我们需要的目标是两个同时优化：</p>
+<p><span class="math display">\[
+\min (\sum_i^M \sum_j^N P_{ij} X_{ij} + \sum_{j} S_{j})
+\]</span></p>
+<p>约束条件是：</p>
+<p><span class="math display">\[
+\begin{gathered}
+\sum_{j} X_{ij} \leq C_{i}, i=1,2, \ldots, M \\
+I n v_{j}+\sum_{i} X_{ij}+S_{j} \geq Tar_{j}, j=1,2, \ldots, N
+\end{gathered}
+\]</span></p>
+<p>这个混合整数规划问题变成了更复杂的样子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 门店库存水平</span></span><br><span class="line">store_inv <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">50</span><span class="punctuation">,</span> <span class="number">20</span><span class="punctuation">,</span> <span class="number">30</span><span class="punctuation">)</span></span><br><span class="line">store_mip <span class="operator">&lt;-</span> MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;integer&quot;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>b<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&#x27;integer&#x27;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  <span class="comment">## 设置目标函数</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>priority<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">+</span> sum_over<span class="punctuation">(</span><span class="number">1000</span><span class="operator">*</span>b<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  <span class="comment">## 增加约束</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">&lt;=</span> wh_capacity<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">)</span> <span class="operator">+</span> store_inv<span class="punctuation">[</span>j<span class="punctuation">]</span> <span class="operator">+</span>  b<span class="punctuation">[</span>j<span class="punctuation">]</span> <span class="operator">&gt;=</span> store_target<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> store_mip</span><br><span class="line">  variable i j value</span><br><span class="line"><span class="number">1</span>        x <span class="number">1</span> <span class="number">1</span>     <span class="number">0</span></span><br><span class="line"><span class="number">4</span>        x <span class="number">2</span> <span class="number">1</span>    <span class="number">50</span></span><br><span class="line"><span class="number">2</span>        x <span class="number">1</span> <span class="number">2</span>     <span class="number">0</span></span><br><span class="line"><span class="number">5</span>        x <span class="number">2</span> <span class="number">2</span>    <span class="number">60</span></span><br><span class="line"><span class="number">3</span>        x <span class="number">1</span> <span class="number">3</span>    <span class="number">90</span></span><br><span class="line"><span class="number">6</span>        x <span class="number">2</span> <span class="number">3</span>     <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h2 id="最小分货单元">6.3. 最小分货单元</h2>
+<p>因为分货的车每次只能装载 6 件商品，因此我们还有一个条件：分货量必须为
+6 的倍数。可以考虑引入一个辅助变量 <span
+class="math inline">\(O_{ij}\)</span>，引入 mlc 之后约束条件增加</p>
+<p><span class="math display">\[
+\begin{gathered}
+mlc \times O_{ij} = X_{ij}\
+\end{gathered}
+\]</span> 模型又发生了一些改变：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## Minimum loading capacity</span></span><br><span class="line">mlc <span class="operator">&lt;-</span> 6</span><br><span class="line">store_mip <span class="operator">&lt;-</span> MIPModel<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&quot;integer&quot;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>b<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&#x27;integer&#x27;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_variable<span class="punctuation">(</span>o<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&#x27;integer&#x27;</span><span class="punctuation">,</span> lb <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  <span class="comment">## 设置目标函数</span></span><br><span class="line">  set_objective<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>priority<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">*</span> x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">+</span> sum_over<span class="punctuation">(</span>b<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&quot;min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  <span class="comment">## 增加约束</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">&lt;=</span> wh_capacity<span class="punctuation">[</span>i<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>sum_over<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">)</span> <span class="operator">+</span> store_inv<span class="punctuation">[</span>j<span class="punctuation">]</span> <span class="operator">+</span>  b<span class="punctuation">[</span>j<span class="punctuation">]</span> <span class="operator">&gt;=</span> store_target<span class="punctuation">[</span>j<span class="punctuation">]</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  add_constraint<span class="punctuation">(</span>mlc <span class="operator">*</span> o<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">==</span> x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">,</span> i <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">2</span><span class="punctuation">,</span> j <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  solve_model<span class="punctuation">(</span>with_ROI<span class="punctuation">(</span>solver <span class="operator">=</span> <span class="string">&quot;glpk&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  get_solution<span class="punctuation">(</span>x<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="operator">&gt;</span> store_mip</span><br><span class="line">  variable i j value</span><br><span class="line"><span class="number">1</span>        x <span class="number">1</span> <span class="number">1</span>     <span class="number">0</span></span><br><span class="line"><span class="number">4</span>        x <span class="number">2</span> <span class="number">1</span>    <span class="number">54</span></span><br><span class="line"><span class="number">2</span>        x <span class="number">1</span> <span class="number">2</span>     <span class="number">0</span></span><br><span class="line"><span class="number">5</span>        x <span class="number">2</span> <span class="number">2</span>    <span class="number">60</span></span><br><span class="line"><span class="number">3</span>        x <span class="number">1</span> <span class="number">3</span>    <span class="number">90</span></span><br><span class="line"><span class="number">6</span>        x <span class="number">2</span> <span class="number">3</span>     <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<p>当然，以上示例均为演示而构造，实际生产过程会远比这些示例复杂，有些明确需要使用其他方法来进行拟合或逼近。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/28/statistician.html" rel="prev" title="数据科学家能力素质模型">
+                  <i class="fa fa-angle-left"></i> 数据科学家能力素质模型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/05/20/synthetic-did.html" rel="next" title="合成双重差分法">
+                  合成双重差分法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

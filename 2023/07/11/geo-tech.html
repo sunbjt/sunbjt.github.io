@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="叶文洁是第一个通过太阳向宇宙发出了信号的地球人，从而暴露了地球在茫茫宇宙中的坐标，成为了三体人进攻和侵略地球的开始。  《三体》小说贡献了太多的经典桥段，“不要回答，不要回答，不要回答”的黑暗丛林法则也让人印象深刻。不过，我们较个真，从科学的角度聊聊需要具备怎样的条件，才能把地球的坐标发出去。为了类比，我们小处着眼，先理解一下在地球上的坐标是咋出来的？ 1. 坐标系 世界大地测量系统（World">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时空数据科学概念和技术">
+<meta property="og:url" content="http://bjt.name/2023/07/11/geo-tech.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="叶文洁是第一个通过太阳向宇宙发出了信号的地球人，从而暴露了地球在茫茫宇宙中的坐标，成为了三体人进攻和侵略地球的开始。  《三体》小说贡献了太多的经典桥段，“不要回答，不要回答，不要回答”的黑暗丛林法则也让人印象深刻。不过，我们较个真，从科学的角度聊聊需要具备怎样的条件，才能把地球的坐标发出去。为了类比，我们小处着眼，先理解一下在地球上的坐标是咋出来的？ 1. 坐标系 世界大地测量系统（World">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/planet-earth.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/GPS24goldenSML.gif">
+<meta property="og:image" content="http://eng.uber.com/wp-content/uploads/2018/06/image12.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/h3-1.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/h3-2.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/h3-3.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/Worlds_animate.gif">
+<meta property="og:image" content="http://bjt.name/upload/pic/weigongcun.png">
+<meta property="article:published_time" content="2023-07-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.294Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/planet-earth.png">
+
+
+<link rel="canonical" href="http://bjt.name/2023/07/11/geo-tech.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2023/07/11/geo-tech.html","path":"2023/07/11/geo-tech.html","title":"时空数据科学概念和技术"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>时空数据科学概念和技术 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2023/07/11/geo-tech.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="时空数据科学概念和技术 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          时空数据科学概念和技术
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-07-11 00:00:00" itemprop="dateCreated datePublished" datetime="2023-07-11T00:00:00+08:00">2023-07-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">数据思维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>叶文洁是第一个通过太阳向宇宙发出了信号的地球人，从而暴露了地球在茫茫宇宙中的坐标，成为了三体人进攻和侵略地球的开始。</p>
+</blockquote>
+<p>《三体》小说贡献了太多的经典桥段，“不要回答，不要回答，不要回答”的黑暗丛林法则也让人印象深刻。不过，我们较个真，从科学的角度聊聊需要具备怎样的条件，才能把地球的坐标发出去。为了类比，我们小处着眼，先理解一下在地球上的坐标是咋出来的？</p>
+<h1 id="坐标系">1. 坐标系</h1>
+<p>世界大地测量系统（World Geodetic System,
+WGS）是一种用于地图学、大地测量学和导航（包括全球定位系统）的大地测量系统标准。WGS
+包含一套地球的标准经纬坐标系、一个用于计算原始海拔数据的参考椭球体，和一套用以定义海平面高度的引力等势面数据。</p>
+<p>地球的形状不是完美的球形。因此，当我们试图近似地球的形状时，需要一个更好的模型。这个模型就是
+WGS84
+坐标系：它的坐标中心点为地球质心，采用一个十分近似于地球自然形状的参考椭球体，作为描述和推算地面点位置和相互关系的基准面。</p>
+<p><img src="/upload/pic/planet-earth.png" /></p>
+<p>有了这个椭球体，地球上任意一个点就可以在这个体系中有唯一投影。这个投影一般使用经度和纬度两个数据，表达该点的位置（也可以有高度）。</p>
+<p>WGS84 是世界上第一个统一的地心坐标系（最后修订于 2004
+年），因此也被称为大地坐标系、原始坐标系。不同的地区地理信息差别较大（海拔、地表趋势等），为了更精确的表达信息，各地使用的参考椭球体（或参数）不同。欧洲石油调查组织（EPSG）的成员在
+1985 年发起了一个介于1024 和 32767 之间的 EPSG
+注册表，这个注册表包含了大地基准面、空间参考系统、地球椭球体、坐标变换和相关测量单位等信息。</p>
+<span id="more"></span>
+<p>EPSP 的英文全称是 European Petroleum Survey
+Group，中文名称为欧洲石油调查组织。这个组织成立于 1986 年，2005
+年并入IOGP(International Association of Oil &amp; Gas
+Producers)，中文名称为国际油气生产者协会。选择不同的座标系对于油气勘探的成本至关重要，所以有不同的座标系，这也是为什么这个注册码是从
+EPSP 发起的。</p>
+<p>对于中国来讲，以地球的几何球心为中心的中国地图注册码就是
+EPSG:4479，以地球的椭球焦点为中心就是 EPSG:4480。</p>
+<p>由美国提供服务的全球定位系统（GPS）使用的就是 WGS84 参考系（EPSG
+注册代码为
+4326）。国家测绘局为了安全考虑（里面的八卦很多，看官感兴趣可自行搜索），要求互联网企业在国内不允许直接使用
+WGS84 坐标下的地理数据，于是开发了加密的 GCJ-02（国家测绘局 02
+年的简写）。这套体系是在 WGS84
+之上做了变换，大约有几百米的偏移量，从视觉上会感觉好像到了火星，所以民间也称
+GCJ-02 为火星坐标系。百度地图又在 GCJ-02
+上多增加了一次变换，用于自己的地图商业解决方案，标识为 BD-09（百度 09
+年的简写）。</p>
+<p>下面列出了各个主流地图厂商在各地使用的坐标系（请注意，把百度的坐标放到高德地图中，位置会发生错乱，坐标和坐标系需要统一）：</p>
+<table>
+<thead>
+<tr class="header">
+<th>地图</th>
+<th>大陆/港/澳</th>
+<th>台湾省</th>
+<th>海外</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>高德</td>
+<td>GCJ-02</td>
+<td>WGS84</td>
+<td>WGS84</td>
+</tr>
+<tr class="even">
+<td>Google</td>
+<td>GCJ-02</td>
+<td>WGS84</td>
+<td>WGS84</td>
+</tr>
+<tr class="odd">
+<td>百度</td>
+<td>BD-09 / GCJ-02</td>
+<td>BD-09 / GCJ-02</td>
+<td>WGS84</td>
+</tr>
+</tbody>
+</table>
+<h1 id="gps-的工作原理">2. GPS 的工作原理</h1>
+<p>GPS
+是美国第二代卫星导航系统。它是在子午仪卫星导航系统的基础上发展起来的。GPS
+卫星在大约
+20200公里的高度的中地球轨道（MEO）飞行，每颗卫星每天绕地球两圈。GPS
+卫星排列成围绕地球的六个等间距轨道平面，每个平面包含由基线卫星占据的四个
+slots，这种 24 slots
+的卫星布局，确保用户可以从地球上的几乎任何一点查看至少四颗卫星（2011 年
+6 月美国空军又在这 24 个卫星基础上新增了 3
+个扩展卫星，以提高卫星可用性和空间整体信号性能的稳健性）。</p>
+<figure>
+<img src="/upload/pic/GPS24goldenSML.gif" alt="来源于 wikipedia" />
+<figcaption aria-hidden="true">来源于 wikipedia</figcaption>
+</figure>
+<p>如何计算观测点的坐标呢？</p>
+<p>GPS
+卫星轨道参数已知，且会不停地发送报文信息，所以我们知道卫星的位置（xyz）。报文到达接收器有时间差，乘以光速，就是观测点到达卫星的距离
+d。从空间几何上看，可以得到以 GPS 卫星为中心，半径为 d
+的圆球。显然有只要存在三个圆球，它们的交汇点即是观测点的位置。</p>
+<p>当然这里面有两个细节：</p>
+<ol type="1">
+<li>光速实在太快了，时间稍稍差一点，观测点到达卫星的距离就错了。因此每颗卫星都需要有原子钟来精确表达时间（铯钟，我国的最新记录是
+6000 万年不差一秒，显然石英钟精度不够）。</li>
+<li>观测点的接收端还需要修正本地时间的误差，因此还需要一颗额外卫星（额外的一条数据）。</li>
+</ol>
+<p>还有种说法是，默认每颗卫星的时钟都是准的，增加一条额外数据，通过最小二乘的方法（4
+条数据求 3 个参数）求解接收点的位置。</p>
+<p>在求解了接收点的空间位置（xyz）之后，显然很容易投影到 WGS84
+这个椭球上，那么我们常见的经度和纬度就得到了，即接收点的位置。</p>
+<blockquote>
+<p>另，我国的北斗卫星比 GPS 还要高级，GPS
+只能单向发信息到终端，北斗还可以在终端发送短报文给卫星，再回传基站（求救中心）。</p>
+</blockquote>
+<h1 id="位置数据的格式">3. 位置数据的格式</h1>
+<p>Simple Features
+是一组标准，用于指定地理要素的通用存储和访问模型，该模型主要由地理信息系统使用的二维几何（点、线、面、多点、多线等）组成。它由开放地理空间联盟（OGC）和国际标准化组织（ISO）正式确定。</p>
+<p>该套标准约定的常见数据格式是 WKT(Well-known
+text)，点、线、面等几种类型（GEOs 中称为 Geometry）数据的示例如下：</p>
+<table>
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>类型</th>
+<th>WKT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Point</td>
+<td>POINT(10 10)</td>
+</tr>
+<tr class="even">
+<td>LineString</td>
+<td>LINESTRING(10 10, 20 30)</td>
+</tr>
+<tr class="odd">
+<td>Polygon</td>
+<td>POLYGON(10 10, 15 16, 30 32)</td>
+</tr>
+<tr class="even">
+<td>MultiPoint</td>
+<td>MULTIPOINT ((10 40), (20 20), (30 10))</td>
+</tr>
+<tr class="odd">
+<td>MultiLineString</td>
+<td>MULTILINESTRING ((10 10, 20 20, 10 40), (40 40, 30 30, 40 20, 30
+10))</td>
+</tr>
+<tr class="even">
+<td>MultiPolygon</td>
+<td>MULTIPOLYGON (((40 40, 20 45, 45 30)), ((20 35, 45 20, 20 35)))</td>
+</tr>
+</tbody>
+</table>
+<p>在 R 中使用 <strong>sf</strong>
+包来支持这类型数据，我们看一个经纬度数值转化为 WGS84
+大地坐标系的例子：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>sf<span class="punctuation">)</span></span><br><span class="line">options<span class="punctuation">(</span>stringsAsFactors <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">lng <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">111.5923</span><span class="punctuation">,</span> <span class="number">111.5675</span><span class="punctuation">)</span></span><br><span class="line">lat <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">25.19013</span><span class="punctuation">,</span> <span class="number">25.18018</span><span class="punctuation">)</span></span><br><span class="line">dfx <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>place <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;客栈&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;酒店&#x27;</span><span class="punctuation">)</span><span class="punctuation">,</span> </span><br><span class="line">       lng <span class="operator">=</span> lng<span class="punctuation">,</span> lat <span class="operator">=</span> lat<span class="punctuation">,</span></span><br><span class="line">       value <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">85</span><span class="punctuation">,</span> <span class="number">82</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment"># just to add some value that is plotable</span></span><br><span class="line">projcrs <span class="operator">&lt;-</span> <span class="string">&quot;+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0&quot;</span></span><br><span class="line">df <span class="operator">&lt;-</span> st_as_sf<span class="punctuation">(</span>x <span class="operator">=</span> dfx<span class="punctuation">,</span>                         </span><br><span class="line">           coords <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;lng&quot;</span><span class="punctuation">,</span> <span class="string">&quot;lat&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">           crs <span class="operator">=</span> projcrs<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## st_crs(df) &lt;- 4326 # same to next step</span></span><br><span class="line">df <span class="operator">&lt;-</span> st_transform<span class="punctuation">(</span>df<span class="punctuation">,</span> crs <span class="operator">=</span> <span class="number">4326</span><span class="punctuation">)</span></span><br><span class="line">df</span><br><span class="line"><span class="comment">## Simple feature collection with 2 features and 2 fields</span></span><br><span class="line"><span class="comment">## Geometry type: POINT</span></span><br><span class="line"><span class="comment">## Dimension:     XY</span></span><br><span class="line"><span class="comment">## Bounding box:  xmin: 111.5675 ymin: 25.18018 xmax: 111.5923 ymax: 25.19013</span></span><br><span class="line"><span class="comment">## Geodetic CRS:  WGS 84</span></span><br><span class="line"><span class="comment">##   place value                  geometry</span></span><br><span class="line"><span class="comment">## 1  客栈    85 POINT (111.5923 25.19013)</span></span><br><span class="line"><span class="comment">## 2  酒店    82 POINT (111.5675 25.18018)</span></span><br></pre></td></tr></table></figure>
+<p>这样我们就将这两个位置对应位置信息以及不同的描述信息组合在了一起。</p>
+<p>还有一种格式是 GeoJSON，基于 JSON 的 Feature 输出格式，它便于被
+JavaScript 等脚本语言处理，OpenLayers 等地理库便是采用 GeoJSON
+格式。</p>
+<h1 id="uber-的全球-h3-体系">4. Uber 的全球 H3 体系</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/uber/h3">H3</a> 是 Uber
+开源的一个地理空间索引系统，它可以将地球表面分成一系列六边形的网格，并对每个六边形进行编码，从而实现对地球表面的高效索引和查询。H3
+的设计目标是提供一种高效、可扩展、灵活的地理空间索引方案。</p>
+<figure>
+<img src="http://eng.uber.com/wp-content/uploads/2018/06/image12.png"
+alt="H3 将地球切分成了一个个的六边形，可以用于更精确的分析任务。" />
+<figcaption aria-hidden="true">H3
+将地球切分成了一个个的六边形，可以用于更精确的分析任务。</figcaption>
+</figure>
+<p>H3
+的六边形网格是根据一定的分辨率级别进行划分的，分辨率级别越高，网格越小，精度越高。H3
+支持 16
+个不同的分辨率级别，从全球范围到具体的街区和建筑物等级别都可以进行索引。每个六边形都有一个唯一的
+H3 编码，可以用于快速查找和比较不同的地理位置。每个六边形大致覆盖 7
+个子六边形，也就是说子六边形面积大约是父六边形的
+1/7。以下的示例是根据前文中提供的两个点返回的 resolution 为 8、9、15
+六边形区块的索引。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>h3jsr<span class="punctuation">)</span></span><br><span class="line">d1 <span class="operator">&lt;-</span> df<span class="operator">$</span>geometry <span class="operator">|&gt;</span> point_to_cell<span class="punctuation">(</span>res <span class="operator">=</span> <span class="number">8</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## [1] &quot;88403532cdfffff&quot; &quot;884035ad37fffff&quot;</span></span><br><span class="line">d2 <span class="operator">&lt;-</span> df<span class="operator">$</span>geometry <span class="operator">|&gt;</span> point_to_cell<span class="punctuation">(</span>res <span class="operator">=</span> <span class="number">9</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## [1] &quot;89403532cdbffff&quot; &quot;894035ad36fffff&quot;</span></span><br><span class="line">d3 <span class="operator">&lt;-</span> df<span class="operator">$</span>geometry <span class="operator">|&gt;</span> point_to_cell<span class="punctuation">(</span>res <span class="operator">=</span> <span class="number">15</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## [1] &quot;8f403532cd91666&quot; &quot;8f4035ad36f1433&quot;</span></span><br><span class="line">grid_distance<span class="punctuation">(</span>d3<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">,</span> d3<span class="punctuation">[</span><span class="number">2</span><span class="punctuation">]</span><span class="punctuation">)</span> <span class="comment"># cell 间距离</span></span><br><span class="line"><span class="comment">## [1] 25</span></span><br><span class="line">dp_9 <span class="operator">&lt;-</span> grid_path<span class="punctuation">(</span>d2<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">,</span> d2<span class="punctuation">[</span><span class="number">2</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">[[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">]</span> <span class="comment"># cell 间的路径</span></span><br><span class="line"><span class="comment">## [1] &quot;89403532cdbffff&quot; &quot;89403532cc3ffff&quot; &quot;89403532cc7ffff&quot; &quot;89403532c8bffff&quot;</span></span><br><span class="line"><span class="comment">## [5] &quot;89403532c8fffff&quot; &quot;89403532cbbffff&quot; &quot;89403532ca3ffff&quot; &quot;89403532cb7ffff&quot;</span></span><br><span class="line"><span class="comment">## [9] &quot;894035ad36bffff&quot; &quot;894035ad36fffff&quot;</span></span><br></pre></td></tr></table></figure>
+<p>H3
+广泛应用于各种地理信息系统，如共享经济、交通运输、城市规划等领域。例如，在
+Uber 的出行服务中，利用 H3
+快速计算乘客和司机之间的距离和路线，辅以车乘匹配算法，提高乘客出行效率。以下代码的意思是将前文提到的点转化为
+resolution 为 8 和 9 的 H3 cell，并找到 9 级 H3 cell
+对应的最短路径。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">df_h3_8 <span class="operator">&lt;-</span> df<span class="operator">$</span>geometry <span class="operator">|&gt;</span> point_to_cell<span class="punctuation">(</span>res <span class="operator">=</span> <span class="number">8</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> cell_to_polygon<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">df_h3_8</span><br><span class="line"><span class="comment">## Geometry set for 2 features </span></span><br><span class="line"><span class="comment">## Geometry type: POLYGON</span></span><br><span class="line"><span class="comment">## Dimension:     XY</span></span><br><span class="line"><span class="comment">## Bounding box:  xmin: 111.564 ymin: 25.17322 xmax: 111.5936 ymax: 25.19341</span></span><br><span class="line"><span class="comment">## Geodetic CRS:  WGS 84</span></span><br><span class="line"><span class="comment">## POLYGON ((111.5929 25.18562, 111.5936 25.19029,...</span></span><br><span class="line"><span class="comment">## POLYGON ((111.573 25.17477, 111.5737 25.17943, ...</span></span><br><span class="line">df_h3_9 <span class="operator">&lt;-</span> df<span class="operator">$</span>geometry <span class="operator">|&gt;</span> point_to_cell<span class="punctuation">(</span>res <span class="operator">=</span> <span class="number">9</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> cell_to_polygon<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">dp_path_9 <span class="operator">&lt;-</span> dp_9 <span class="operator">|&gt;</span> cell_to_polygon<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">ggplot<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> df_h3_8<span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> df_h3_9<span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> df<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> dp_path_9<span class="punctuation">,</span> alpha <span class="operator">=</span> <span class="number">0.3</span><span class="punctuation">,</span> fill <span class="operator">=</span> <span class="string">&#x27;blue&#x27;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_fill_viridis_d<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>text <span class="operator">=</span> element_text<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<figure>
+<img src="/upload/pic/h3-1.png"
+alt="将前文中两个点对应为 resolution 为 8 和 9 的 H3 cell和最短路径" />
+<figcaption aria-hidden="true">将前文中两个点对应为 resolution 为 8 和 9
+的 H3 cell和最短路径</figcaption>
+</figure>
+<p>H3
+最大的好处是将全球所有的位置以不重不漏的方式进行了重组，极大的方便了我们对于空间中点（比如人、车、事件等）的后续分析。</p>
+<h1 id="空间拓扑关系">5. 空间拓扑关系</h1>
+<p>已知两个几何对象
+A，B，看他们之间的关系：比如一个点是不是在一个面里，面和另一个面是不是重叠？……这些说的就是空间拓扑关系，常用的拓扑关系有这些：</p>
+<ul>
+<li>Intersects</li>
+<li>Disjoint</li>
+<li>Contains</li>
+<li>Within</li>
+<li>Equal</li>
+<li>Overlap</li>
+<li>Touch</li>
+<li>Cross</li>
+</ul>
+<p>客官如果有兴趣可以参考“<a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DE-9IM">九交模型（DE-9IM）</a>”，这套拓扑模型有更加科学和严格的定义。</p>
+<p>在实际项目中 Contains 这个关系用的最多，拿一个例子说明：有 2
+个车站（定义为：前文提到的 df 是站点的中心，半径为 450
+米的圆），判断每个车站内有几辆车。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">set.seed<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 随机生成 10 个车辆位置</span></span><br><span class="line">n <span class="operator">&lt;-</span> 10</span><br><span class="line">l1 <span class="operator">&lt;-</span> runif<span class="punctuation">(</span>n<span class="punctuation">,</span> <span class="built_in">min</span><span class="punctuation">(</span>lng<span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">max</span><span class="punctuation">(</span>lng<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">l2 <span class="operator">&lt;-</span> runif<span class="punctuation">(</span>n<span class="punctuation">,</span> <span class="built_in">min</span><span class="punctuation">(</span>lat<span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">max</span><span class="punctuation">(</span>lat<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">pts <span class="operator">&lt;-</span> st_as_sf<span class="punctuation">(</span>x <span class="operator">=</span> data.frame<span class="punctuation">(</span>lon <span class="operator">=</span> l1<span class="punctuation">,</span> lat <span class="operator">=</span> l2<span class="punctuation">)</span><span class="punctuation">,</span>                         </span><br><span class="line">           coords <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;lon&quot;</span><span class="punctuation">,</span> <span class="string">&quot;lat&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">           crs <span class="operator">=</span> projcrs<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">df_circle <span class="operator">&lt;-</span> st_buffer<span class="punctuation">(</span>df<span class="punctuation">,</span> <span class="number">450</span><span class="punctuation">)</span> <span class="comment"># 以 df 为圆心画半径为 450 米的圆</span></span><br><span class="line">st_contains<span class="punctuation">(</span>df_circle<span class="punctuation">,</span> pts<span class="punctuation">,</span> sparse <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span> <span class="comment"># 是否重合</span></span><br><span class="line"><span class="comment">##       [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]</span></span><br><span class="line"><span class="comment">## [1,] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span></span><br><span class="line"><span class="comment">## [2,] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></span><br><span class="line"></span><br><span class="line">ggplot<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> df_circle<span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> pts<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>text <span class="operator">=</span> element_text<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<figure>
+<img src="/upload/pic/h3-2.png"
+alt="可以看到 10 辆车只有 1 辆车在站内" />
+<figcaption aria-hidden="true">可以看到 10 辆车只有 1
+辆车在站内</figcaption>
+</figure>
+<p>这里有一个细节，我们做空间拓扑的包含判断，数据量少的话性能还
+OK，但数据量一旦上来，会出现巨大的笛卡尔积，性能会出现指数级下降。这个问题在
+<strong>sf</strong>
+包中已经被考虑，通过构建空间索引，计算耗时基本是线性的，细节可以参考<a
+target="_blank" rel="noopener" href="https://r-spatial.org/r/2017/06/22/spatial-index.html">这里</a>。另外，其他时空工具也同样考虑了这个性能问题，这也是为什么空间统计是独一份存在。</p>
+<p>再来个例子：因为业务考虑，其中一个车站要更大（具体是和一个三角形合并），再判断车在不在这两个车站。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 假如我们要增加一个三角形 polygon</span></span><br><span class="line">s_list <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span>rbind<span class="punctuation">(</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">111.577</span><span class="punctuation">,</span><span class="number">25.177</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">111.563</span><span class="punctuation">,</span><span class="number">25.183</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">111.581</span><span class="punctuation">,</span><span class="number">25.185</span><span class="punctuation">)</span><span class="punctuation">,</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">111.577</span><span class="punctuation">,</span><span class="number">25.177</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">polygon_s <span class="operator">&lt;-</span> st_polygon<span class="punctuation">(</span>s_list<span class="punctuation">)</span> <span class="operator">|&gt;</span> st_sfc<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">st_crs<span class="punctuation">(</span>polygon_s<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="number">4326</span></span><br><span class="line"></span><br><span class="line">polygon_u <span class="operator">&lt;-</span> st_union<span class="punctuation">(</span>polygon_s<span class="punctuation">,</span> df_circle<span class="punctuation">)</span> <span class="comment"># 合并polygon</span></span><br><span class="line">ggplot<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> polygon_u<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_sf<span class="punctuation">(</span>data <span class="operator">=</span> pts<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>text <span class="operator">=</span> element_text<span class="punctuation">(</span>family<span class="operator">=</span><span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">st_contains<span class="punctuation">(</span>polygon_u<span class="punctuation">,</span> pts<span class="punctuation">,</span> sparse <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">##      [,1] [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]</span></span><br><span class="line"><span class="comment">## [1,] TRUE TRUE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</span></span><br><span class="line"><span class="comment">## [2,] TRUE TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</span></span><br></pre></td></tr></table></figure>
+<figure>
+<img src="/upload/pic/h3-3.png"
+alt="站点的形状发生变化，生成的 10 辆车，有 3 辆车在站内" />
+<figcaption aria-hidden="true">站点的形状发生变化，生成的 10 辆车，有 3
+辆车在站内</figcaption>
+</figure>
+<h1 id="平面可视化">6. 平面可视化</h1>
+<p>前面的小例子都是在地理坐标系（Geographic coordinate
+system）下做的说明。如果我们需要和实际地图做联动的话，就需要从地理坐标系的三维投影到电脑屏幕的二维上，这时需要使用投影坐标系（Projected
+coordinate
+systems），常用的是墨卡托投影（Mercator）。需要注意的是，墨卡托投影纬度越高，放大效应越厉害。下图是墨卡托投影下每个国家的大小和实际大小的差别：</p>
+<p><img src="/upload/pic/Worlds_animate.gif" /></p>
+<p>墨卡托投影的线型比例尺在图中任意一点周围都保持不变，从而可以保持大陆轮廓投影后的角度和形状不变，非常适合做二维平面可视化。墨卡托投影对应的
+EPSG 注册码为 3857。目前主要是各大互联网地图公司以它为基准，例如 Google
+地图，Microsoft 地图。</p>
+<p>假设我们希望绘制一个点，这个点是全国最贵农田的坐标（lng=116.331415,
+lat=39.965217，猜猜是哪）。使用百度坐标在 leaflet 中做展示，需要配置好
+EPSG 相关的参数和百度自己的地图瓦片，代码见下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>leaflet<span class="punctuation">)</span></span><br><span class="line">epsgBaidu <span class="operator">&lt;-</span> leafletCRS<span class="punctuation">(</span></span><br><span class="line">  crsClass <span class="operator">=</span> <span class="string">&quot;L.Proj.CRS&quot;</span><span class="punctuation">,</span> </span><br><span class="line">  code <span class="operator">=</span> <span class="string">&quot;EPSG:3857&quot;</span><span class="punctuation">,</span></span><br><span class="line">  proj4def <span class="operator">=</span> <span class="string">&#x27;+proj=merc +a=6378206 +b=6356584.314245179 +lat_ts=0.0 +lon_0=0.0 +x_0=0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext  +no_defs&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  resolutions <span class="operator">=</span> <span class="number">2</span><span class="operator">^</span><span class="punctuation">(</span><span class="number">18</span><span class="operator">:</span><span class="number">0</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  origin <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  bounds <span class="operator">=</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="built_in">list</span><span class="punctuation">(</span><span class="number">20037508.342789244</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">20037508.342789244</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最新的百度地图瓦片</span></span><br><span class="line">newBaiduTileLayerConf <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span></span><br><span class="line">  tile_url <span class="operator">=</span> <span class="string">&quot;https://maponline&#123;s&#125;.bdimg.com/tile/?qt=vtile&amp;x=&#123;x&#125;&amp;y=&#123;y&#125;&amp;z=&#123;z&#125;&amp;styles=pl&amp;scaler=4&quot;</span><span class="punctuation">,</span></span><br><span class="line">  subdomains<span class="operator">=</span><span class="string">&#x27;0123&#x27;</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">baseBaiduMap <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>...<span class="punctuation">,</span> layerConfig <span class="operator">=</span> newBaiduTileLayerConf<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  leaflet<span class="punctuation">(</span>...<span class="punctuation">,</span> options <span class="operator">=</span> leafletOptions<span class="punctuation">(</span>crs <span class="operator">=</span> epsgBaidu<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">    addTiles<span class="punctuation">(</span>urlTemplate <span class="operator">=</span> layerConfig<span class="operator">$</span>tile_url<span class="punctuation">,</span></span><br><span class="line">             options <span class="operator">=</span> tileOptions<span class="punctuation">(</span>tms <span class="operator">=</span> <span class="number">1</span><span class="punctuation">,</span> subdomains<span class="operator">=</span>layerConfig<span class="operator">$</span>subdomains<span class="punctuation">)</span></span><br><span class="line">    <span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">m <span class="operator">&lt;-</span> baseBaiduMap<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  addMarkers<span class="punctuation">(</span>lng<span class="operator">=</span><span class="number">116.331415</span><span class="punctuation">,</span> lat<span class="operator">=</span><span class="number">39.965217</span><span class="punctuation">,</span> popup<span class="operator">=</span><span class="string">&quot;中国最贵的一块农田&quot;</span><span class="punctuation">)</span></span><br><span class="line">m</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/upload/pic/weigongcun.png" /></p>
+<h1 id="工具和解决方案">7. 工具和解决方案</h1>
+<p>前面简要的介绍了和时空相关的一些基础知识，利用 R
+作为工具做了一些演示。实际上时空数据包含了至少存储、计算、可视化、模型四部分。如果想省心，可以转向最成熟的商业软件
+ArcGIS，如果工作只是涉及其中的一部分，也有不同的开源的工具可以使用，成体系的有
+Apache 协议下的 GeoMesa、Sedona（支持分布式，个人比较推荐），下图是
+Sedona 的系统架构图：</p>
+<p><img
+src="https://sedona.apache.org/1.4.1/image/architecture.svg" /></p>
+<p>如果工作只是一部分涉及的话，可以单独看解决方案：</p>
+<ul>
+<li>存储：PostGIS、redis</li>
+<li>计算：<a target="_blank" rel="noopener" href="https://github.com/locationtech/jts">JTS</a>、<a
+target="_blank" rel="noopener" href="https://trac.osgeo.org/geos">GEOS</a>、R(wrapper)、Python(wrapper)</li>
+<li>可视化：一般都是 JS 框架，如 <a
+target="_blank" rel="noopener" href="https://leafletjs.com/index.html">Leaflet</a>(乌克兰作者，愿战争远离我们每个人)、<a
+target="_blank" rel="noopener" href="https://deck.gl">deck.gl</a> 等</li>
+<li>模型：建议先用 R、Python
+跑通，这个体系太庞大，看如果有空我再单独写一篇。</li>
+</ul>
+<h1 id="回到开始的问题">8. 回到开始的问题</h1>
+<p>基于以上获得地球上任意物体的坐标的讨论，可以推断地球人没法给三体人发送自己的坐标，大刘的这个设定存在问题。</p>
+<p>理由如下：</p>
+<ol type="1">
+<li>宇宙中地球的位置需要有一个参照系，这个参照系显然需要“三体人”给我们，这样我们才能给出”合理“的位置数据（参考火星坐标系现象）。</li>
+<li>要计算地球的位置，需要有若干个发射源不停地广播自己的位置，地球进行接收（参考
+GPS
+原理）。地球人显然不知道这个广播源在哪里，从能量损耗角度讲，除非人类知道三体人的方向，朝着那个方向发射过去，才有可能接收到表示位置的能量。</li>
+<li>以及通讯的文字解码也是个问题。</li>
+</ol>
+<p>如果三体人获得了地球的坐标，那么大概率会使用空间 H3
+的类似技术快速锁定我们从属的区域（空间检索），甚至做一些空间拓扑关系的运算（从属区域历史上还有没有报告坐标的生命体，有几个？）。最后通过类似墨卡托投影的技术，把地球投影在星图上。</p>
+<p>要解决这些问题必须要说明白宇宙的中心在哪里，这样后面就可以一步一步解决了。那宇宙的中心在哪里呢？两脚兽有个说法——宇宙的中心在铁岭。</p>
+<p>一本正经地胡说八道完毕。</p>
+<p>参考文献：</p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E5%85%A8%E7%90%83%E5%AE%9A%E4%BD%8D%E7%B3%BB%E7%BB%9F">全球定位系统维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.gps.gov/">GPS 官网</a></li>
+<li><a
+target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Mercator_projection">墨卡托投影维基百科（英文）</a></li>
+<li><a target="_blank" rel="noopener" href="https://e7868a.com/gis-coordinate-project">GIS基础知识 -
+坐标系、投影、EPSG:4326、EPSG:3857</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.uber.com/en-KR/blog/h3/">H3: Uber’s Hexagonal
+Hierarchical Spatial Index</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/05/20/synthetic-did.html" rel="prev" title="合成双重差分法">
+                  <i class="fa fa-angle-left"></i> 合成双重差分法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/01/13/local-gpt.html" rel="next" title="90 行代码实现问答型商品推荐系统">
+                  90 行代码实现问答型商品推荐系统 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

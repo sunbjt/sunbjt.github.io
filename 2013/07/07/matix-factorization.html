@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="矩阵分解技术是推荐系统常用的技术之一，它的变种出现在很多算法都有涉及。这里先不做展开，对于最基本的矩阵分解技术做一些原理和代码解释。 1. 矩阵分解的数学原理 首先约定一下符号，对于用户（users）的集合 \(U\)，以及商品的集合 \(D\)，用 \(R\) 来表示用户商品信息的共现（ \(U \times D\) ）矩阵。我们现在想找出 K 个潜在的特征，即：找到两个新矩阵P（ \(U \t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="矩阵分解的一般性解法">
+<meta property="og:url" content="http://bjt.name/2013/07/07/matix-factorization.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="矩阵分解技术是推荐系统常用的技术之一，它的变种出现在很多算法都有涉及。这里先不做展开，对于最基本的矩阵分解技术做一些原理和代码解释。 1. 矩阵分解的数学原理 首先约定一下符号，对于用户（users）的集合 \(U\)，以及商品的集合 \(D\)，用 \(R\) 来表示用户商品信息的共现（ \(U \times D\) ）矩阵。我们现在想找出 K 个潜在的特征，即：找到两个新矩阵P（ \(U \t">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/loss.png">
+<meta property="article:published_time" content="2013-07-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.291Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/loss.png">
+
+
+<link rel="canonical" href="http://bjt.name/2013/07/07/matix-factorization.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2013/07/07/matix-factorization.html","path":"2013/07/07/matix-factorization.html","title":"矩阵分解的一般性解法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>矩阵分解的一般性解法 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2013/07/07/matix-factorization.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="矩阵分解的一般性解法 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          矩阵分解的一般性解法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-07-07 00:00:00" itemprop="dateCreated datePublished" datetime="2013-07-07T00:00:00+08:00">2013-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>矩阵分解技术是推荐系统常用的技术之一，它的变种出现在很多算法都有涉及。这里先不做展开，对于最基本的矩阵分解技术做一些原理和代码解释。</p>
+<h1 id="矩阵分解的数学原理">1. 矩阵分解的数学原理</h1>
+<p>首先约定一下符号，对于用户（users）的集合 <span
+class="math inline">\(U\)</span>，以及商品的集合 <span
+class="math inline">\(D\)</span>，用 <span
+class="math inline">\(R\)</span> 来表示用户商品信息的共现（ <span
+class="math inline">\(U \times D\)</span> ）矩阵。我们现在想找出 K
+个潜在的特征，即：找到两个新矩阵P（ <span class="math inline">\(U \times
+K\)</span> ），Q（ <span class="math inline">\(D \times K\)</span>
+），使得：</p>
+<p><span class="math display">\[R = P \times Q^T = \hat{R}\]</span></p>
+<p>这时，P包含了所有的用户（U）的相关信息（特征），而 Q
+则包含了商品的相关信息（特征）。那如何找到这两个矩阵呢？</p>
+<span id="more"></span>
+<p>其中的一种方法就是梯度下降（gradient descent）：首先先给 P、Q
+一些初始值，然后计算R和 <span class="math inline">\(P \times Q\)</span>
+的差异，接着通过迭代最小化二者的差异。这个差异我们一般用如下的方式表示：</p>
+<p><span class="math display">\[\begin{equation}
+e_{ij}^2 = (r_{ij} - \hat{r}_{ij})^2
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+    = (r_{ij} - \sum_{k=1}^K p_{ik} q_{kj})^2
+\end{equation}\]</span></p>
+<p>对于上式，我们必须找到一个方向来优化 <span
+class="math inline">\(p_{ik},q_{kj}\)</span>。换句话说，我们需要知道当前值的梯度下降方向：</p>
+<p><span class="math display">\[\frac{\partial e_{ij}^2}{\partial
+p_{ik}}=-2(r_{ij}-\hat{r}_{ij})(q_{kj})=-2e_{ij}q_{kj}\]</span></p>
+<p><span class="math display">\[\frac{\partial e_{ij}^2}{\partial
+q_{ik}} = -2(r_{ij} - \hat{r}_{ij})(p_{ik}) = -2
+e_{ij}p_{ik}\]</span></p>
+<p>既然以及找到梯度，那则有</p>
+<p><span class="math display">\[p_{ik}^{new} = p_{ik} + 2\alpha e_{ij}
+q_{kj}\]</span></p>
+<p><span class="math display">\[q_{kj}^{new} = q_{kj} + 2\alpha e_{ij}
+p_{ik}\]</span></p>
+<p>这里 <span class="math inline">\(\alpha\)</span>
+是一个常数，决定梯度的步长，为了避免越过局部最优值，所以 <span
+class="math inline">\(\alpha\)</span>
+一般都是一个很小的数，比如0.0002。</p>
+<p>另外一个问题有来了：</p>
+<blockquote>
+<p>如果我们求得的 P 和 Q 的乘积同 R
+完全一致，那么未观测的值（表示为零的行为），依旧是零。</p>
+</blockquote>
+<p>这里需要澄清一下：<code>我们只对原始数据不为零的元素求解二者差异，而不是全部的元素。</code></p>
+<h1 id="正则化-regularization">2. 正则化 Regularization</h1>
+<p>为了避免过拟合，我们一般会引入 Regularization
+来作为惩罚项，一般是引入一个 <span class="math inline">\(\beta\)</span>
+来修改误差的平方：</p>
+<p><span class="math display">\[\begin{equation}
+e_{ij}^2 = (r_{ij} - \sum_{k=1}^K p_{ik} q_{kj})^2 + \frac{\beta}{2}
+\sum_{k=1}^K(||P||^2 + ||Q||^2)
+\end{equation}\]</span></p>
+<p><span class="math inline">\(\beta\)</span>
+用来控制用户特征和商品特征的程度（magnitudes），保证 P、Q 对 R
+的近似，但不会出现太大的数值。</p>
+<p>这样梯度下降的规则就变成了如下：</p>
+<p><span class="math display">\[p_{ik}^{new} = p_{ik} + 2\alpha e_{ij}
+q_{kj} - \beta p_{ik}\]</span></p>
+<p><span class="math display">\[q_{kj}^{new} = q_{kj} + 2\alpha e_{ij}
+p_{ik} - \beta q_{kj}\]</span></p>
+<h1 id="上代码">3. 上代码</h1>
+<p>为了简化，我将 <span class="math inline">\(Q^T\)</span> 直接写成了
+<span class="math inline">\(Q\)</span>。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">steps <span class="operator">&lt;-</span> 1000 <span class="comment"># the maximum number of steps to perform the optimisation</span></span><br><span class="line">alpha <span class="operator">&lt;-</span> 0.0002 <span class="comment"># the learning rate</span></span><br><span class="line">beta <span class="operator">&lt;-</span> 0.02 <span class="comment"># the regularization parameter</span></span><br><span class="line">K <span class="operator">&lt;-</span> 3  <span class="comment"># the number of latent features</span></span><br><span class="line"></span><br><span class="line">R <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>read.csv<span class="punctuation">(</span>textConnection<span class="punctuation">(</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">0 0 3 3 0 0 0</span></span><br><span class="line"><span class="string">0 0 1 0 2 0 0</span></span><br><span class="line"><span class="string">0 1 2 0 0 0 0</span></span><br><span class="line"><span class="string">0 0 0 0 2 0 2</span></span><br><span class="line"><span class="string">0 3 0 0 0 4 0</span></span><br><span class="line"><span class="string">0 2 0 3 0 2 0</span></span><br><span class="line"><span class="string">3 0 0 0 0 0 2</span></span><br><span class="line"><span class="string">0 0 5 0 0 3 0</span></span><br><span class="line"><span class="string">&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span> header <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&#x27; &#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">m <span class="operator">&lt;-</span> nrow<span class="punctuation">(</span>R<span class="punctuation">)</span></span><br><span class="line">n <span class="operator">&lt;-</span> ncol<span class="punctuation">(</span>R<span class="punctuation">)</span></span><br><span class="line">P <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span>rnorm<span class="punctuation">(</span>m <span class="operator">*</span> K<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">.5</span><span class="punctuation">)</span><span class="punctuation">,</span> m<span class="punctuation">,</span> K<span class="punctuation">,</span> byrow <span class="operator">=</span> <span class="built_in">T</span><span class="punctuation">)</span></span><br><span class="line">Q <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span>rnorm<span class="punctuation">(</span>n <span class="operator">*</span> K<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">.5</span><span class="punctuation">)</span><span class="punctuation">,</span> K<span class="punctuation">,</span> n<span class="punctuation">,</span> byrow <span class="operator">=</span> <span class="built_in">T</span><span class="punctuation">)</span></span><br><span class="line">print<span class="punctuation">(</span>P<span class="punctuation">)</span></span><br><span class="line">print<span class="punctuation">(</span>Q<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">eij <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">loss <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>s <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>steps<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>m<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="keyword">for</span><span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">            <span class="keyword">if</span> <span class="punctuation">(</span>R<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">&gt;</span> <span class="number">0</span><span class="punctuation">)</span> eij <span class="operator">&lt;-</span> R<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">-</span> P<span class="punctuation">[</span>i<span class="punctuation">,</span><span class="punctuation">]</span> <span class="operator">%*%</span> Q<span class="punctuation">[</span><span class="punctuation">,</span>j<span class="punctuation">]</span></span><br><span class="line">            <span class="keyword">for</span><span class="punctuation">(</span>k <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>K<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">                P<span class="punctuation">[</span>i<span class="punctuation">,</span>k<span class="punctuation">]</span> <span class="operator">&lt;-</span> P<span class="punctuation">[</span>i<span class="punctuation">,</span>k<span class="punctuation">]</span> <span class="operator">+</span> alpha <span class="operator">*</span> <span class="punctuation">(</span><span class="number">2</span> <span class="operator">*</span> eij <span class="operator">*</span> Q<span class="punctuation">[</span>k<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">-</span> beta <span class="operator">*</span> P<span class="punctuation">[</span>i<span class="punctuation">,</span>k<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">                Q<span class="punctuation">[</span>k<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">&lt;-</span> Q<span class="punctuation">[</span>k<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">+</span> alpha <span class="operator">*</span> <span class="punctuation">(</span><span class="number">2</span> <span class="operator">*</span> eij <span class="operator">*</span> P<span class="punctuation">[</span>i<span class="punctuation">,</span>k<span class="punctuation">]</span> <span class="operator">-</span> beta <span class="operator">*</span> Q<span class="punctuation">[</span>k<span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">            <span class="punctuation">&#125;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    e <span class="operator">&lt;-</span> 0</span><br><span class="line">    <span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>m<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="keyword">for</span><span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>n<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">            <span class="keyword">if</span> <span class="punctuation">(</span>R<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">&gt;</span> <span class="number">0</span><span class="punctuation">)</span> e <span class="operator">&lt;-</span> <span class="punctuation">(</span>R<span class="punctuation">[</span>i<span class="punctuation">,</span>j<span class="punctuation">]</span> <span class="operator">-</span> P<span class="punctuation">[</span>i<span class="punctuation">,</span><span class="punctuation">]</span><span class="operator">%*%</span>Q<span class="punctuation">[</span><span class="punctuation">,</span>j<span class="punctuation">]</span><span class="punctuation">)</span><span class="operator">^</span><span class="number">2</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    loss<span class="punctuation">[</span>s<span class="punctuation">]</span> <span class="operator">&lt;-</span> e</span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">ggplot<span class="punctuation">(</span>data.frame<span class="punctuation">(</span>s <span class="operator">=</span> <span class="number">1</span><span class="operator">:</span><span class="built_in">length</span><span class="punctuation">(</span>loss<span class="punctuation">)</span><span class="punctuation">,</span> loss<span class="punctuation">)</span><span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> s<span class="punctuation">,</span> y <span class="operator">=</span> loss<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> geom_line<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"><span class="built_in">round</span><span class="punctuation">(</span>P <span class="operator">%*%</span> Q<span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">R</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>我们先看一下每一步迭代后的损失</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/loss.png"/></p>
+<blockquote>
+<p>客官会看到损失在后面有提高，如何规避请自行思考。</p>
+</blockquote>
+<p>对比一下结果（因为随机初始化的 P 和
+Q，所以我们的结果肯定不一样）：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">&gt;</span> <span class="built_in">round</span><span class="punctuation">(</span>P <span class="operator">%*%</span> Q<span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">)</span></span><br><span class="line">     <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">]</span> <span class="punctuation">[</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">4.07</span> <span class="number">2.24</span> <span class="number">2.78</span> <span class="number">3.01</span> <span class="number">3.83</span> <span class="number">2.76</span> <span class="number">3.13</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">2</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">1.16</span> <span class="number">0.07</span> <span class="number">1.21</span> <span class="number">1.74</span> <span class="number">1.84</span> <span class="number">0.62</span> <span class="number">0.83</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">3</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">2.46</span> <span class="number">1.21</span> <span class="number">2.04</span> <span class="number">2.20</span> <span class="number">2.77</span> <span class="number">1.59</span> <span class="number">1.90</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">2.15</span> <span class="number">1.00</span> <span class="number">1.46</span> <span class="number">1.79</span> <span class="number">2.11</span> <span class="number">1.42</span> <span class="number">1.61</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">5</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">5.98</span> <span class="number">3.00</span> <span class="number">4.82</span> <span class="number">5.22</span> <span class="number">6.57</span> <span class="number">3.90</span> <span class="number">4.63</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">6</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">3.35</span> <span class="number">1.78</span> <span class="number">3.04</span> <span class="number">3.04</span> <span class="number">3.99</span> <span class="number">2.16</span> <span class="number">2.65</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">7</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">3.01</span> <span class="number">1.38</span> <span class="number">0.44</span> <span class="number">1.51</span> <span class="number">1.26</span> <span class="number">2.20</span> <span class="number">2.05</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">8</span><span class="punctuation">,</span><span class="punctuation">]</span> <span class="number">5.04</span> <span class="number">1.68</span> <span class="number">4.99</span> <span class="number">5.92</span> <span class="number">6.98</span> <span class="number">3.00</span> <span class="number">3.85</span></span><br><span class="line"><span class="operator">&gt;</span> R</span><br><span class="line">     V1 V2 V3 V4 V5 V6 V7</span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">3</span>  <span class="number">3</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">2</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">1</span>  <span class="number">0</span>  <span class="number">2</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">3</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">1</span>  <span class="number">2</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">2</span>  <span class="number">0</span>  <span class="number">2</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">5</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">3</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">4</span>  <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">6</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">2</span>  <span class="number">0</span>  <span class="number">3</span>  <span class="number">0</span>  <span class="number">2</span>  <span class="number">0</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">7</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">3</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">2</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">8</span><span class="punctuation">,</span><span class="punctuation">]</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">5</span>  <span class="number">0</span>  <span class="number">0</span>  <span class="number">3</span>  <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<h1 id="其他">4. 其他</h1>
+<ul>
+<li>生产环境肯定不会这样存储数据的，不同的存储方式在计算逻辑上会大有不同。</li>
+<li>初始化 P 和 Q 的策略不同，会导致收敛速度和结果不同。</li>
+<li><span class="math inline">\(\alpha\)</span> 和 <span
+class="math inline">\(\beta\)</span>
+的设置不同会导致收敛速度不一致，是否可以动态调整，答案是，请自行搜索。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/06/29/open-blas-r.html" rel="prev" title="用 OpenBLAS 加速 R 的矩阵运算">
+                  <i class="fa fa-angle-left"></i> 用 OpenBLAS 加速 R 的矩阵运算
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/09/09/emacs-configure.html" rel="next" title="用 Emacs 编辑 markdown">
+                  用 Emacs 编辑 markdown <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

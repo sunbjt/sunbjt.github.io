@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="推荐系统在个性化领域有着广泛的应用，从技术上讲涉及概率、抽样、最优化、机器学习、数据挖掘、搜索引擎、自然语言处理等多个领域。东西太多，我也不准备写连载，今天仅从基本算法这个很小的切入点来聊聊推荐引擎的原理。 1. 推荐系统的策略 推荐引擎（系统）从不同的角度看有不同的划分，比如：  按照数据的分类：协同过滤、内容过滤、社会化过滤 按照模型的分类：基于近邻的模型、矩阵分解模型、图模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="协同过滤和推荐引擎">
+<meta property="og:url" content="http://bjt.name/2013/06/16/recommendation-system.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="推荐系统在个性化领域有着广泛的应用，从技术上讲涉及概率、抽样、最优化、机器学习、数据挖掘、搜索引擎、自然语言处理等多个领域。东西太多，我也不准备写连载，今天仅从基本算法这个很小的切入点来聊聊推荐引擎的原理。 1. 推荐系统的策略 推荐引擎（系统）从不同的角度看有不同的划分，比如：  按照数据的分类：协同过滤、内容过滤、社会化过滤 按照模型的分类：基于近邻的模型、矩阵分解模型、图模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/item-based2.png">
+<meta property="article:published_time" content="2013-06-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.290Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/item-based2.png">
+
+
+<link rel="canonical" href="http://bjt.name/2013/06/16/recommendation-system.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2013/06/16/recommendation-system.html","path":"2013/06/16/recommendation-system.html","title":"协同过滤和推荐引擎"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>协同过滤和推荐引擎 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2013/06/16/recommendation-system.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="协同过滤和推荐引擎 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          协同过滤和推荐引擎
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-06-16 00:00:00" itemprop="dateCreated datePublished" datetime="2013-06-16T00:00:00+08:00">2013-06-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>推荐系统在个性化领域有着广泛的应用，从技术上讲涉及概率、抽样、最优化、机器学习、数据挖掘、搜索引擎、自然语言处理等多个领域。东西太多，我也不准备写连载，今天仅从基本算法这个很小的切入点来聊聊推荐引擎的原理。</p>
+<h1 id="推荐系统的策略">1. 推荐系统的策略</h1>
+<p>推荐引擎（系统）从不同的角度看有不同的划分，比如：</p>
+<ul>
+<li>按照数据的分类：协同过滤、内容过滤、社会化过滤</li>
+<li>按照模型的分类：基于近邻的模型、矩阵分解模型、图模型</li>
+</ul>
+<span id="more"></span>
+<p>上面的这种说法有点乱，换个说法：一般我们将推荐系统归纳于两项策略，一种是基于内容的过滤（content-based
+filtering）以及基于用户行为的协同过滤（collaborative filtering）。</p>
+<p>基于内容的过滤创建了每个商品、用户的属性（或是组合）用来描述其本质。比如对于电影来说，可能包括演员、票房程度等。用户属性信息可能包含地理信息、问卷调查的回答等。这些属性信息关联用户用户后即可达到匹配商品的目的。当然基于内容的策略极有可能因为信息收集的不便而导致无法实施。</p>
+<p>一个比较成功的内容过滤是 pandora.com
+的音乐基因项目，一个训练有素的音乐分析师会对每首歌里几百个独立的特征进行打分。这些得分帮助pandora推荐歌曲。还有一种基于内容的过滤是基于用户人口统计特征的推荐，先根据人口统计学特征将用户分成若干个先验的类。对后来的任意一个用户，首先找到他的聚类，然后给他推荐这个聚类里的其他用户喜欢的物品。这种方法的虽然推荐的粒度太粗，但可以有效解决注册用户的冷启动(Cold
+Start)的问题。</p>
+<p>与基于内容的过滤算法相对的另一种策略是：依赖于用户过去的行为的协同过滤，行为可以是过往的交易行为和商品评分，这种方式不需要显性的属性信息。协同过滤通过分析用户和商品的内在关系来识别新的
+user-item
+关系。一般来说基于用户行为的协同过滤方法要优于基于内容的技术，但会有冷启动的问题。对于新系统来说，基于内容的推荐则更优。</p>
+<p>协同过滤领域主要的两种方式是最近邻（neighborhood）方法和潜在因子（latent
+factor）模型。最近邻方法主要集中在 item 的关系或者是 user
+的关系，是比较基础的过滤引擎。而潜在因子模型并不是选取所有的关系，而是通过矩阵分解的技术将<code>共现矩阵</code>的分解，比如提取20-100个因子，来表示原始矩阵信息（可以对比上面提到的音乐基因，只不过潜在因子模型是通过计算机化的实现）。</p>
+<h1 id="近邻协同过滤">2. 近邻协同过滤</h1>
+<p>矩阵分解技术稍稍复杂一点，暂不介绍，下面着重说一下 item based
+最近邻的协同过滤。</p>
+<p>对于一般的协同过滤引擎，首先会有一个 item-item 的相似矩阵 <span
+class="math inline">\(S\)</span>，比如下图所示（来自于 recommenderlab
+包的 vignette 文档），它记录了每两个 item
+间的相似情况。但由于计算量和内存的考虑，一般在构建推荐引擎时不会这么暴力的存储全部的相似信息，而是使用部分信息。比如（按行来看）和
+<span class="math inline">\(i_1\)</span> 最相关的三个item是 <span
+class="math inline">\(i_4, i_5, i_6\)</span>，而另外的两个 item <span
+class="math inline">\(i_2, i_8\)</span> 则不参与计算。</p>
+<p><img src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/item-based2.png"/></p>
+<p>介绍完相似矩阵，接下来就的最近邻协同过滤就非常简单了，假如用户 <span
+class="math inline">\(u_\alpha\)</span> 对 <span
+class="math inline">\(i_1, i_5, i_8\)</span> 分别打了 2，4，5
+分，根据相似阵 <span class="math inline">\(S\)</span> 中 item
+的相似程度，来计算其余未打分的 item 的评分，即</p>
+<blockquote>
+<p>对于每个 item （相似）加权平均后的得分，再过滤已评分的 item</p>
+</blockquote>
+<p>最后的 <span class="math inline">\(r_\alpha\)</span> 则是对 item
+的预测结果。</p>
+<p>既然逻辑都讲清楚了，那不实现一下推荐引擎就有点说不过去了。首先介绍一下原始的输入数据，共三列：第一列代表用户，第二列表示购买的
+item 的名称，第三列表是用户在这个 item 上的评分：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">x <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span>textConnection<span class="punctuation">(</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">  1,101,5.0</span></span><br><span class="line"><span class="string">  1,102,3.0</span></span><br><span class="line"><span class="string">  1,103,2.5</span></span><br><span class="line"><span class="string">  2,101,2.0</span></span><br><span class="line"><span class="string">  2,102,2.5</span></span><br><span class="line"><span class="string">  2,103,5.0</span></span><br><span class="line"><span class="string">  2,104,2.0</span></span><br><span class="line"><span class="string">  3,101,2.5</span></span><br><span class="line"><span class="string">  3,104,4.0</span></span><br><span class="line"><span class="string">  3,105,4.5</span></span><br><span class="line"><span class="string">  3,107,5.0</span></span><br><span class="line"><span class="string">  4,101,5.0</span></span><br><span class="line"><span class="string">  4,103,3.0</span></span><br><span class="line"><span class="string">  4,104,4.5</span></span><br><span class="line"><span class="string">  4,106,4.0</span></span><br><span class="line"><span class="string">  5,101,4.0</span></span><br><span class="line"><span class="string">  5,102,3.0</span></span><br><span class="line"><span class="string">  5,103,2.0</span></span><br><span class="line"><span class="string">  5,104,4.0</span></span><br><span class="line"><span class="string">  5,105,3.5</span></span><br><span class="line"><span class="string">  5,106,4.0  </span></span><br><span class="line"><span class="string">&quot;</span><span class="punctuation">)</span><span class="punctuation">,</span> header <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>接下来是根据上述用户行为，预测用户没有评分的 item 的得分：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">rn <span class="operator">&lt;-</span> sort<span class="punctuation">(</span>unique<span class="punctuation">(</span>x<span class="operator">$</span>V1<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">cn <span class="operator">&lt;-</span> sort<span class="punctuation">(</span>unique<span class="punctuation">(</span>x<span class="operator">$</span>V2<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>Matrix<span class="punctuation">)</span></span><br><span class="line">y <span class="operator">&lt;-</span></span><br><span class="line">  sparseMatrix<span class="punctuation">(</span>i <span class="operator">=</span> match<span class="punctuation">(</span>x<span class="operator">$</span>V1<span class="punctuation">,</span> rn<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">               j <span class="operator">=</span> match<span class="punctuation">(</span>x<span class="operator">$</span>V2<span class="punctuation">,</span> cn<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">               x <span class="operator">=</span> x<span class="operator">$</span>V3<span class="punctuation">)</span></span><br><span class="line">h <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>dist<span class="punctuation">(</span>t<span class="punctuation">(</span>y<span class="punctuation">)</span><span class="punctuation">,</span> diag <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span> <span class="operator">^</span> <span class="number">2</span><span class="punctuation">)</span></span><br><span class="line">h <span class="operator">&lt;-</span> 1 <span class="operator">/</span> <span class="punctuation">(</span><span class="number">1</span> <span class="operator">+</span> h<span class="punctuation">)</span></span><br><span class="line">diag<span class="punctuation">(</span>h<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="number">0</span></span><br><span class="line"><span class="comment">## 推荐引擎的四个参数：相似矩阵、购买了什么，得分是多少，推荐几个</span></span><br><span class="line">recommend <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>h <span class="operator">=</span> h<span class="punctuation">,</span></span><br><span class="line">                      k <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">3</span><span class="punctuation">,</span> <span class="number">5</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">                      score <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">4</span><span class="punctuation">,</span> <span class="number">5</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">                      m <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="keyword">if</span> <span class="punctuation">(</span><span class="built_in">length</span><span class="punctuation">(</span>k<span class="punctuation">)</span> <span class="operator">&gt;</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line">    v <span class="operator">&lt;-</span> colSums<span class="punctuation">(</span>h<span class="punctuation">[</span>k<span class="punctuation">,</span> <span class="punctuation">]</span> <span class="operator">*</span> score<span class="punctuation">)</span> <span class="operator">/</span> colSums<span class="punctuation">(</span>h<span class="punctuation">[</span>k<span class="punctuation">,</span> <span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    v <span class="operator">&lt;-</span> h<span class="punctuation">[</span>k<span class="punctuation">,</span> <span class="punctuation">]</span></span><br><span class="line">  v<span class="punctuation">[</span>k<span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="number">0</span></span><br><span class="line">  od <span class="operator">&lt;-</span> order<span class="punctuation">(</span>v<span class="punctuation">,</span> decreasing <span class="operator">=</span> <span class="built_in">T</span><span class="punctuation">)</span><span class="punctuation">[</span><span class="number">1</span><span class="operator">:</span>m<span class="punctuation">]</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span><span class="built_in">list</span><span class="punctuation">(</span>colnames<span class="punctuation">(</span>h<span class="punctuation">)</span><span class="punctuation">[</span>od<span class="punctuation">]</span><span class="punctuation">,</span> v<span class="punctuation">[</span>od<span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">recommend<span class="punctuation">(</span>h<span class="punctuation">,</span></span><br><span class="line">          k <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">          score <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">5</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">          m <span class="operator">=</span> <span class="number">2</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>这也算是上代码量最短的协同过滤引擎之一了吧。</p>
+<h1 id="最后">3. 最后</h1>
+<p>我们在返回来说几句推荐系统大逻辑，如果仅仅将推荐看作是算法（尤其是协同过滤）的确很简单，但对于一个登录用户：</p>
+<ol type="1">
+<li>任意时刻都用一个算法推荐，鬼才搭理你；</li>
+<li>如果有脏数据在构建模型前要优先搞定；</li>
+<li>网站页面设计差，用户体验很烂，同样没用。</li>
+</ol>
+<p>借用张栋在 2011 推荐系统论坛曾提出的说法：</p>
+<blockquote>
+<p>一个成功的resys推荐系统的影响权重：UI/UE 40%，data:30%, knowledge:
+20, algorithm:10%</p>
+</blockquote>
+<p>推荐这事儿不那么简单。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/05/20/china-r-conference.html" rel="prev" title="第六届中国 R 语言会议流水帐">
+                  <i class="fa fa-angle-left"></i> 第六届中国 R 语言会议流水帐
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/06/29/open-blas-r.html" rel="next" title="用 OpenBLAS 加速 R 的矩阵运算">
+                  用 OpenBLAS 加速 R 的矩阵运算 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本篇关键内容（阅读需要约 15 分钟）：  分析师的职责范围 重定义：数据科学合作伙伴 数据需求的标准流程 工欲善其事，必先利其器 - tapd  为什么写这篇文章？起因是分析师团队的 leader 离职了，作为大老板，我只能选择暂代管理一段时间。在帮团队成员梳理工作内容的过程，我抽象了其中一些关键的要素，以及需要澄清的认知误区。这些总结我不想仅仅封闭在自己的团队内部，还希望能帮到正在职业生涯迷茫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据分析师的生存手记">
+<meta property="og:url" content="http://bjt.name/2020/01/05/make-better.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="本篇关键内容（阅读需要约 15 分钟）：  分析师的职责范围 重定义：数据科学合作伙伴 数据需求的标准流程 工欲善其事，必先利其器 - tapd  为什么写这篇文章？起因是分析师团队的 leader 离职了，作为大老板，我只能选择暂代管理一段时间。在帮团队成员梳理工作内容的过程，我抽象了其中一些关键的要素，以及需要澄清的认知误区。这些总结我不想仅仅封闭在自己的团队内部，还希望能帮到正在职业生涯迷茫">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-01-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.293Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2020/01/05/make-better.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2020/01/05/make-better.html","path":"2020/01/05/make-better.html","title":"数据分析师的生存手记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据分析师的生存手记 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2020/01/05/make-better.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据分析师的生存手记 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据分析师的生存手记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-01-05 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-05T00:00:00+08:00">2020-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">数据思维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>本篇关键内容（阅读需要约 15 分钟）：</p>
+<ol type="1">
+<li>分析师的职责范围</li>
+<li>重定义：数据科学合作伙伴</li>
+<li>数据需求的标准流程</li>
+<li>工欲善其事，必先利其器 - tapd</li>
+</ol>
+<p>为什么写这篇文章？起因是分析师团队的 leader
+离职了，作为大老板，我只能选择暂代管理一段时间。在帮团队成员梳理工作内容的过程，我抽象了其中一些关键的要素，以及需要澄清的认知误区。这些总结我不想仅仅封闭在自己的团队内部，还希望能帮到正在职业生涯迷茫的分析师们。</p>
+<span id="more"></span>
+<h1 id="分析师的职责范围">1. 分析师的职责范围</h1>
+<p>为了说清楚为什么会有后面这么庞大的逻辑体系，需要从分析师处理的主要三种类型工作说起：</p>
+<ol type="1">
+<li>临时性数据需求（或专项分析报告）</li>
+<li>快速可视化报表开发（BI）</li>
+<li>专业角度的数据挖掘任务</li>
+</ol>
+<p>几乎所有人都希望承担第 3
+种类型工作。为什么呢——无外乎，节奏更主动，复杂度高，彰显个人的专业价值呗。第
+1 和 2
+种工作往往被贴上了被动、低价值、重复劳动这些标签。先别急着下结论，这个观点背后是因为不匹配的认知和流程而导致的，如果
+1 和 2
+不能正确的搞定，你会因为不懂业务，也不可能玩转这些所谓的专业数据挖掘任务的。</p>
+<p>在聊正事之前先分享一个故事，故事的名字叫做《第 7
+个馒头》，情节很简单：</p>
+<blockquote>
+<p>有个老头儿饿坏了，一连吃了 6 个馒头还没吃饱，当他吃下第 7
+个馒头时，终于吃饱了。</p>
+<p>于是好事者开始研究第 7
+个馒头的做法和用料，想从中挖决出老头吃饱的奥秘……</p>
+</blockquote>
+<p>这个故事周鸿祎经常挂在嘴边，虽然听起来像笑话，但实际上每天都在重复上演。想想我们在教科书、外部分享看到或听到的拍案叫绝的案例，它们都在讲第
+7 个馒头。我们所有的分析训练（并不是特指狭义的数据分析）都在指向研究第 7
+个馒头的做法和用料，而忽视了前 6 个馒头的过程和作用。</p>
+<p>“凡战者，以正和，以奇胜”，一定要谨记：“正和”是在“奇胜”之前。临时性数据分析需求就是前
+6 个馒头，恰恰可以让分析师全方位、深入理解业务问题，是极佳的契机点！</p>
+<p>核心点说清楚了，那如何解构呢？我们需要从角色定位、环节内容、机制等环节来重塑流程。</p>
+<h1 id="角色定位和机制">2. 角色定位和机制</h1>
+<p>传统上，我们一般定义了数据分析师、数据分析专员这两个角色。但仔细想想这两个名词的字面意义，问题其实非常大，他们居然全是面向数据的，而不是面向业务问题或者价值本身的！</p>
+<p>更恰当的定义是什么呢？在我的团队，我把她重新定义成了 DSP（Data
+Science
+Partner），是披着数据科学外衣的合作伙伴。不要小看这个角色定义的不同，这个角色要求数据分析师从一个被动接受需求的定位直接过渡到合作者模式。（为了保持行文和观念的一致性，后面依然会使用数据分析师的称呼）</p>
+<p>输出决定于输入。角色重新定义之后，分析师如何获得更多的信息？如果不能够第一时间获取公司的决策信息，那么工作还是会非常被动。不同的公司有不同的操作方法，这里面给出建议的操作步骤：</p>
+<ol type="1">
+<li>利用好列席其他部门的周例会的机会。既然定义为
+partner，那么伙伴部门的周例会必须要全程参加，以伙伴视角观察这个部门日常运作的情况，不超过一个月，分析师会在目标认知上有长足变化。</li>
+<li>利用非工作时间（如午餐）同伙伴部门的关键人物进行一对一非正式沟通，并持续保持频率。</li>
+<li>以上信息定期同数据部门老大做更新，得到反馈。</li>
+</ol>
+<p>以上动作释放给了外部一个信号，我们可以一起通过数据搞定业务问题，在有需要的第一时间马上可以找到数据分析师。在有效信息输入问题得到改善之后，分析师将面临接到需求之后如何更高效率的整合这些零散。<strong>整合的效率和
+1 年之后的分析师价值高度相关。</strong></p>
+<p>注：（对于我司来说）分析师负责的十条业务线分别是：CEO、市场、运营、外教、产品、学术、用户体验、技术，财务，人力。</p>
+<h1 id="数据分析的工作流程">3. 数据分析的工作流程</h1>
+<blockquote>
+<p>数据分析工作最终指向的是，通过业务问题的拆解和合并，最终形成业务问题图谱。</p>
+</blockquote>
+<p>先针对于单一分析任务，我把这个数据分析师的工作流程划分成了八个状态，这些状态（环节）的简要介绍如下：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/analysis-workflow.png" /></p>
+<p>"新" 这个状态是起始状态，"已拒绝" 和 "价值回顾和复盘"
+这两个状态是结束状态。我们逐个分析为什么在数据分析的过程中必须要这些环节？</p>
+<h2 id="环节新">3.1. 环节：新</h2>
+<p>这个状态是不做任何评判，纯粹从需求方角度，忠实的记录原始需求。这里只是纯粹的记录，而不进行
+judgment，这里借鉴了ORID
+焦点讨论法的第一个步骤，其中的奥妙请自行思考。</p>
+<h2 id="环节业务确认">3.2. 环节：业务确认</h2>
+<p>这个环节是分析师显示自身的专业能力的关键环节，也是分析任务成败的首要关键步骤。由于需求方背景不同，对于数据认知能力也参差不齐。这里面会存在几种可能：</p>
+<ol type="1">
+<li>业务方无法描述问题</li>
+<li>业务方将很多问题混杂在一起</li>
+<li>业务方清楚面临问题，但无法和数据进行映射</li>
+<li>业务方清楚面临问题，提出了错误的数据需求</li>
+<li>业务方无法预判可能的分析结果</li>
+</ol>
+<p>对于 1 类需求方，专业技能不合格，会祸害上下游，fire
+掉就可以了，<strong>绝对不可以手软。</strong>（如果你是我的分析师，请告诉我这个业务是谁）</p>
+<p>对于 2
+类需求方，非常普遍，因为很多人并没有经受过严格的系统化思维，分析师需要使用
+MECE
+原则帮助业务方梳理业务，在期间找到机会点。同时在梳理问题的同时，需要了解清楚什么是主要问题，什么是次要问题？什么是问题背后的问题？</p>
+<p>对于第 3
+类需求方，也相对普遍，一般企业是通过角色前置来缓解这个问题，通常这个前置的角色是产品经理，不过悲剧的是前置角色可能不合格，这时又需要分析师在<sub>数据源确认</sub>环节给出专业建议。</p>
+<p>第 4 类业务方的问题和第 3
+种很像，但需要单独提出来，想想一下，对方提了一个错误的数据需求，但作为分析师的你居然漂亮地执行完成了……然后业务方不满意，又提了一遍，可能还有第三遍……新手分析师应该没少吃过这个哑巴亏。</p>
+<p>对于第 5
+类，我们实际上对业务方提出了更高的要求，这背后的逻辑有两层：</p>
+<ul>
+<li>业务方是否游刃有余的掌控业务和数据之间的所有可能关系；</li>
+<li>如果有和预期一致的数据分析结果，那么接下来的行动方案是否值得执行。</li>
+</ul>
+<p><strong>如果以上两点业务方把控的非常完美，不论你是否是资深数据分析师，赶紧抱大腿！</strong>如果大腿不知道怎么抱，私信我。</p>
+<h2 id="环节数据源确认">3.3. 环节：数据源确认</h2>
+<p>这个环节可能会有以下几个问题：</p>
+<ol type="1">
+<li>期望的数据在技术层没有存储</li>
+<li>有数据，但数据分散在数据仓库的不同位置</li>
+</ol>
+<p>第 1
+个问题在初创公司比较常见，第一责任人是研发，顺次是产品经理，再次是业务方。如果作为分析师搞定了这个数据源问题，你实际在变相帮助产品经理和业务方，甚至是研发。久而久之，你的技术层面影响力会得到持续强化。</p>
+<p>第 2
+个问题体现了数据仓库设计的不完备。这种情况下，首先判断是否是经常性问题，如果不是，临时解决即可；如果是，有两种策略：</p>
+<ol type="1">
+<li>告知数据仓库开发对应负责人，等待预期数据结果的交付；</li>
+<li>主动了解底层的数据逻辑，在 ODS
+层做二次处理，在临时数据层形成结果集，最终将工程化的代码交付数据仓库团队。</li>
+</ol>
+<p>考虑到分析师团队一般同仓库团队隶属于同一个大部门，持续保持这个习惯，也会增强分析师的内部影响力。</p>
+<h2 id="环节实现中">3.4. 环节：实现中</h2>
+<p>这个步骤需要强调的点是如何利用 git 管理好自己的分析代码，以 R
+为例，尽量使用
+<code>magrittr</code>、<code>dplyr</code>、<code>dtplyr</code>
+这类的包，保证数据处理的每个步骤的可读性。同时保证代码内的注释以及 git
+commit 的信息完整性。</p>
+<p>分析师会通过 HIVE SQL 提取数据，再通过 R
+进行处理，如何设计取数逻辑，利用好 HIVE SQL 和 R
+两种工具的各自优点，提高数据处理的可理解性和速度，考验的就是基本功了。</p>
+<p>这里多讲一下工具的使用，如果大量使用 R Notebook
+这类工具，会让你的效率大大提高。</p>
+<h2 id="环节交付">3.5. 环节：交付</h2>
+<p>强调无数次：</p>
+<blockquote>
+<p>从数据到结论！</p>
+</blockquote>
+<p>如果分析师没有结论则不能称之为交付。交付的形式有文档、幻灯片、邮件，不同交付形式会有一些不一样的要求，对于分析师来说幻灯片交付要求最高。未来可能会专门写篇文章来讲述如何做幻灯片（注意
+slides 不等于 PPT）。</p>
+<p>交付的内容从要素上来说包含文字、表格、图形。文字内容部分是在业务确认环节中梳理的逻辑深度，表格也不详细赘述，在分析的过程如何确定一张合理的图形呢？这里面有一些套路，偷懒了，直接给出一个前人总结的经验：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/chart_suggestions.jpg" /></p>
+<h2 id="环节价值回顾和复盘">3.6. 环节：价值回顾和复盘</h2>
+<ol type="1">
+<li><p>初级分析师经常会在这个环节出现失误，我经常在 review
+各位分析师项目时会发现，很多项目会停滞在<sub>交付</sub>这个环节，习惯的力量太可怕。这个环节的两个关键点：价值的判断和复盘。</p>
+<p>价值判断至少存在两方面考量：</p>
+<ol type="1">
+<li>通过分析得到的关键正确决策，影响公司某项进程的直接价值。锻炼的是分析师业务
+sense 能力；</li>
+<li>个人有限的时间带来的收益，投入产出比。锻炼的是分析师时间规划能力和判断力。</li>
+</ol></li>
+</ol>
+<p>复盘（After Action
+Review）这个话题很大，在这个节点我们稍稍聚焦一下：</p>
+<ol type="1">
+<li>为什么和初始的目标相差很远？关键的事件是什么？</li>
+<li>重新做一遍这个需求，哪些行为需要开始做？那些事情需要停止做？哪些事情需要持续做？</li>
+<li>以上不限于技术、流程、环境、组织、人员的一切因素。</li>
+</ol>
+<h2 id="状态的流转">3.7. 状态的流转</h2>
+<p>已拒绝和挂起两种状态不做更多的赘述。最后我们再看看这 8
+个状态的流转关系：</p>
+<img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyODdweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjU1N3B4O2hlaWdodDoyODdweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1NTcgMjg3IiB3aWR0aD0iNTU3cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUuMCw1LjA7IiB4MT0iMTkiIHgyPSIxOSIgeTE9IjM2LjI5NjkiIHkyPSIyNTIuMjk2OSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NS4wLDUuMDsiIHgxPSI3OCIgeDI9Ijc4IiB5MT0iMzYuMjk2OSIgeTI9IjI1Mi4yOTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9IjE2NSIgeDI9IjE2NSIgeTE9IjM2LjI5NjkiIHkyPSIyNTIuMjk2OSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NS4wLDUuMDsiIHgxPSIyNDUiIHgyPSIyNDUiIHkxPSIzNi4yOTY5IiB5Mj0iMjUyLjI5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUuMCw1LjA7IiB4MT0iMzA0IiB4Mj0iMzA0IiB5MT0iMzYuMjk2OSIgeTI9IjI1Mi4yOTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9IjM5MSIgeDI9IjM5MSIgeTE9IjM2LjI5NjkiIHkyPSIyNTIuMjk2OSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41O3N0cm9rZS1kYXNoYXJyYXk6NS4wLDUuMDsiIHgxPSI0NzgiIHgyPSI0NzgiIHkxPSIzNi4yOTY5IiB5Mj0iMjUyLjI5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTtzdHJva2UtZGFzaGFycmF5OjUuMCw1LjA7IiB4MT0iNTMwIiB4Mj0iNTMwIiB5MT0iMzYuMjk2OSIgeTI9IjI1Mi4yOTY5Ii8+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyOCIgeD0iNSIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE0IiB4PSIxMiIgeT0iMjQuOTk1MSI+JiMyNjAzMjs8L3RleHQ+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIyOCIgeD0iNSIgeT0iMjUxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNCIgeD0iMTIiIHk9IjI3MS4yOTIiPiYjMjYwMzI7PC90ZXh0PjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzAuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNzAiIHg9IjQzIiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTYiIHg9IjUwIiB5PSIyNC45OTUxIj4mIzE5OTk0OyYjMjExNTM7JiMzMDgzMDsmIzM1NzQ4OzwvdGV4dD48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjMwLjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjcwIiB4PSI0MyIgeT0iMjUxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNTAiIHk9IjI3MS4yOTIiPiYjMTk5OTQ7JiMyMTE1MzsmIzMwODMwOyYjMzU3NDg7PC90ZXh0PjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzAuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iODQiIHg9IjEyMyIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjcwIiB4PSIxMzAiIHk9IjI0Ljk5NTEiPiYjMjU5Njg7JiMyNTQ1NDsmIzI4MzA0OyYjMzA4MzA7JiMzNTc0ODs8L3RleHQ+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI4NCIgeD0iMTIzIiB5PSIyNTEuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjcwIiB4PSIxMzAiIHk9IjI3MS4yOTIiPiYjMjU5Njg7JiMyNTQ1NDsmIzI4MzA0OyYjMzA4MzA7JiMzNTc0ODs8L3RleHQ+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI1NiIgeD0iMjE3IiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDIiIHg9IjIyNCIgeT0iMjQuOTk1MSI+JiMyMzQ1NDsmIzI5NjE2OyYjMjAwMTM7PC90ZXh0PjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzAuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNTYiIHg9IjIxNyIgeT0iMjUxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0MiIgeD0iMjI0IiB5PSIyNzEuMjkyIj4mIzIzNDU0OyYjMjk2MTY7JiMyMDAxMzs8L3RleHQ+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI0MiIgeD0iMjgzIiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjgiIHg9IjI5MCIgeT0iMjQuOTk1MSI+JiMyMDEzMjsmIzIwMTg0OzwvdGV4dD48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjMwLjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQyIiB4PSIyODMiIHk9IjI1MS4yOTY5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjgiIHg9IjI5MCIgeT0iMjcxLjI5MiI+JiMyMDEzMjsmIzIwMTg0OzwvdGV4dD48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjMwLjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjExMiIgeD0iMzM1IiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTgiIHg9IjM0MiIgeT0iMjQuOTk1MSI+JiMyMDIxNTsmIzIwNTQwOyYjMjIyMzg7JiMzOTAzODsmIzIxNjQ0OyYjMjI3OTc7JiMzMDQyNDs8L3RleHQ+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxMTIiIHg9IjMzNSIgeT0iMjUxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5OCIgeD0iMzQyIiB5PSIyNzEuMjkyIj4mIzIwMjE1OyYjMjA1NDA7JiMyMjIzODsmIzM5MDM4OyYjMjE2NDQ7JiMyMjc5NzsmIzMwNDI0OzwvdGV4dD48cmVjdCBmaWxsPSIjRTJFMkYwIiBoZWlnaHQ9IjMwLjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQyIiB4PSI0NTciIHk9IjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iNDY0IiB5PSIyNC45OTUxIj4mIzI1MzQ2OyYjMzYyMTU7PC90ZXh0PjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzAuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNDIiIHg9IjQ1NyIgeT0iMjUxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iNDY0IiB5PSIyNzEuMjkyIj4mIzI1MzQ2OyYjMzYyMTU7PC90ZXh0PjxyZWN0IGZpbGw9IiNFMkUyRjAiIGhlaWdodD0iMzAuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNDIiIHg9IjUwOSIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4IiB4PSI1MTYiIHk9IjI0Ljk5NTEiPiYjMjUyOTg7JiMzMjQ3Nzs8L3RleHQ+PHJlY3QgZmlsbD0iI0UyRTJGMCIgaGVpZ2h0PSIzMC4yOTY5IiByeD0iMi41IiByeT0iMi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSI0MiIgeD0iNTA5IiB5PSIyNTEuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4IiB4PSI1MTYiIHk9IjI3MS4yOTIiPiYjMjUyOTg7JiMzMjQ3Nzs8L3RleHQ+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI2Niw0OC4yOTY5LDc2LDUyLjI5NjksNjYsNTYuMjk2OSw3MCw1Mi4yOTY5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjIuMCwyLjA7IiB4MT0iMTkiIHgyPSI3MiIgeTE9IjUyLjI5NjkiIHkyPSI1Mi4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNTMsNjIuMjk2OSwxNjMsNjYuMjk2OSwxNTMsNzAuMjk2OSwxNTcsNjYuMjk2OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheToyLjAsMi4wOyIgeDE9Ijc4IiB4Mj0iMTU5IiB5MT0iNjYuMjk2OSIgeTI9IjY2LjI5NjkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjIzMyw3Ni4yOTY5LDI0Myw4MC4yOTY5LDIzMyw4NC4yOTY5LDIzNyw4MC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjIuMCwyLjA7IiB4MT0iMTY1IiB4Mj0iMjM5IiB5MT0iODAuMjk2OSIgeTI9IjgwLjI5NjkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9Ijg5LDkwLjI5NjksNzksOTQuMjk2OSw4OSw5OC4yOTY5LDg1LDk0LjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSI4MyIgeDI9IjI0NCIgeTE9Ijk0LjI5NjkiIHkyPSI5NC4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNzYsMTA0LjI5NjksMTY2LDEwOC4yOTY5LDE3NiwxMTIuMjk2OSwxNzIsMTA4LjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSIxNzAiIHgyPSIyNDQiIHkxPSIxMDguMjk2OSIgeTI9IjEwOC4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyOTIsMTE4LjI5NjksMzAyLDEyMi4yOTY5LDI5MiwxMjYuMjk2OSwyOTYsMTIyLjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSIyNDUiIHgyPSIyOTgiIHkxPSIxMjIuMjk2OSIgeTI9IjEyMi4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIzNzksMTMyLjI5NjksMzg5LDEzNi4yOTY5LDM3OSwxNDAuMjk2OSwzODMsMTM2LjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSIzMDQiIHgyPSIzODUiIHkxPSIxMzYuMjk2OSIgeTI9IjEzNi4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0NjYsMTQ2LjI5NjksNDc2LDE1MC4yOTY5LDQ2NiwxNTQuMjk2OSw0NzAsMTUwLjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSI3OCIgeDI9IjQ3MiIgeTE9IjE1MC4yOTY5IiB5Mj0iMTUwLjI5NjkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjUxOCwxNjAuMjk2OSw1MjgsMTY0LjI5NjksNTE4LDE2OC4yOTY5LDUyMiwxNjQuMjk2OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheToyLjAsMi4wOyIgeDE9Ijc4IiB4Mj0iNTI0IiB5MT0iMTY0LjI5NjkiIHkyPSIxNjQuMjk2OSIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iODksMTc0LjI5NjksNzksMTc4LjI5NjksODksMTgyLjI5NjksODUsMTc4LjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSI4MyIgeDI9IjE2NCIgeTE9IjE3OC4yOTY5IiB5Mj0iMTc4LjI5NjkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQ2NiwxODguMjk2OSw0NzYsMTkyLjI5NjksNDY2LDE5Ni4yOTY5LDQ3MCwxOTIuMjk2OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheToyLjAsMi4wOyIgeDE9IjE2NSIgeDI9IjQ3MiIgeTE9IjE5Mi4yOTY5IiB5Mj0iMTkyLjI5NjkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjUxOCwyMDIuMjk2OSw1MjgsMjA2LjI5NjksNTE4LDIxMC4yOTY5LDUyMiwyMDYuMjk2OSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheToyLjAsMi4wOyIgeDE9IjE2NSIgeDI9IjUyNCIgeTE9IjIwNi4yOTY5IiB5Mj0iMjA2LjI5NjkiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9Ijg5LDIxNi4yOTY5LDc5LDIyMC4yOTY5LDg5LDIyNC4yOTY5LDg1LDIyMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjIuMCwyLjA7IiB4MT0iODMiIHgyPSI0NzciIHkxPSIyMjAuMjk2OSIgeTI9IjIyMC4yOTY5Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNzYsMjMwLjI5NjksMTY2LDIzNC4yOTY5LDE3NiwyMzguMjk2OSwxNzIsMjM0LjI5NjkiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6Mi4wLDIuMDsiIHgxPSIxNzAiIHgyPSI0NzciIHkxPSIyMzQuMjk2OSIgeTI9IjIzNC4yOTY5Ii8+PCEtLVNSQz1bS3Rlc1JPRUlXZ3drZE9CSWFuc3BkZE9qVkJ2bXRPanJJdkl1S0JhRzVTLWNSZFpNay14UGhXYm1IVVdZNDdMRnJ5cnh0aFZYb093ckcxSzhEYlBScUFLbmhTMG1PRFVJOXhqZFcxbThPSzE1VHN6X3NoM2R3VW52Qm5Wa1VwZ2Z2LWNJdGtVcFAtM21IS19KWXd0UlNTWHJKdGctVW92RVp3NHY3aGlZa0ZhdWZFNU1HREhYRG5iUDNqcVMwMDAwXS0tPjwvZz48L3N2Zz4='>
+<p>以上描述的是一个数据需求的状态定义和流转过程。反复多轮之后，分析师必须通过问题的分解和合并技巧，以及价值排序判断，形成自己的业务知识图谱，这项能力是不可复制的，切记！</p>
+<h1 id="利其器">4. 利其器</h1>
+<p>好记性不如烂笔头，上述道理大家似乎都明白，但真正在执行的时候，很多人会犯错误。强烈分析师团队利用好公司级的项目管理（敏捷开发）工具，比如我们正在使用的
+tapd，或者 jira 这些都可以。</p>
+<p>拿 tapd 来说，可以自定义
+workflow，标签，包括消息等，实在太方便。除了记录数据分析需求，tapd
+还可以帮我们记录平时分析师内部自行发起的需求，比如前文一笔带过的数据挖掘任务或专项分析。</p>
+<p>以及 R 是做数据分析最好的工具，没有之一，不接受反驳<img
+src="https://res.wx.qq.com/mpres/htmledition/images/icon/common/emotion_panel/smiley/smiley_23.png"
+alt="img" /></p>
+<p>最后我们再总结一下前面的内容：数据分析师如果希望在职场生存的舒适，角色越来越关键，一定要注意创造好有利的信息输入环境，要么自己行动，要么对老板提要求；在工作职责范围，做好自己的预期管理，分析师的工作不是一锤子买卖，需要统筹好工作的层次和先后顺序；在每个分析需求的完成都要通过前面提到的
+8 步法，反复锻炼自己抽象和结构问题的能力。</p>
+<p>相信，各位分析师会玩的越来越开心。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/10/21/url-handle.html" rel="prev" title="在 R 中各种码的转换">
+                  <i class="fa fa-angle-left"></i> 在 R 中各种码的转换
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/04/12/value.html" rel="next" title="你为什么可以被晋升？">
+                  你为什么可以被晋升？ <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前天下班浏览朋友圈，雪晴数据网转发了一篇译文，大数据工具比较：R 语言和 Spark 谁更胜一筹？，原作者测试了在限定为单机环境下，使用Kaggle提供的手写识别的数据在R和Spark平台运行不同算法的对比速度，结论有一下几个：  主成分分析R要4小时，Spark要10秒 逻辑回归：R运行7小时，Spark约5分钟 朴素贝叶斯，因为算法太简单，差异不那么巨大（45s和9s） 决策树：R完全跑不起来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark or R">
+<meta property="og:url" content="http://bjt.name/2015/12/12/spark-or-r.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="前天下班浏览朋友圈，雪晴数据网转发了一篇译文，大数据工具比较：R 语言和 Spark 谁更胜一筹？，原作者测试了在限定为单机环境下，使用Kaggle提供的手写识别的数据在R和Spark平台运行不同算法的对比速度，结论有一下几个：  主成分分析R要4小时，Spark要10秒 逻辑回归：R运行7小时，Spark约5分钟 朴素贝叶斯，因为算法太简单，差异不那么巨大（45s和9s） 决策树：R完全跑不起来">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2015-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.292Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2015/12/12/spark-or-r.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2015/12/12/spark-or-r.html","path":"2015/12/12/spark-or-r.html","title":"Spark or R"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spark or R | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2015/12/12/spark-or-r.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spark or R | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spark or R
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-12 00:00:00" itemprop="dateCreated datePublished" datetime="2015-12-12T00:00:00+08:00">2015-12-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前天下班浏览朋友圈，<a
+target="_blank" rel="noopener" href="http://www.xueqing.cc/">雪晴数据网</a>转发了一篇译文，<a
+target="_blank" rel="noopener" href="http://www.xueqing.cc/cms/article/74">大数据工具比较：R 语言和
+Spark
+谁更胜一筹？</a>，原作者测试了在限定为单机环境下，使用Kaggle提供的手写识别的数据在R和Spark平台运行不同算法的对比速度，结论有一下几个：</p>
+<ul>
+<li>主成分分析R要4小时，Spark要10秒</li>
+<li>逻辑回归：R运行7小时，Spark约5分钟</li>
+<li>朴素贝叶斯，因为算法太简单，差异不那么巨大（45s和9s）</li>
+<li>决策树：R完全跑不起来，Spark花20秒</li>
+</ul>
+<p>在整篇文章作者的测试非常武断，有很多误导观众的信息。R再怎么样也不会如此不济，下面会逐条针对原文做补充。当然，这里面我还想强调：在使用算法解决问题的过程中，以下几大行为必须纠正（或者叫做流氓法则）：</p>
+<ol type="1">
+<li><strong>不贴源代码，是耍流氓</strong></li>
+<li><strong>张冠李戴，完全复制，不做任何优化就对比，更是耍流氓</strong></li>
+<li><strong>不考虑业务场景乱用算法，就是耍流氓</strong></li>
+<li><strong>不考虑数据形态以及精度要求，拿算法的帽子乱盖，还是耍流氓</strong></li>
+</ol>
+<span id="more"></span>
+<h1 id="我们也来玩玩测试">我们也来玩玩测试</h1>
+<p>首先提供一下我的环境，11 年购入的 Thinkpad T420，i7-2640M，4核心，8G
+内存；R 版本Windows 64位原生编译版本，未做 Blas
+库的任何优化。在这台玩魔兽现在都有点卡的老爷机上，以上几个算法在单机版的R平台上测试速度为：</p>
+<ul>
+<li>主成分分析为 1.64s</li>
+<li>二分类逻辑回归 5s，多分类逻辑回归为58s</li>
+<li>决策树使用更高级的GBDT，3s</li>
+</ul>
+<p>同时为了表明不是流氓，给出代码</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>data.table<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>irlba<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>LiblineaR<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>SparseM<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>xgboost<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">setwd<span class="punctuation">(</span><span class="string">&quot;E:/Dropbox/data/handwriting&quot;</span><span class="punctuation">)</span></span><br><span class="line">train <span class="operator">&lt;-</span> fread<span class="punctuation">(</span><span class="string">&#x27;train.csv&#x27;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">train <span class="operator">&lt;-</span> as<span class="punctuation">(</span>train<span class="punctuation">,</span> <span class="string">&#x27;Matrix&#x27;</span><span class="punctuation">)</span></span><br><span class="line">Y <span class="operator">&lt;-</span> train<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line">A <span class="operator">&lt;-</span> train<span class="punctuation">[</span><span class="punctuation">,</span><span class="operator">-</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Principal Components Analysis</span></span><br><span class="line">system.time<span class="punctuation">(</span>P <span class="operator">&lt;-</span> irlba<span class="punctuation">(</span>A<span class="punctuation">,</span> nv<span class="operator">=</span><span class="number">9</span><span class="punctuation">,</span> center<span class="operator">=</span>colMeans<span class="punctuation">(</span>A<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Logistic Regression</span></span><br><span class="line">id <span class="operator">&lt;-</span> Y <span class="operator">==</span> <span class="number">1</span></span><br><span class="line">Y1 <span class="operator">&lt;-</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span>id<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## single label</span></span><br><span class="line">system.time<span class="punctuation">(</span>m1 <span class="operator">&lt;-</span> LiblineaR<span class="punctuation">(</span>data <span class="operator">=</span> as<span class="punctuation">(</span>A<span class="punctuation">,</span> <span class="string">&#x27;matrix.csr&#x27;</span><span class="punctuation">)</span><span class="punctuation">,</span> target <span class="operator">=</span> Y1<span class="punctuation">,</span> type <span class="operator">=</span> <span class="number">5</span><span class="punctuation">)</span><span class="punctuation">)</span> </span><br><span class="line"><span class="comment">## multi label</span></span><br><span class="line">system.time<span class="punctuation">(</span>m2 <span class="operator">&lt;-</span> LiblineaR<span class="punctuation">(</span>data <span class="operator">=</span> as<span class="punctuation">(</span>A<span class="punctuation">,</span> <span class="string">&#x27;matrix.csr&#x27;</span><span class="punctuation">)</span><span class="punctuation">,</span> target <span class="operator">=</span> Y<span class="punctuation">,</span> type <span class="operator">=</span> <span class="number">5</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Confusion Matrix</span></span><br><span class="line">dd <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>predict<span class="punctuation">(</span>m2<span class="punctuation">,</span> as<span class="punctuation">(</span>A<span class="punctuation">,</span> <span class="string">&#x27;matrix.csr&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">,</span> Y<span class="punctuation">)</span></span><br><span class="line">table<span class="punctuation">(</span>dd<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## eXtreme Gradient Boosting (Tree)</span></span><br><span class="line">system.time<span class="punctuation">(</span>bst <span class="operator">&lt;-</span> xgboost<span class="punctuation">(</span>data <span class="operator">=</span> A<span class="punctuation">,</span> label <span class="operator">=</span> Y1<span class="punctuation">,</span> nrounds<span class="operator">=</span><span class="number">10</span><span class="punctuation">,</span> objective <span class="operator">=</span> <span class="string">&quot;binary:logistic&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="深层次的原因">深层次的原因</h1>
+<p>写到这里，有看官肯定会有疑问了：为什么同样的平台怎么就差异这么大了呢？在解释之前，首先需要明确的一点：</p>
+<blockquote>
+<p>Spark
+作为利用多机内存处理大数据的利器，必然是大规模数据计算的未来发展方向，这个势是无法阻挡的。</p>
+</blockquote>
+<p>但 R 从最初设计就不是干这个的！R 语言基本继承了 S
+语言的设计理念，我们先了解一下当时 S 诞生的理由(Yihui Xie,2008)。</p>
+<ol type="1">
+<li>1975-1976年，贝尔实验室统计研究部使用一套庞大且文档齐全的 Fortran
+库做统计研究，简称为 SCS(Statistical Computing Subroutines)。</li>
+<li>SCS
+库为模拟实验、大问题研究、蒙特卡罗分析和非标准分析提供了完美支持。但统计研究部主要负责非标准的数据案例，</li>
+<li>这种方式更接近于现代数据分析需求-探索性数据分析技术（Exploratory
+Data
+Analysis），在这个需求下花在大量的编程的精力和问题的价值是极不相符的。</li>
+<li>以John Chambers核心的统计研究部最终结论是需要一套完整语言系统，于是
+S 语言诞生了。</li>
+</ol>
+<p>简要说：需要高性能计算的部分使用 C 和
+Fortran，需要处理逻辑以及快速分析部分使用
+R。这一直都是R存在的理念。直至今日，R 的源码 50% 是C，30%
+是Fortran，仅有 20% 的 R 代码。大量通用化计算模块均以 R 包的方式存在。R
+单机版性能不济，十之八九是用户采用了不恰当的方式。</p>
+<p>比如 Regression 问题，当数据量小的时候一般用 QR
+分解，亦可以直接用标准最小二乘方式，这时候就需要计算X的内积以及内积的求逆。当维度很大时，这种做法完全就是个灾难。如果我们改用梯度下降或坐标下降方法之后，虽然牺牲了精度，但计算效率可以得到极大改观。</p>
+<p>同样上个世纪 Friedman 提出了Gradient Boosting
+Machine，该方法每一代辛勤的科研工作者均站在前人的肩膀上做了更多的优化，拿早期版本和最新的成果进行对比，（比如用
+Python 的 sklearn 库中的 GBM 和 R 中的 xgboost 比，然后说 R
+快），这本身是<code>赤裸裸地耍流氓</code>。</p>
+<p>对于像 SVD
+分解这类问题，如果进行全矩阵分解，计算量暴大不说，单单存储就不太容易搞定。Lancozs算法可以只求解我们关注的最大的几个奇异值，忽略尾部的奇异值，有这么方便的方法还去做全矩阵分解，请参见流氓法则
+4。</p>
+<h1 id="写在最后">写在最后</h1>
+<p>如果过于迷信工具，而忽视了要解决问题的本质，就需要参见流氓做法 3 和
+4了。当我们碰到一个问题，首先判断是否能够转化为数学问题，然后判断用什么方法解决它，再然后判断适用的工具以及工具对应的特定方法。</p>
+<p>突然记起 Python 社区 Zoom.Q 大妈T恤上有句话，叫做</p>
+<blockquote>
+<p>人生苦短，Python 是岸</p>
+</blockquote>
+<p>天天争论哪个工具好用，舍本逐末，那真是人生苦短了~</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/12/10/neual-network-r.html" rel="prev" title="神经网络初步">
+                  <i class="fa fa-angle-left"></i> 神经网络初步
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/04/19/duplicated-function.html" rel="next" title="词向量的唯一化">
+                  词向量的唯一化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

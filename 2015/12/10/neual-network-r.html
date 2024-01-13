@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 损失函数的定义 根据 Y 类型的不同（数值型、类别型、顺序型），一般有三种损失函数：  Regression loss functions，如 GDP 的预测问题 Classification loss functions，如区分图片是猫还是狗 ‍Ranking loss functions，如广告素材的排序问题  本文主要讨论分类问题（classification）的公式推导以及 R 代码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络初步">
+<meta property="og:url" content="http://bjt.name/2015/12/10/neual-network-r.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="1. 损失函数的定义 根据 Y 类型的不同（数值型、类别型、顺序型），一般有三种损失函数：  Regression loss functions，如 GDP 的预测问题 Classification loss functions，如区分图片是猫还是狗 ‍Ranking loss functions，如广告素材的排序问题  本文主要讨论分类问题（classification）的公式推导以及 R 代码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/gNip2.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/coef.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/nnet.png">
+<meta property="og:image" content="http://bjt.name/upload/pic/exp-123.png">
+<meta property="article:published_time" content="2015-12-09T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.292Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/gNip2.png">
+
+
+<link rel="canonical" href="http://bjt.name/2015/12/10/neual-network-r.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2015/12/10/neual-network-r.html","path":"2015/12/10/neual-network-r.html","title":"神经网络初步"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>神经网络初步 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2015/12/10/neual-network-r.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="神经网络初步 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          神经网络初步
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2015-12-10 00:00:00" itemprop="dateCreated datePublished" datetime="2015-12-10T00:00:00+08:00">2015-12-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="损失函数的定义">1. 损失函数的定义</h1>
+<p>根据 Y 类型的不同（数值型、类别型、顺序型），一般有三种损失函数：</p>
+<ol type="1">
+<li>Regression loss functions，如 GDP 的预测问题</li>
+<li>Classification loss functions，如区分图片是猫还是狗</li>
+<li>‍Ranking loss functions，如广告素材的排序问题</li>
+</ol>
+<p>本文主要讨论分类问题（classification）的公式推导以及 R
+代码示例的实现。</p>
+<h1 id="分类问题和交叉熵">2. 分类问题和交叉熵</h1>
+<p>交叉熵 Cross entropy loss
+是机器学习中常用的衡量分类模型表现如何的指标，熵是由 Claude Shannon 在
+1948 年第一次引入。</p>
+<p><span class="math display">\[
+\begin{equation*}
+H(X) = -\Sigma_i P(X=i) \log _2 P(X=i)
+\end{equation*}
+\]</span></p>
+<p>交叉熵 Cross-entropy
+还经常被用于衡量两个概率分布之间的差异。假设有三个类别，标签为
+A、B、C，他们的事实分布概率是：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Pr(A)</th>
+<th style="text-align: center;">Pr(B)</th>
+<th style="text-align: center;">Pr(C)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.0</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">0.0</td>
+</tr>
+</tbody>
+</table>
+<p>通过训练的某个机器学习分类器，预测的概率分布如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Pr(A)</th>
+<th style="text-align: center;">Pr(B)</th>
+<th style="text-align: center;">Pr(C)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.228</td>
+<td style="text-align: center;">0.619</td>
+<td style="text-align: center;">0.153</td>
+</tr>
+</tbody>
+</table>
+<p>我们显然希望预测分布 predicted distribution 同实际分布 true
+distribution 无限接近于
+0，那这两个分布之间的差异有多大呢？是否在改善？这时候使用的就是交叉熵来度量的，公式如下：</p>
+<p><img src="/upload/pic/gNip2.png" /></p>
+<p>根据公式计算两个分部之间的差异为：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d_true <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span></span><br><span class="line">d_predicted <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.228</span><span class="punctuation">,</span> <span class="number">0.619</span><span class="punctuation">,</span> <span class="number">0.153</span><span class="punctuation">)</span></span><br><span class="line">H <span class="operator">=</span> <span class="operator">-</span><span class="built_in">sum</span><span class="punctuation">(</span>d_true <span class="operator">*</span> <span class="built_in">log</span><span class="punctuation">(</span>d_predicted<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">H</span><br><span class="line"><span class="comment"># [1] 0.47965</span></span><br></pre></td></tr></table></figure>
+<p>目测如果预测改善会出现什么情况：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">d_predicted <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.08</span><span class="punctuation">,</span> <span class="number">0.81</span><span class="punctuation">,</span> <span class="number">0.11</span><span class="punctuation">)</span></span><br><span class="line"><span class="operator">-</span><span class="built_in">sum</span><span class="punctuation">(</span>d_true <span class="operator">*</span> <span class="built_in">log</span><span class="punctuation">(</span>d_predicted<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># [1] 0.210721</span></span><br></pre></td></tr></table></figure>
+<p>交叉熵变的更小了。假如我们认定预测值大于 0.5 即为 1
+的话（传统的分类错误率），会发现这两组的预测精度是一样的（正确率都是
+100%），显然无法更好的衡量模型的预测精度。</p>
+<h2 id="二分类交叉熵">2.1. 二分类交叉熵</h2>
+<p>在将问题具象化到二分类问题，交叉熵的损失函数形式为：</p>
+<p><span class="math display">\[
+\begin{equation*}
+L = -(y \log(p) + (1-y) \log (1-p))
+\end{equation*}
+\]</span></p>
+<p>其中，<span class="math inline">\(y\)</span> 是真实标签（0 或
+1），<span class="math inline">\(p\)</span> 是模型的预测概率（0 到 1
+之间，比如通过 sigmoid 变换的结果）。</p>
+<p>通过前面的示例演示以及数学性质，这个损失函数具有两条基本属性：</p>
+<ol type="1">
+<li>非负性</li>
+<li>预测目标值越接近实际目标值时，损失函数接越近于 0</li>
+</ol>
+<h2 id="拟合梯度下降">2.2. 拟合梯度下降</h2>
+<p>已知 sigmod 这个变换可以将线性预测的结果压缩到 0 至 1
+之间，刚好表征了 0-1 类别的概率</p>
+<p><span class="math display">\[
+p = \sigma(s)=\frac{1}{1+e^{-s}}=\frac{e}{1+e^{s}}
+\]</span></p>
+<p><span class="math inline">\(s\)</span> 为 <span
+class="math inline">\(x_i\)</span> 的线性组合关系：</p>
+<p><span class="math display">\[
+s = \sum w_i x_i
+\]</span></p>
+<p>我们希望损失函数（交叉熵）最小化，对系数 <span
+class="math inline">\(w_i\)</span> 求导：</p>
+<p><span class="math display">\[
+\frac{\partial L}{\partial w_{i}}=\frac{\partial L}{\partial p}
+\frac{\partial p}{\partial s} \frac{\partial s}{\partial w_{i}}
+\]</span></p>
+<p>这三项分别计算，可以得到以下结果。推导背景知识可以参考<a
+target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%AF%BC%E6%95%B0%E5%88%97%E8%A1%A8">导数推导词条</a>：</p>
+<p><span class="math display">\[
+\begin{align}
+    \frac{\partial L}{\partial p} &amp;= -y / p+(1-y) /(1-p) \\
+    \frac{\partial p}{\partial s} &amp;= e^{s} /\left(1+e^{s}\right) * 1
+/\left(1+e^{s}\right)=\sigma(s) *(1-\sigma(s)) \\
+    \frac{\partial s}{\partial w_{i}} &amp;= x_{i} \\
+\end{align}
+\]</span></p>
+<p>有了上面推导结果，就可以利用梯度更新的方式求解 <span
+class="math inline">\(w_i\)</span>：</p>
+<p><span class="math display">\[
+\begin{equation*}
+w_i \leftarrow w_i-\alpha \frac{\partial}{\partial w_i} L(w)
+\end{equation*}
+\]</span></p>
+<p>用一个小例子（逻辑回归），来说明 <span
+class="math inline">\(w_i\)</span> 更新的过程：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input dataset</span></span><br><span class="line">X <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>iris<span class="punctuation">[</span>iris<span class="operator">$</span>Species <span class="operator">!=</span> <span class="string">&#x27;versicolor&#x27;</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># output dataset  </span></span><br><span class="line">y <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="built_in">rep</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">50</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">50</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sigmoid function</span></span><br><span class="line">nonlin <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">	<span class="keyword">if</span><span class="punctuation">(</span>deriv <span class="operator">==</span> <span class="literal">TRUE</span><span class="punctuation">)</span> x <span class="operator">*</span> <span class="punctuation">(</span><span class="number">1</span> <span class="operator">-</span> x<span class="punctuation">)</span></span><br><span class="line">	<span class="keyword">else</span> <span class="number">1</span><span class="operator">/</span><span class="punctuation">(</span><span class="number">1</span> <span class="operator">+</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span>x<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">set.seed<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># initialize weights randomly with mean 0</span></span><br><span class="line">w <span class="operator">&lt;-</span> rnorm<span class="punctuation">(</span><span class="number">4</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span></span><br><span class="line">tmp <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="comment"># 记录w的变化</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	l0 <span class="operator">&lt;-</span> X</span><br><span class="line">	l1 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l0 <span class="operator">%*%</span> w<span class="punctuation">)</span></span><br><span class="line">	l1_delta <span class="operator">&lt;-</span> <span class="punctuation">(</span>y <span class="operator">-</span> l1<span class="punctuation">)</span> <span class="operator">*</span> nonlin<span class="punctuation">(</span>l1<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">  <span class="comment"># update weights</span></span><br><span class="line">  w <span class="operator">&lt;-</span> w <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l0<span class="punctuation">)</span> <span class="operator">%*%</span> l1_delta</span><br><span class="line">  tmp<span class="punctuation">[[</span>i<span class="punctuation">]</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> w</span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">l1</span><br><span class="line">table<span class="punctuation">(</span>l1 <span class="operator">&gt;</span> <span class="number">0.5</span><span class="punctuation">,</span> y<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Coef&#x27;s solution path</span></span><br><span class="line">ts.plot<span class="punctuation">(</span>t<span class="punctuation">(</span>do.call<span class="punctuation">(</span>cbind<span class="punctuation">,</span> tmp<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>可以观察 coefficient path 的变化：</p>
+<p><img src="/upload/pic/coef.png" alt="exp" width="500px"/></p>
+<p>不过更为通泛的做法是将三者相乘，直接求得 <span
+class="math inline">\(\frac{\partial L}{\partial w_{i}}\)</span>
+的表达</p>
+<p><span class="math display">\[
+\begin{align}
+    \frac{\partial L}{\partial w_{i}} &amp;= [-y / p + (1-y) /(1-p)] *
+\sigma(s) *(1-\sigma(s)) * x_{i} \\
+                                  &amp;= [-y / \sigma(s)+(1-y)
+/(1-\sigma(s))] * \sigma(s) *(1-\sigma(s)) * x_{i} \\
+                                  &amp;= [-y * (1-\sigma(s))+(1-y) *
+\sigma(s)] * x_{i} \\
+                                  &amp;= [\sigma(s)-y] * x_{i}
+\end{align}
+\]</span></p>
+<p>我们得到了一个比前面推导更加漂亮的结果。将前面的例子重写一下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># input dataset</span></span><br><span class="line">X <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>iris<span class="punctuation">[</span>iris<span class="operator">$</span>Species <span class="operator">!=</span> <span class="string">&#x27;versicolor&#x27;</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># output dataset  </span></span><br><span class="line">y <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="built_in">rep</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">50</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">50</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">sigmoid <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="number">1</span><span class="operator">/</span><span class="punctuation">(</span><span class="number">1</span> <span class="operator">+</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span>x<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">w <span class="operator">&lt;-</span> rnorm<span class="punctuation">(</span><span class="number">4</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span></span><br><span class="line">tmp <span class="operator">&lt;-</span> <span class="built_in">list</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="comment"># 记录w的变化</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">100</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	l0 <span class="operator">&lt;-</span> X</span><br><span class="line">	l1 <span class="operator">&lt;-</span> sigmoid<span class="punctuation">(</span>l0 <span class="operator">%*%</span> w<span class="punctuation">)</span></span><br><span class="line">  <span class="comment"># update weights</span></span><br><span class="line">  w <span class="operator">&lt;-</span> w <span class="operator">+</span> <span class="number">0.001</span> <span class="operator">*</span> t<span class="punctuation">(</span>l0<span class="punctuation">)</span> <span class="operator">%*%</span> <span class="punctuation">(</span>y <span class="operator">-</span> l1<span class="punctuation">)</span></span><br><span class="line">  tmp<span class="punctuation">[[</span>i<span class="punctuation">]</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> w</span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">l1</span><br><span class="line">table<span class="punctuation">(</span>l1 <span class="operator">&gt;</span> <span class="number">0.5</span><span class="punctuation">,</span> y<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Coef&#x27;s solution path</span></span><br><span class="line">ts.plot<span class="punctuation">(</span>t<span class="punctuation">(</span>do.call<span class="punctuation">(</span>cbind<span class="punctuation">,</span> tmp<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<h1 id="为什么不用-mse">3. 为什么不用 MSE</h1>
+<p>从前文可以看到，交叉熵权重学习的速率受到 <span
+class="math inline">\(\sigma(s) - y\)</span>
+的影响，也就是输出误差的控制，这样在误差较大时有更大的学习速度。再比较一下平方损失代价函数的学习速率，定义
+Loss 为：</p>
+<p><span class="math display">\[
+L=\frac{1}{2}\left(p-y)^{2}\right.
+\]</span></p>
+<p>且</p>
+<p><span class="math display">\[
+p = \sigma(s)=\frac{1}{1+e^{-s}}=\frac{e^{s}}{1+e^{s}}
+\]</span></p>
+<p>则对其求偏导有</p>
+<p><span class="math display">\[
+(p-y) * \sigma(s) *(1-\sigma(s)) * x_{i}
+\]</span></p>
+<p>不难看出，其偏导值在输出概率值接近0或者1的时候都会非常小，这可能会造成模型刚开始训练时，偏导值几乎消失。
+这也是为什么我们不会使用 MSE 作为 0-1 回归 loss 的原因。</p>
+<h1 id="标准神经网络">4. 标准神经网络</h1>
+<p>构建包含一个隐藏层 hidden layer 的神经网络，隐藏层有两个 cell。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>visNetwork<span class="punctuation">)</span></span><br><span class="line">color.background <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;red&quot;</span><span class="punctuation">,</span><span class="string">&quot;red&quot;</span><span class="punctuation">,</span><span class="string">&quot;red&quot;</span><span class="punctuation">,</span><span class="string">&quot;red&quot;</span><span class="punctuation">,</span><span class="string">&quot;blue&quot;</span><span class="punctuation">,</span><span class="string">&quot;blue&quot;</span><span class="punctuation">,</span><span class="string">&quot;green&quot;</span><span class="punctuation">)</span></span><br><span class="line">nodes <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>id <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">)</span><span class="punctuation">,</span> </span><br><span class="line">                    color.background <span class="operator">=</span> color.background<span class="punctuation">,</span></span><br><span class="line">                    label <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;I1&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;I2&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;I3&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;I4&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;H1&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;H2&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;O1&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">edges <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>from <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">4</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">)</span><span class="punctuation">,</span> </span><br><span class="line">                      to <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">5</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">6</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">                    label <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="built_in">rep</span><span class="punctuation">(</span><span class="string">&#x27;&#x27;</span><span class="punctuation">,</span> <span class="number">10</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">visNetwork<span class="punctuation">(</span>nodes<span class="punctuation">,</span> edges<span class="punctuation">,</span> width <span class="operator">=</span> <span class="string">&quot;100%&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  visEdges<span class="punctuation">(</span>arrows <span class="operator">=</span> <span class="string">&quot;to&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  visHierarchicalLayout<span class="punctuation">(</span>sortMethod <span class="operator">=</span> <span class="string">&#x27;directed&#x27;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p><img src="/upload/pic/nnet.png" alt="exp" width="400px"/></p>
+<p>看看每个层的参数是如何更新的，两个关键映射</p>
+<ul>
+<li>4 个变量向 2 个 cell 的 sigmoid 映射</li>
+<li>2 个 cell 向 y 的 sigmoid 映射</li>
+</ul>
+<p>对应的代码如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## include hidden layer</span></span><br><span class="line"><span class="comment">## input dataset</span></span><br><span class="line">X <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>iris<span class="punctuation">[</span>iris<span class="operator">$</span>Species <span class="operator">!=</span> <span class="string">&#x27;versicolor&#x27;</span><span class="punctuation">,</span> <span class="number">1</span><span class="operator">:</span><span class="number">4</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># output dataset  </span></span><br><span class="line">y <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="built_in">rep</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">50</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">50</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># sigmoid function</span></span><br><span class="line">nonlin <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">	<span class="keyword">if</span><span class="punctuation">(</span>deriv <span class="operator">==</span> <span class="literal">TRUE</span><span class="punctuation">)</span> x <span class="operator">*</span> <span class="punctuation">(</span><span class="number">1</span> <span class="operator">-</span> x<span class="punctuation">)</span></span><br><span class="line">	<span class="keyword">else</span> <span class="number">1</span><span class="operator">/</span><span class="punctuation">(</span><span class="number">1</span> <span class="operator">+</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span>x<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">set.seed<span class="punctuation">(</span><span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">m <span class="operator">&lt;-</span> ncol<span class="punctuation">(</span>X<span class="punctuation">)</span></span><br><span class="line">n <span class="operator">&lt;-</span> 2 <span class="comment"># number of cells of hidden layer</span></span><br><span class="line">syn0 <span class="operator">=</span> matrix<span class="punctuation">(</span>rnorm<span class="punctuation">(</span>m<span class="operator">*</span>n<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span><span class="punctuation">,</span> nrow <span class="operator">=</span> m<span class="punctuation">,</span> ncol <span class="operator">=</span> n<span class="punctuation">)</span></span><br><span class="line">syn1 <span class="operator">=</span> rnorm<span class="punctuation">(</span>n<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">iter <span class="operator">&lt;-</span> 500</span><br><span class="line"></span><br><span class="line">M <span class="operator">&lt;-</span> matrix<span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> iter <span class="operator">*</span> <span class="number">3</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">)</span> <span class="comment"># 测试scale后的效果和中值后的</span></span><br><span class="line">M<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">1</span><span class="operator">:</span>iter<span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">)</span></span><br><span class="line">M<span class="punctuation">[</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="number">1</span><span class="operator">:</span><span class="number">3</span><span class="punctuation">,</span> each <span class="operator">=</span> iter<span class="punctuation">)</span> <span class="comment"># 三组实验</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>iter<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	l0 <span class="operator">&lt;-</span> X</span><br><span class="line">	l1 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l0 <span class="operator">%*%</span> syn0<span class="punctuation">)</span></span><br><span class="line">	l2 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l1 <span class="operator">%*%</span> syn1<span class="punctuation">)</span></span><br><span class="line">	l2_delta <span class="operator">=</span> <span class="punctuation">(</span>y <span class="operator">-</span> l2<span class="punctuation">)</span> <span class="operator">*</span> nonlin<span class="punctuation">(</span>l2<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">	l1_error <span class="operator">=</span> l2_delta <span class="operator">%*%</span> t<span class="punctuation">(</span>syn1<span class="punctuation">)</span> <span class="comment"># how much did each l1 value contribute to the l2 error (according to the weights)?</span></span><br><span class="line">	l1_delta <span class="operator">=</span> l1_error <span class="operator">*</span> nonlin<span class="punctuation">(</span>l1<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">	<span class="comment">## update weights</span></span><br><span class="line">  syn1 <span class="operator">&lt;-</span> syn1 <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l1<span class="punctuation">)</span> <span class="operator">%*%</span> l2_delta</span><br><span class="line">  syn0 <span class="operator">&lt;-</span> syn0 <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l0<span class="punctuation">)</span> <span class="operator">%*%</span> l1_delta</span><br><span class="line">  M<span class="punctuation">[</span>j<span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> sd<span class="punctuation">(</span>y <span class="operator">-</span> l2<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">pred <span class="operator">&lt;-</span> X <span class="operator">%*%</span> syn0 <span class="operator">%*%</span> syn1 <span class="operator">|&gt;</span> nonlin<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">table<span class="punctuation">(</span>pred <span class="operator">&gt;</span> <span class="number">0.5</span><span class="punctuation">,</span> y<span class="punctuation">)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>能不能加快迭代速度？显然是可能的，有两个思路：</p>
+<ol type="1">
+<li>标准化</li>
+<li>中心化</li>
+</ol>
+<p>我们看看这两个思路的效果如何？</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">m <span class="operator">&lt;-</span> ncol<span class="punctuation">(</span>X<span class="punctuation">)</span></span><br><span class="line">n <span class="operator">&lt;-</span> 2 <span class="comment"># number of cells of hidden layer</span></span><br><span class="line">syn0 <span class="operator">=</span> matrix<span class="punctuation">(</span>rnorm<span class="punctuation">(</span>m<span class="operator">*</span>n<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span><span class="punctuation">,</span> nrow <span class="operator">=</span> m<span class="punctuation">,</span> ncol <span class="operator">=</span> n<span class="punctuation">)</span></span><br><span class="line">syn1 <span class="operator">=</span> rnorm<span class="punctuation">(</span>n<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>iter<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	l0 <span class="operator">&lt;-</span> scale<span class="punctuation">(</span>X<span class="punctuation">)</span></span><br><span class="line">	l1 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l0 <span class="operator">%*%</span> syn0<span class="punctuation">)</span></span><br><span class="line">	l2 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l1 <span class="operator">%*%</span> syn1<span class="punctuation">)</span></span><br><span class="line">	l2_delta <span class="operator">=</span> <span class="punctuation">(</span>y <span class="operator">-</span> l2<span class="punctuation">)</span> <span class="operator">*</span> nonlin<span class="punctuation">(</span>l2<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">	l1_error <span class="operator">=</span> l2_delta <span class="operator">%*%</span> t<span class="punctuation">(</span>syn1<span class="punctuation">)</span> <span class="comment"># how much did each l1 value contribute to the l2 error (according to the weights)?</span></span><br><span class="line">	l1_delta <span class="operator">=</span> l1_error <span class="operator">*</span> nonlin<span class="punctuation">(</span>l1<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">	<span class="comment">## update weights</span></span><br><span class="line">  syn1 <span class="operator">&lt;-</span> syn1 <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l1<span class="punctuation">)</span> <span class="operator">%*%</span> l2_delta</span><br><span class="line">  syn0 <span class="operator">&lt;-</span> syn0 <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l0<span class="punctuation">)</span> <span class="operator">%*%</span> l1_delta</span><br><span class="line">  M<span class="punctuation">[</span>j <span class="operator">+</span> iter<span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> sd<span class="punctuation">(</span>y <span class="operator">-</span> l2<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m <span class="operator">&lt;-</span> ncol<span class="punctuation">(</span>X<span class="punctuation">)</span></span><br><span class="line">n <span class="operator">&lt;-</span> 2 <span class="comment"># number of cells of hidden layer</span></span><br><span class="line">syn0 <span class="operator">=</span> matrix<span class="punctuation">(</span>rnorm<span class="punctuation">(</span>m<span class="operator">*</span>n<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span><span class="punctuation">,</span> nrow <span class="operator">=</span> m<span class="punctuation">,</span> ncol <span class="operator">=</span> n<span class="punctuation">)</span></span><br><span class="line">syn1 <span class="operator">=</span> rnorm<span class="punctuation">(</span>n<span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0.1</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>iter<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	l0 <span class="operator">&lt;-</span> t<span class="punctuation">(</span>t<span class="punctuation">(</span>X<span class="punctuation">)</span> <span class="operator">-</span> colMeans<span class="punctuation">(</span>X<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">	l1 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l0 <span class="operator">%*%</span> syn0<span class="punctuation">)</span></span><br><span class="line">	l2 <span class="operator">&lt;-</span> nonlin<span class="punctuation">(</span>l1 <span class="operator">%*%</span> syn1<span class="punctuation">)</span></span><br><span class="line">	l2_delta <span class="operator">=</span> <span class="punctuation">(</span>y <span class="operator">-</span> l2<span class="punctuation">)</span> <span class="operator">*</span> nonlin<span class="punctuation">(</span>l2<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">	l1_error <span class="operator">=</span> l2_delta <span class="operator">%*%</span> t<span class="punctuation">(</span>syn1<span class="punctuation">)</span> <span class="comment"># how much did each l1 value contribute to the l2 error (according to the weights)?</span></span><br><span class="line">	l1_delta <span class="operator">=</span> l1_error <span class="operator">*</span> nonlin<span class="punctuation">(</span>l1<span class="punctuation">,</span> deriv <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line">	<span class="comment">## update weights</span></span><br><span class="line">  syn1 <span class="operator">&lt;-</span> syn1 <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l1<span class="punctuation">)</span> <span class="operator">%*%</span> l2_delta</span><br><span class="line">  syn0 <span class="operator">&lt;-</span> syn0 <span class="operator">+</span> <span class="number">0.01</span> <span class="operator">*</span> t<span class="punctuation">(</span>l0<span class="punctuation">)</span> <span class="operator">%*%</span> l1_delta</span><br><span class="line">  M<span class="punctuation">[</span>j <span class="operator">+</span> <span class="number">2</span><span class="operator">*</span>iter<span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> sd<span class="punctuation">(</span>y <span class="operator">-</span> l2<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">M <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>M<span class="punctuation">)</span></span><br><span class="line">M <span class="operator">&lt;-</span> transform<span class="punctuation">(</span>M<span class="punctuation">,</span> X3 <span class="operator">=</span> as.factor<span class="punctuation">(</span>X3<span class="punctuation">)</span><span class="punctuation">)</span>	</span><br><span class="line"><span class="built_in">names</span><span class="punctuation">(</span>M<span class="punctuation">)</span> <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;iter&#x27;</span><span class="punctuation">,</span><span class="string">&#x27;MSE&#x27;</span><span class="punctuation">,</span><span class="string">&#x27;Class&#x27;</span><span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> M<span class="punctuation">,</span> mapping <span class="operator">=</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> iter<span class="punctuation">,</span> y <span class="operator">=</span> MSE<span class="punctuation">,</span> colour <span class="operator">=</span> Class<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> </span><br><span class="line">    geom_line<span class="punctuation">(</span>linewidth <span class="operator">=</span> <span class="number">1.5</span><span class="punctuation">)</span> <span class="operator">+</span> ylim<span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span><span class="number">.65</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p><img src="/upload/pic/exp-123.png" alt="exp" width="700px"/></p>
+<p>可以看到标准化和中心化都可以更快速的求得结果。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2015/11/25/graphics-tools.html" rel="prev" title="用 R 做人工审核图片的小工具">
+                  <i class="fa fa-angle-left"></i> 用 R 做人工审核图片的小工具
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2015/12/12/spark-or-r.html" rel="next" title="Spark or R">
+                  Spark or R <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

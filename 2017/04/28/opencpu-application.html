@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="思路可借鉴，但内容已经过时，请忽视。可转向 https:&#x2F;&#x2F;github.com&#x2F;rexyai&#x2F;RestRserve  使用R提供一个高可用的服务一直对R来说都是弱点，比如JRI(Java)或Rserve这些都不是太友好。 OpenCPU的出现彻底解决了这个问题，援引OpenCPU介绍：  Interoperable HTTP for data analysis RPC and object m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用R和opencpu搭建高可用的HTTP服务">
+<meta property="og:url" content="http://bjt.name/2017/04/28/opencpu-application.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="思路可借鉴，但内容已经过时，请忽视。可转向 https:&#x2F;&#x2F;github.com&#x2F;rexyai&#x2F;RestRserve  使用R提供一个高可用的服务一直对R来说都是弱点，比如JRI(Java)或Rserve这些都不是太友好。 OpenCPU的出现彻底解决了这个问题，援引OpenCPU介绍：  Interoperable HTTP for data analysis RPC and object m">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-04-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.292Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="opencpu">
+<meta property="article:tag" content="json">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2017/04/28/opencpu-application.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2017/04/28/opencpu-application.html","path":"2017/04/28/opencpu-application.html","title":"利用R和opencpu搭建高可用的HTTP服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>利用R和opencpu搭建高可用的HTTP服务 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2017/04/28/opencpu-application.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="利用R和opencpu搭建高可用的HTTP服务 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用R和opencpu搭建高可用的HTTP服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-04-28 00:00:00" itemprop="dateCreated datePublished" datetime="2017-04-28T00:00:00+08:00">2017-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R-%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">R 技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>思路可借鉴，但内容已经过时，请忽视。可转向
+https://github.com/rexyai/RestRserve</p>
+</blockquote>
+<p>使用R提供一个高可用的服务一直对R来说都是弱点，比如JRI(Java)或Rserve这些都不是太友好。
+OpenCPU的出现彻底解决了这个问题，援引OpenCPU<a
+target="_blank" rel="noopener" href="https://jeroen.github.io/opencpu-slides/">介绍</a>：</p>
+<ul>
+<li>Interoperable HTTP for data analysis</li>
+<li>RPC and object management</li>
+<li>I/O: JSON, Protocol Buffers, CSV</li>
+<li>Support for parallel/async requests</li>
+<li>Highly configurable security policies</li>
+<li>Native reproducibility</li>
+<li>Client libraries: JavaScript, Ruby, ...</li>
+</ul>
+<p>一言以蔽之：可以快速搭建灵活的高可用服务。比如说，对于线上预测的请求，大概在200毫秒左右，很多场景基本上也够用了。</p>
+<span id="more"></span>
+<p>OpenCPU支持 GET 和POST 请求，对于Object和file目标响应不同：</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 5%" />
+<col style="width: 11%" />
+<col style="width: 18%" />
+<col style="width: 29%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">METHOD</th>
+<th style="text-align: left;">TARGET</th>
+<th style="text-align: left;">ACTION</th>
+<th style="text-align: left;">ARGUMENTS</th>
+<th style="text-align: left;">EXAMPLE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">GET</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">read object</td>
+<td style="text-align: left;">control output format</td>
+<td style="text-align: left;">GET /ocpu/cran/MASS/data/cats/json</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POST</td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">call function</td>
+<td style="text-align: left;">function arguments</td>
+<td style="text-align: left;">POST /ocpu/library/stats/R/rnorm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GET</td>
+<td style="text-align: left;">file</td>
+<td style="text-align: left;">read file</td>
+<td style="text-align: left;">-</td>
+<td style="text-align: left;">GET /ocpu/cran/MASS/scripts/</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POST</td>
+<td style="text-align: left;">file</td>
+<td style="text-align: left;">run script</td>
+<td style="text-align: left;">control interpreter</td>
+<td style="text-align: left;">POST
+/ocpu/cran/knitr/examples/minimal.Rmd</td>
+</tr>
+</tbody>
+</table>
+<p>一般来讲，线上服务我们期待通过传递参数的call
+funcion的方式，以下是该场景的极简示例。</p>
+<h1 id="opencpu在centos-7平台上的安装">opencpu在CentOS
+7平台上的安装</h1>
+<p>不同平台的安装方式不同，这里使用了标配的CentOS
+7，该平台需要自行编译rpm包，具体操作过程请参考<a
+target="_blank" rel="noopener" href="https://github.com/jeroen/opencpu-server/blob/master/rpm/buildscript.sh">这里</a>。</p>
+<p>安装结束后，请测试</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://localhost/ocpu/library/</span><br></pre></td></tr></table></figure>
+<p>返回了全部的R包列表，则表明安装成功。</p>
+<p>可能会涉及 opencpu 的重新启动，直接利用以下命令：</p>
+<pre><code>sudo apachectl restart</code></pre>
+<h1 id="利用rstudio快速创建服务">利用RStudio快速创建服务</h1>
+<p>使用RStudio做package
+check&amp;build非常方便，我们可以很轻松在CentOS7上安装一个Server版。
+这里有一个小细节，RStudio安装完毕后，利用Web界面登陆（建议用Firefox），此时不能使用root账号直接登录，我们可以add一个名为
+bjt 的账号登录，并创建名为 spampred 的包</p>
+<h1 id="利用线上redis缓存来做预测">利用线上redis缓存来做预测</h1>
+<h2 id="特征服务的模拟">特征服务的模拟</h2>
+<p>假设spam的特征数据是实时被写入到缓存的
+hashmap，模拟操作利用了pipeline操作</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>ElemStatLearn<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>rredis<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>Matrix<span class="punctuation">)</span></span><br><span class="line">redisConnect<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">redisSetPipeline<span class="punctuation">(</span><span class="literal">TRUE</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">tr <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>x<span class="punctuation">)</span> charToRaw<span class="punctuation">(</span><span class="built_in">as.character</span><span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">d <span class="operator">&lt;-</span> summary<span class="punctuation">(</span>as<span class="punctuation">(</span>as.matrix<span class="punctuation">(</span>spam<span class="punctuation">[</span><span class="punctuation">,</span><span class="operator">-</span>ncol<span class="punctuation">(</span>spam<span class="punctuation">)</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="string">&#x27;dgCMatrix&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span>nrow<span class="punctuation">(</span>d<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	redisHSet<span class="punctuation">(</span><span class="built_in">as.character</span><span class="punctuation">(</span>d<span class="punctuation">[</span>i<span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">,</span> <span class="built_in">as.character</span><span class="punctuation">(</span>d<span class="punctuation">[</span>i<span class="punctuation">,</span><span class="number">2</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">,</span> tr<span class="punctuation">(</span>d<span class="punctuation">[</span>i<span class="punctuation">,</span><span class="number">3</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">resp <span class="operator">&lt;-</span> redisGetResponse<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>我们可以找一些values：</p>
+<pre><code>127.0.0.1:6379&gt; HVALS 2
+ 1) &quot;0.21&quot;
+ 2) &quot;0.28&quot;
+ 3) &quot;0.5&quot;
+ 4) &quot;0.14&quot;
+ 5) &quot;0.28&quot;
+ 6) &quot;0.21&quot;
+ 7) &quot;0.07&quot;</code></pre>
+<p>关于rredis的使用可以参考以前的<a href="/2014/06/r-redis">博文</a></p>
+<h2 id="模拟一个预测模型">模拟一个预测模型</h2>
+<p>利用xgboost和glmnet包：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>xgboost<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>glmnet<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ElemStatLearn<span class="punctuation">)</span></span><br><span class="line">x <span class="operator">&lt;-</span> as.matrix<span class="punctuation">(</span>spam<span class="punctuation">[</span><span class="punctuation">,</span> <span class="operator">-</span>ncol<span class="punctuation">(</span>spam<span class="punctuation">)</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">y <span class="operator">&lt;-</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span>spam<span class="operator">$</span>spam<span class="punctuation">)</span> <span class="operator">-</span> <span class="number">1</span></span><br><span class="line">m <span class="operator">&lt;-</span> xgboost<span class="punctuation">(</span>data <span class="operator">=</span> x<span class="punctuation">,</span> label <span class="operator">=</span> y<span class="punctuation">,</span> nrounds <span class="operator">=</span> <span class="number">5</span><span class="punctuation">,</span> objective <span class="operator">=</span> <span class="string">&#x27;binary:logistic&#x27;</span><span class="punctuation">)</span></span><br><span class="line">save<span class="punctuation">(</span>m<span class="punctuation">,</span> file<span class="operator">=</span><span class="string">&quot;data/xgb.rda&quot;</span><span class="punctuation">)</span></span><br><span class="line">g <span class="operator">&lt;-</span> cv.glmnet<span class="punctuation">(</span>x <span class="operator">=</span> x<span class="punctuation">,</span> y <span class="operator">=</span> y<span class="punctuation">,</span> family <span class="operator">=</span> <span class="string">&#x27;binomial&#x27;</span><span class="punctuation">)</span></span><br><span class="line">save<span class="punctuation">(</span>g<span class="punctuation">,</span> file<span class="operator">=</span><span class="string">&quot;data/glm.rda&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>保存模型的结果
+<code>xgb.rda</code>至新建包的<code>data</code>目录下，保证lazyload可以直接使用该对象。</p>
+<h2 id="创建r包">创建R包</h2>
+<p>以下就非常容易了，在RStudio中</p>
+<blockquote>
+<p>File - New Project - New Directory - R package</p>
+</blockquote>
+<p>填写包名 <code>spampred</code>，进入R子目录，将 <code>hello.R</code>
+文件<code>mv hello.R predxgb.R</code>，打开predxgb.R
+文件，将以下代码贴入：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">getdata <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>id <span class="operator">=</span> <span class="string">&#x27;1&#x27;</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  id <span class="operator">&lt;-</span> <span class="built_in">as.character</span><span class="punctuation">(</span>id<span class="punctuation">)</span></span><br><span class="line">  rredis<span class="operator">::</span>redisConnect<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  z <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span><span class="number">57</span><span class="punctuation">)</span></span><br><span class="line">  d <span class="operator">&lt;-</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span>unlist<span class="punctuation">(</span>rredis<span class="operator">::</span>redisHKeys<span class="punctuation">(</span>id<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  z<span class="punctuation">[</span>d<span class="punctuation">]</span> <span class="operator">&lt;-</span> t<span class="punctuation">(</span><span class="built_in">as.numeric</span><span class="punctuation">(</span>rredis<span class="operator">::</span>redisHVals<span class="punctuation">(</span>id<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  rredis<span class="operator">::</span>redisClose<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span>as.matrix<span class="punctuation">(</span>t<span class="punctuation">(</span>z<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">spampred <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>id <span class="operator">=</span> <span class="string">&#x27;1&#x27;</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  v <span class="operator">=</span> xgboost<span class="operator">:::</span>predict.xgb.Booster<span class="punctuation">(</span>object <span class="operator">=</span> m<span class="punctuation">,</span> newdata <span class="operator">=</span> getdata<span class="punctuation">(</span>id<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  v <span class="operator">=</span> <span class="built_in">as.character</span><span class="punctuation">(</span>v<span class="punctuation">)</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span><span class="built_in">list</span><span class="punctuation">(</span><span class="built_in">class</span> <span class="operator">=</span> v<span class="punctuation">,</span></span><br><span class="line">              url <span class="operator">=</span> paste<span class="punctuation">(</span><span class="string">&quot;cc.bjt.name/data?v=&quot;</span><span class="punctuation">,</span> v<span class="punctuation">,</span> <span class="string">&quot;&amp;id=&quot;</span><span class="punctuation">,</span> id<span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br><span class="line">linearpred <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>id <span class="operator">=</span> <span class="string">&#x27;1&#x27;</span><span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">	v <span class="operator">=</span> glmnet<span class="operator">:::</span>predict.cv.glmnet<span class="punctuation">(</span>object <span class="operator">=</span> g<span class="punctuation">,</span> newx <span class="operator">=</span> getdata<span class="punctuation">(</span>id<span class="punctuation">)</span><span class="punctuation">,</span> s <span class="operator">=</span> <span class="string">&quot;lambda.min&quot;</span><span class="punctuation">,</span> type <span class="operator">=</span> <span class="string">&#x27;response&#x27;</span><span class="punctuation">)</span></span><br><span class="line">	v <span class="operator">=</span> <span class="built_in">as.character</span><span class="punctuation">(</span>v<span class="punctuation">)</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span><span class="built_in">list</span><span class="punctuation">(</span><span class="built_in">class</span> <span class="operator">=</span> v<span class="punctuation">,</span></span><br><span class="line">              url <span class="operator">=</span> paste<span class="punctuation">(</span><span class="string">&quot;cc.bjt.name/data?v=&quot;</span><span class="punctuation">,</span> v<span class="punctuation">,</span> <span class="string">&quot;&amp;id=&quot;</span><span class="punctuation">,</span> id<span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span>	</span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>在DESCRIPTION文件中修改以及增加</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LazyData: false</span><br><span class="line">Imports:</span><br><span class="line">    xgboost,</span><br><span class="line">    rredis</span><br></pre></td></tr></table></figure>
+<p>将man中的 <code>hello.Rd</code> 文件改为
+<code>spampred.Rd</code>，同时修改函数的说明和定义。</p>
+<h2 id="提高-http-服务的性能">提高 http 服务的性能</h2>
+<p>在 <code>spampred/R</code> 目录下增加
+<code>onLoad.R</code>文件（提高载入性能），文件内容如下：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">.onLoad <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>lib<span class="punctuation">,</span> pkg<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="comment">#automatically loads the dataset when package is loaded</span></span><br><span class="line">  <span class="comment">#do not use this in combination with lazydata=true</span></span><br><span class="line">  utils<span class="operator">::</span>data<span class="punctuation">(</span>xgb<span class="punctuation">,</span> package <span class="operator">=</span> pkg<span class="punctuation">,</span> envir <span class="operator">=</span> parent.env<span class="punctuation">(</span>environment<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">  utils<span class="operator">::</span>data<span class="punctuation">(</span>glm<span class="punctuation">,</span> package <span class="operator">=</span> pkg<span class="punctuation">,</span> envir <span class="operator">=</span> parent.env<span class="punctuation">(</span>environment<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>修改opencup服务参数，文件位于
+<code>/etc/opencpu/server.conf</code>，增加预加载的包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;preload&quot;: [&quot;jsonlite&quot;,&quot;ggplot2&quot;,&quot;xgboost&quot;,&quot;glmnet&quot;,&quot;spampred&quot;, &quot;lattice&quot;,&quot;ocputest&quot;,&quot;randomForest&quot;,&quot;rredis&quot;]</span><br></pre></td></tr></table></figure>
+<p>增加参数之后，重启opencpu服务。</p>
+<p><code>Ctrl + Shift + E</code> check
+一下包是否有问题。没有问题的话，可以选择 Build Binary Package。
+返回服务器，在创建好的包目录执行</p>
+<pre><code>R CMD INSTALL spampred_0.1.0_R_x86_64-redhat-linux-gnu.tar.gz </code></pre>
+<p>此时我们的函数通过R包生效。</p>
+<h1 id="通过opencpu提供服务">通过opencpu提供服务</h1>
+<p>opencpu贴心的提供了测试页面，对于我来说是</p>
+<pre><code>http://47.92.114.121:8004/ocpu/test/</code></pre>
+<p>在 HTTP request options 中变更请求方式为post，Endpoint 为
+<code>../library/spampred/R/spampred</code>，同时增加 Param Name 和
+Param Value， 请求Ajax，看到</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/ocpu/tmp/x023b988e25/R/.val</span><br><span class="line">/ocpu/tmp/x023b988e25/stdout</span><br><span class="line">/ocpu/tmp/x023b988e25/source</span><br><span class="line">/ocpu/tmp/x023b988e25/console</span><br><span class="line">/ocpu/tmp/x023b988e25/info</span><br><span class="line">/ocpu/tmp/x023b988e25/files/DESCRIPTION</span><br></pre></td></tr></table></figure>
+<p>说明服务是正常的。</p>
+<p>当然既然服务已就绪，在其他段上可以直接调用返回JSON结果，比如我的是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@iz8vbblvp84015jmqwu5tlz sunbjt]# time curl http://47.92.114.121:8004/ocpu/library/spampred/R/spampred/json -d &quot;id=1&quot; </span><br><span class="line">&#123;</span><br><span class="line">  &quot;class&quot;: [&quot;0.875068128108978&quot;],</span><br><span class="line">  &quot;url&quot;: [&quot;cc.bjt.name/data?v=0.875068128108978&amp;id=1&quot;]</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/redis/" rel="tag"># redis</a>
+              <a href="/tags/opencpu/" rel="tag"># opencpu</a>
+              <a href="/tags/json/" rel="tag"># json</a>
+              <a href="/tags/http/" rel="tag"># http</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/11/19/jdbc-hive-r.html" rel="prev" title="利用 JDBC 驱动连接 R 和 Hive">
+                  <i class="fa fa-angle-left"></i> 利用 JDBC 驱动连接 R 和 Hive
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/26/fiery-http-server.html" rel="next" title="R的高性能 http 服务 fiery">
+                  R的高性能 http 服务 fiery <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

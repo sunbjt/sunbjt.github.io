@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一般来说，大家喜欢使用微软的产品 Power Point（PPT）来做幻灯片演示，但我对它基本没有什么好感，基本观点是认为它既不 Power 也没有 Point。当然不喜欢它也是有原因的：15 分钟的汇报需要搞很久才能达到好的一个效果。对于习惯使用 LaTeX 的我来说，beamer 是一个非常不错的选择，除了动画稍稍麻烦以外，其他所有 PPT 的功能它全部支持，PPT 不擅长的功能它也能支持（比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何准备演讲-beamer版">
+<meta property="og:url" content="http://bjt.name/2013/01/13/beamer-presentation.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="一般来说，大家喜欢使用微软的产品 Power Point（PPT）来做幻灯片演示，但我对它基本没有什么好感，基本观点是认为它既不 Power 也没有 Point。当然不喜欢它也是有原因的：15 分钟的汇报需要搞很久才能达到好的一个效果。对于习惯使用 LaTeX 的我来说，beamer 是一个非常不错的选择，除了动画稍稍麻烦以外，其他所有 PPT 的功能它全部支持，PPT 不擅长的功能它也能支持（比">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2013-01-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.290Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="beamer">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2013/01/13/beamer-presentation.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2013/01/13/beamer-presentation.html","path":"2013/01/13/beamer-presentation.html","title":"如何准备演讲-beamer版"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>如何准备演讲-beamer版 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2013/01/13/beamer-presentation.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="如何准备演讲-beamer版 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何准备演讲-beamer版
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-01-13 00:00:00" itemprop="dateCreated datePublished" datetime="2013-01-13T00:00:00+08:00">2013-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">数据思维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>一般来说，大家喜欢使用微软的产品 Power
+Point（PPT）来做幻灯片演示，但我对它基本没有什么好感，基本观点是认为它既不
+Power 也没有 Point。当然不喜欢它也是有原因的：15
+分钟的汇报需要搞很久才能达到好的一个效果。对于习惯使用 LaTeX
+的我来说，beamer 是一个非常不错的选择，除了动画稍稍麻烦以外，其他所有
+PPT 的功能它全部支持，PPT 不擅长的功能它也能支持（比如标签）。而且
+beamer提供的模板着实漂亮，就更没有拒绝它的理由了。beamer
+手册非常不错，其中一段是讲述<strong>如何准备演讲</strong>，简单翻译一下供大家参考。</p>
+<span id="more"></span>
+<h1 id="时间的限制">1. 时间的限制</h1>
+<p>一般演讲持续的时间可能在2分钟至2小时之间，这里有一些准则：</p>
+<ul>
+<li>每一页幻灯片讲述的时间不应该超过一分钟</li>
+<li>一般准备幻灯片的实际时间要比想要花的时间少</li>
+<li>不要试图在有限的时间内压缩更多的信息，即便是那些细节对你非常重要。只<strong>留下主要信息比主要信息、细节信息一把抓</strong>要好很多</li>
+</ul>
+<p>很多情况下，先做一个对时间的快速评估能有效避免自己陷入细节的麻烦中。了解这点，将会节省很多不必要的时间。</p>
+<h1 id="主题结构">2. 主题结构：</h1>
+<p>建立演讲材料的主题结构有如下步骤：</p>
+<ol type="1">
+<li>先在心里列一下在有限的时间下需要陈述的清单</li>
+<li>把清单分类到节（section）和小节（subsection）</li>
+<li>对于比较长的演讲（比如持续90分钟的），最好是将演讲分为几个独立的部分。每一部分都有独立的目录。</li>
+<li>不用担心在准备材料的时候变更演讲的结构，这是很正常的。</li>
+</ol>
+<h2 id="关于部分节小节">2.1. 关于部分、节、小节</h2>
+<blockquote>
+<p>每一部分中节的数量不能超过4个，不能小于2个</p>
+</blockquote>
+<p>尽管4节的情况非常普遍，但除非他们遵循一个简单模式。节的数量超过5个会让听众很难记清。换句话说，当你展示目录的时候，听众很难抓住演讲的重点或者关系。随着演讲的时间流逝，听众会忘记他们。</p>
+<ul>
+<li>理想地，目录必须是清楚明了的。尤其是在听众不了解的情况下，目录必须是可理解的。</li>
+<li>节和小节标题必须能够自我解释</li>
+<li>节和小节都必须遵循一个逻辑模式</li>
+<li>以介绍演讲讲述的内容为开场白（不要假设每个人都知道你要说什么。
+Ignorant Audience
+Law说：一些重要的听众所知要远比你想象的少，甚至是你已经将Ignorant
+Audience Law考虑进去了）</li>
+<li>然后解释（和主题相关的）你和你的同伴发现了什么</li>
+<li>时不时的总结，简单的重复演讲的主要信息。听众一般会在开头和结尾比较有注意力，总结是传递信息的“第二次机会”。</li>
+<li>可以使用附录。将你不准备讲的部分放到附录里，当听众提问时会有些帮助。</li>
+<li>不要使用子子节（subsubsection），那是地狱</li>
+</ul>
+<h2 id="给一个摘要">2.2. 给一个摘要</h2>
+<p>在一篇论文中，摘要是给整个论文做的一个简要的总结，大约100词左右。这个总结可以帮助读者判断是否需要阅读整篇文章。</p>
+<ul>
+<li>既然你的听众不大可能在演讲的第一页逃走，那摘要就不必写了</li>
+<li>但，如果你想先给一个漂亮、简洁的陈述，这时候可以来个摘要</li>
+<li>如果有摘要，一定要确认是简短的信息，而不是很长的文字</li>
+<li>永远也不要重复使用论文摘要到演讲材料中，除非是文字比较简单的“我们证明P=NP”</li>
+<li>如果你的摘要是上面的那个，再检验一下你的证明是否正确</li>
+</ul>
+<h1 id="幻灯的结构">3. 幻灯的结构</h1>
+<p>和整篇演讲一样，每页幻灯片都需要设置好结构。如有某一页幻灯片只是简单的铺满了文字，那会非常难懂。听众必须能立即看到那些信息是重要的，那些只是细节，演示信息是怎么组织的，等等。</p>
+<h2 id="幻灯标题">3.1. 幻灯标题</h2>
+<ul>
+<li>每页幻灯片必须有标题。标题是一个提纲挈领的东西，可以提示听众哪些可以不去关注</li>
+<li>标题必须实在的解释了内容，而不是含混介绍。比如“偏序集”这个标题对让人疑惑，
+但是如果改成“局部顺序集合（偏序集）的定义回顾”或者“基因型矩阵列向量的局部排序”会有更多的信息量。</li>
+<li>理想的状况是，幻灯片的标题连贯下来将会“讲述一个故事”</li>
+</ul>
+<h2 id="幻灯片上放多少材料">3.2. 幻灯片上放多少材料？</h2>
+<ul>
+<li>一页幻灯片放的材料“少”要比“多”好。正常一页应该在 20-40
+个单词，最大不能超过 80 个单词</li>
+<li>不要假设所有的听众都是演讲主题方面的专家，即便他们真的是，他们可能最后一次听说你所陈述的已经是几年前的事情了。
+你必须对一些关键术语有快速的提示。</li>
+<li>不要把你不会解释的材料放到幻灯片上，更不要让听众觉得你讲述的内容是多么的复杂。但，你可以解释不在同一张幻灯片上的事情。</li>
+<li>保持简单。一般的，听众看幻灯片不会超过50秒。他们没有时间去思考复杂的陈述和公式。</li>
+<li>尽量减少数学公式的使用。Lance
+Fortnow，一位计算科学系的教授说：PowerPoint 的用户能给更好的演讲。</li>
+</ul>
+<p>他的理由是：既然 PowerPoint
+是如此难以书写数学公式，因此他们会尽量少使用，这恰恰使得演讲更容易被听懂。</p>
+<h2 id="幻灯的结构-1">3.3. 幻灯的结构</h2>
+<ul>
+<li>使用框块（block）环境，比如 block、theorem、proof、example 等</li>
+<li>使用计数（enumeration）和逐条列记（itemize）环境，而不是纯文本</li>
+<li>当要定义一些问题时，使用描述（description）环境</li>
+<li>不要使用两层以上的itemize环境</li>
+<li>不要创建拖沓（endless）的itemize和enumerate列表</li>
+<li>不要逐条（piecewise）的uncover lists</li>
+<li>强调很重要。可以是一个单词或句子。但不要过分的应用，否则会影响效果</li>
+<li>使用列栏（columns）</li>
+<li>永远也不要用脚注。他们不必要地打断了阅读的连贯性。如果脚注很重要，那就放到正文中；如果不重要就忽略吧。</li>
+<li>对引证的文字使用 quote 或 quotation</li>
+<li>不要使用 allframebreaks 参数，除非是很长的参考文献</li>
+<li>不要使用很长的参考文献</li>
+</ul>
+<h2 id="书写文字">3.4. 书写文字</h2>
+<ul>
+<li>使用短句</li>
+<li>词组要比完整的句子好。比如“做图展示了图灵机，右图展示了一个永动机”，不如改成“左：图灵机，右：永动机”。最好改成itemize或description</li>
+<li>标点：词组后无标点，只有完整的句子才有标点</li>
+<li>不要用更小的字体来“适应一张幻灯片”。远离恶魔参数“shrink”。</li>
+<li>在图（figure）中的文字和数字要和正文中的文字大小一致。坐标轴上模糊的数字会毁灭图形和它代表的信息</li>
+</ul>
+<hr />
+<p>最后是一些资源：</p>
+<ul>
+<li>第一个是beamer的 <a
+target="_blank" rel="noopener" href="http://www.hartwork.org/beamer-theme-matrix/">theme
+matrix</a>，可以很容易的看到各个theme的式样</li>
+<li>我自己常用模板的自定义设置 <a
+href="/upload/pdf/presentation.tex">下载TeX</a>，xeLaTeX编译</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/beamer/" rel="tag"># beamer</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/01/05/Beijing-subway.html" rel="prev" title="好地段是怎么选出来的-从北京地铁看区域的重要性">
+                  <i class="fa fa-angle-left"></i> 好地段是怎么选出来的-从北京地铁看区域的重要性
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/05/11/big-data-r-application.html" rel="next" title="R 语言企业级数据挖掘应用">
+                  R 语言企业级数据挖掘应用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

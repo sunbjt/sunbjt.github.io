@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 预热 5月16日（周四），西直门 到达西直门已经是八点多，见到舰哥已经是快九点，但是还是兴致勃勃地畅谈了国内 R 语言发展和商业化问题，以及国内比较奇葩的数据环境，包括国内某 xx 所在将 SAS 换代为 R 的种种“事迹”，各种吐槽各种感慨…… 又简单聊了聊中文环境下的文本挖掘，准备和舰哥合作写一个，争取后半年空出时间来做。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第六届中国 R 语言会议流水帐">
+<meta property="og:url" content="http://bjt.name/2013/05/20/china-r-conference.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="1. 预热 5月16日（周四），西直门 到达西直门已经是八点多，见到舰哥已经是快九点，但是还是兴致勃勃地畅谈了国内 R 语言发展和商业化问题，以及国内比较奇葩的数据环境，包括国内某 xx 所在将 SAS 换代为 R 的种种“事迹”，各种吐槽各种感慨…… 又简单聊了聊中文环境下的文本挖掘，准备和舰哥合作写一个，争取后半年空出时间来做。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2013-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.290Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="friends">
+<meta property="article:tag" content="useR">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2013/05/20/china-r-conference.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2013/05/20/china-r-conference.html","path":"2013/05/20/china-r-conference.html","title":"第六届中国 R 语言会议流水帐"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>第六届中国 R 语言会议流水帐 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2013/05/20/china-r-conference.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="第六届中国 R 语言会议流水帐 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          第六届中国 R 语言会议流水帐
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2013-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2013-05-20T00:00:00+08:00">2013-05-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="预热">1. 预热</h1>
+<h2 id="月16日周四西直门">5月16日（周四），西直门</h2>
+<p>到达西直门已经是八点多，见到舰哥已经是快九点，但是还是兴致勃勃地畅谈了国内
+R 语言发展和商业化问题，以及国内比较奇葩的数据环境，包括国内某 xx 所在将
+SAS 换代为 R 的种种“事迹”，各种吐槽各种感慨……</p>
+<p>又简单聊了聊中文环境下的文本挖掘，准备和舰哥合作写一个，争取后半年空出时间来做。</p>
+<span id="more"></span>
+<h2 id="月17日周五人民大学明德楼">5月17日（周五），人民大学明德楼</h2>
+<p>当我到的时候，统计之都成员几乎悉数到齐，美帝的分舵的，上海分舵的、北京总部，新人旧友难得的大聚，我还琢磨着如果房间里丢个炸弹，统计之都就差不多就会彻底从地球上抹掉了。</p>
+<p>接着就是周扬牛掰的可视化展示，各位观众的热情一次又一次的被点燃，各种膜拜，各种掌声，这产品要早出来几年必然完爆Rosling的气泡图。</p>
+<p>接着是李舰的关于芒果中国的案例分享，详细介绍了 R
+语言在英国应用的成功经验，以及 R 和 SAS 在制药领域的地位，R
+在定量药理学的成绩，让人大开眼界。</p>
+<h1 id="r语言会议-day-1-morning">2. R语言会议 Day 1 Morning</h1>
+<p>本次R会议报名人数超过 600+，可怜国学院的教室只有
+150，会议筹备组只好又协调了一个镜像教室做同步。等我到的时候，主会场已经人山人海，所有的工作人员只好全部外面站立，我听完老吴和赵院长的致辞后也只好先行闪到镜像教室。</p>
+<p>接下来是重点，关于R会议：</p>
+<p><strong>谢益辉 - 我的第 8 个 R 包</strong></p>
+<p>实话说，益辉从第一个包 animation 起，我就在琢磨是不是自己也写个 R
+包，后来发现比较分散，函数不少，但不成体系，只好作罢。益辉的knitr
+非常有用，像我这种用 Sweave 的老古董慢慢也开始使用 knitr + Rstudio
+的模式了。</p>
+<p><strong>Graham Williams - Data Mining with Rattle and R</strong></p>
+<p>Rattle 这个包是我以前做数据挖掘项目必装的一个包，虽说几乎没有用过
+rattle 的 Gnome 界面，但必须承认：</p>
+<blockquote>
+<p>rattle 是一个非常优秀的数据挖掘方法集合体</p>
+</blockquote>
+<p>rattle 在 R
+语言上有了更多的数据挖掘的二次开发以及封装，在实际的挖掘项目中能够有效的提高项目的速度。Graham
+Williams 敬仰已久，但无奈英文能力有限，并没有主动过去聊天。</p>
+<p><strong>谢邦昌、刘思喆 - DataMining 云端决策平台 CDMS Smart Score
+II</strong></p>
+<p>谢老师的这个演讲颇有一波三折的味道：三月底第十届海峡两岸数据挖掘研讨会，会议间隙大家闲聊到
+R 会议，谢老师惊奇的发现 5 月 18、19 日居然有时间！于是定下要来 R
+会议做主题演讲。不过不巧的是，在会议前 1
+周临时有要事须去美国，因此由我来代讲。</p>
+<blockquote>
+<p>自我评价：中规中矩，95页的幻灯片，时间稍稍有点超</p>
+</blockquote>
+<p>材料中提到的 Smart Score II 这款产品大家可以在这里测试与使用 <a
+target="_blank" rel="noopener" href="http://120.125.85.66/mining/index.php">http://120.125.85.66/mining/index.php</a></p>
+<p>帐号和密码同为：test</p>
+<p><strong>John Maindonald -- Rethinking Data Analysis and Data Analysis
+Tools</strong></p>
+<p>Maindonald
+老爷子是统计之都的老朋友，在第一届R语言会议就通过Skype远程连线了国内会场（不过当时效果较差，只好中断）。老爷子现在已经退休，但是还是非常热爱统计，对我们这些统计后辈非常关照。这次的演讲站在了一个比较高的角度诠释了R语言，不过
+Rethinking Data Analysis
+的时候时间不太充裕，按时停止了分享，让我颇感自责和遗憾（我超时了 3
+分钟，老爷子就少了3分钟）。</p>
+<h1 id="r语言会议-day-1-afternoon">3. R语言会议 Day 1 Afternoon</h1>
+<p><strong>李舰、周扬 - 禽流感分析中的 R</strong></p>
+<p>估计李舰和周扬头一天晚上分享了一遍，当天的演讲有所保留。但那已足够让全场认识到
+R 语言在动态图形上的强大，尤其大部分可视化产品都是从一个有情怀的 R
+语言程序员的手中诞生。实话说，我一直期待 R
+语言的可视化引擎什么时候可以方便嵌入到商业 BI 项目上，那对业务人员对 BI
+的认识是个极大的冲击。</p>
+<blockquote>
+<p>期待 Mango-solution 的强大的 mangochart 包的开源</p>
+</blockquote>
+<p><strong>张晓华 - displayHTS</strong></p>
+<p>张老师的这个包虽说和自己关系不大，但我还真见过！最惊讶的是默克的司训，和统计之都、以及自己的原则非常相似。内容的话，隔行如隔山，不多做评论。</p>
+<p><strong>张常有 - Julia 语言和并行计算</strong></p>
+<p>Julia
+是最近几年新兴的数据分析语言，标志是媲美C的速度。虽然她的理念要比R语言要新，但个人认为
+Julia 还需要很长的时间才能够走到今天R的地步。后来张老师同事负责开发的
+OpenBlas
+是我一直想尝试的库，这个库在某些场景下可以有效提高代数运算速度。像
+Oracle R Enterprise 即调用了 Intel 的MKL
+BLAS，因此速度才有显著的提高。</p>
+<p><strong>肖楠 - Web Scraping with R</strong></p>
+<p>统计之都的黑客，没有之一！详细的讲述了定向爬虫如何在R语言架构下的使用，非常全面。杀人越货，居家旅行必备之良器。</p>
+<h1 id="r语言会议-day-2-morning">4. R语言会议 Day 2 Morning</h1>
+<p>这半天的5位嘉宾都是本领域的绝对专家，我的几位同事都向反映看到他们几个都感觉压力太大，哈哈。</p>
+<p><strong>庄宝童 - 机器学习在互联网广告中的应用</strong></p>
+<p>宝童的报告水平很高，属于多年的经验汇总，不但总结了各大平台的广告系统特点，甚至算法也有总结。有些机器学习方法，虽然有些了解，但对于在工业界应用估计很多人也是第一次听闻。虽然超时
+15 分钟，但意犹未尽，不忍释怀。</p>
+<p><strong>潘佳鸣 李忠 - eBay 大数据分析中的应用</strong></p>
+<p>eBay
+的数据应用去年在上海就有见识，整个公司以数为据，着实让我感到了国际一流跨国公司的企业文化。李忠大哥的报告从用户的多角度展示了Ebay
+在使用 R 语言的案例，各种 ggplot2
+的绘图，业务和统计高度结合，让人目不暇接。</p>
+<p>潘佳鸣的报告就更有意思了，日志分析这么枯燥无聊的事情也使用 R
+做了文本分析，甚至做了 LDA
+的主题模型，并做分类识别算法，想法非常赞！</p>
+<blockquote>
+<p>个人觉得赵扬去了eBay 而没有选择京东是更好的选择</p>
+</blockquote>
+<p><strong>阿稳 - R 的工程实践和 Data Scientist</strong></p>
+<p>阿稳的报告中有太多的亮点，不多讲，枚举几例：</p>
+<ul>
+<li>Spark -&gt; Rpark</li>
+<li>向量化编程</li>
+<li>关于数据科学的定义</li>
+</ul>
+<p>上述几项，如果没五年以上"扎实"的数据挖掘项目的沉淀，根本不可能有如此的领悟。</p>
+<blockquote>
+<p>阿稳确实是国内数据挖掘领域顶级的工程师。</p>
+</blockquote>
+<p><strong>王浩 -
+基于机器学习的互联网内容质量评价与智能排序</strong></p>
+<p>和王浩在微博上神交已久，终于请到了本人来 R
+会议，非常荣幸。王浩做的项目非常有意思，记得有张妈妈们在不同时期搜索的关键词，真是一图胜千言。回头大家翻翻王浩的幻灯片，信息量非常大。正如微博所描述：数据挖掘、用户行为分析和推荐算法方面的研究实践者。所有的工作都凝结了王浩博士的思考，实在佩服！</p>
+<blockquote>
+<p>看这条微博，限18岁以上 http://weibo.com/1658771391/zqiBopM0g</p>
+</blockquote>
+<p>一句话总结：没听够就结束了</p>
+<h1 id="r语言会议-day-2-afternoon">5. R语言会议 Day 2 Afternoon</h1>
+<p><strong>王汉生 - On the ultrahigh dimensional linear discriminant
+analysis problem with a diverging number of classes</strong></p>
+<p>王老师是一个值得尊敬的前辈，不但学术做的好，业界应用也做的好，是我们的榜样。记得王老师最早在微博上反思大数据时代给统计界带来的挑战时，我就在暗暗佩服。不为别的，单这种气场就不是一般学者能释放出来的。</p>
+<p>手写识别这事儿没仔细研究过理论，欧式距离肯定不如马氏距离好用，但这里的
+lda 中方差阵 Sigma 的逆（稠密阵）确实不太好好算。但我估计做 low-rank
+appropriation
+应该是这个问题的更好解决方向（空间变换后的低维度空间的相似问题），但没实际操作，只是猜想。</p>
+<p><strong>周庭锐 - 移动应用里的线上行为：一个 R 的尝试</strong></p>
+<p>认识周老师还真有点奇遇的意思，早年和 Sweave 的作者 Friedrich
+有些关系，后来 Friedrich 写了一个很牛的包叫做
+flexmix，专门做有限混合模型，某天突然发现国内有位教授在一个叫做"风住沉香"的博客上有详细的写了
+flexmix
+的应用案例，果断翻看了博客里的所有内容。得知周老师不但是台湾市场营销系的创系教授，还曾在机场用
+R 编写了易经占卜软件。市场营销 + R
+语言，这个组合有点超出我的理解，呵呵</p>
+<blockquote>
+<p>周老师的台风实在有趣，高深的理论在听众的笑声中消化的无影无形，厉害！</p>
+</blockquote>
+<p>周老师在收得邀请后随即表示非常乐意参与，接触的过程，谦逊的品质在时时刻刻都在感染着我，是我追随的轨迹。</p>
+<p><strong>李欣海 - 用 R 和WinBUGS 实现贝叶斯分级模型</strong></p>
+<p>李老师在本领域应用统计的功底非常深，还清晰地记得以前一起兴高采烈讨论随机森林的场景。不过这次的分级模型（Hierarchical
+modeling）利用了WinBUGS软件，暂时超过我的研究领域，暂且不评论。</p>
+<blockquote>
+<p>李老师最后一页是朱鹮展翅翱翔的照片。那时、那景，不知为何眼眶湿润了。是为那濒临的朱鹮，还是为寂寞的统计人，还是为那翱翔的梦？</p>
+</blockquote>
+<p><strong>王贺 - 基于R 语言的网络文本挖掘与数据可视化</strong></p>
+<p>师弟很强，尤其是才刚刚大三。各种绚丽的展示，深刻的思考。让台下某为的一位朋友按耐不住，都想直接现场挖人了。</p>
+<blockquote>
+<p>有这么多优秀的师弟师妹也是件很幸福的事情，比如怡轩也是从大三看到今天的，当年就展示了极具张力的才华，我们只有羡慕嫉妒恨的份了。未来还会看到更多的有为的学弟学妹。</p>
+</blockquote>
+<p><strong>关菁菁 - Data cloning</strong></p>
+<p>还没来得及看相关论文，反正我是理解成 Two stage prediction
+问题了。菁菁是我院的才女，当年（貌似也是大三）就以一篇 ensemble model
+的演讲在 R 会议上技惊四座，前途无可限量啊～</p>
+<p>太多老朋友没时间一一叙旧：</p>
+<p>施涛老师, <span class="citation"
+data-cites="rickjin">@rickjin</span>, <span class="citation"
+data-cites="张磊IDMer">@张磊IDMer</span>, <span class="citation"
+data-cites="大数据皮东">@大数据皮东</span>, lyxmoo, <span
+class="citation" data-cites="road2stat">@road2stat</span> ……</p>
+<p>以及从上海、西安、天津、武汉等地的朋友们、学弟学妹们，向你们的热情致敬！</p>
+<p>还有高涛、太云、陈昱、Manqi, 晓矛, 建冲, 展航, 冷静,
+陈森，还有几位叫不上名字的师妹，感谢你们的努力！</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/friends/" rel="tag"># friends</a>
+              <a href="/tags/useR/" rel="tag"># useR</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2013/05/11/big-data-r-application.html" rel="prev" title="R 语言企业级数据挖掘应用">
+                  <i class="fa fa-angle-left"></i> R 语言企业级数据挖掘应用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2013/06/16/recommendation-system.html" rel="next" title="协同过滤和推荐引擎">
+                  协同过滤和推荐引擎 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="十月份在公司的技术中心分享了《数据思维、技术到商业价值》，从数据科学的重要基石之一统计学开讲，帮大家串了一下数据科学到底是什么东西。其中有一页幻灯片，讲到我心目中数据科学 milestone 的时间轴，这里分享给大家，以及怎么使用 R 包绘制。啥也不说，先看图：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据科学的关键事件">
+<meta property="og:url" content="http://bjt.name/2018/11/18/timeline.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="十月份在公司的技术中心分享了《数据思维、技术到商业价值》，从数据科学的重要基石之一统计学开讲，帮大家串了一下数据科学到底是什么东西。其中有一页幻灯片，讲到我心目中数据科学 milestone 的时间轴，这里分享给大家，以及怎么使用 R 包绘制。啥也不说，先看图：">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/timeline.png">
+<meta property="article:published_time" content="2018-11-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.293Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/timeline.png">
+
+
+<link rel="canonical" href="http://bjt.name/2018/11/18/timeline.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2018/11/18/timeline.html","path":"2018/11/18/timeline.html","title":"数据科学的关键事件"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>数据科学的关键事件 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2018/11/18/timeline.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="数据科学的关键事件 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          数据科学的关键事件
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-11-18 00:00:00" itemprop="dateCreated datePublished" datetime="2018-11-18T00:00:00+08:00">2018-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">数据思维</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>十月份在公司的技术中心分享了《数据思维、技术到商业价值》，从数据科学的重要基石之一统计学开讲，帮大家串了一下数据科学到底是什么东西。其中有一页幻灯片，讲到我心目中数据科学
+milestone 的时间轴，这里分享给大家，以及怎么使用 R
+包绘制。啥也不说，先看图：</p>
+<p><img src="/upload/pic/timeline.png" /></p>
+<span id="more"></span>
+<p><strong>Information entropy, 1948</strong></p>
+<p>由信息论之父 C. E. Shannon 在论文《A Mathematical Theory of
+Communication 》提出。Shannon 借用热力学的原理解决了 Uncertainty
+的测量性问题。（太早，故未在时间轴上体现）</p>
+<p><strong>The Future of Data Analysis, 1962</strong></p>
+<p>John W. Tukey
+也是个人最为崇拜的统计学家（除了祖师爷Fisher以外），Tukey
+讨论了两个有意思的问题：</p>
+<ol type="1">
+<li>统计学和数据分析的关系</li>
+<li>统计学和计算机学的关系</li>
+</ol>
+<p>大家有兴趣可以搜一下原文，感受一下 56 年前大佬的思考深度。</p>
+<p><strong>Data science, 1974</strong></p>
+<p>Data science 的概念是 Peter Naur 在《Concise Survey of Computer
+Methods》首次提出，Peter Naur 是计算机科学家，图灵奖的获得者。
+在这本书里，Peter Naur 给了偏计算机领域的数据定义：</p>
+<blockquote>
+<p>Data is a representation of facts or ideas in a formalized manner
+capable of being communicated or manipulated by some process.</p>
+</blockquote>
+<p>Peter Naur 对 computer science 这个词很有意见，建议应该叫做 datalogy
+或者 data science，当然和现代 data science 的定义还是差别很大。</p>
+<p><strong>Two-Way Communication, 1975</strong></p>
+<p>由日本邮政和通信省主导，在这次信息社会普查发现：信息（数据）的传递不是单向的，双向（个性化）的是未来的趋势。</p>
+<p><strong>Exploratory Data Analysis, 1977</strong></p>
+<p>这个词学统计的应该非常清楚是什么意思，不多讲。Tukey 在 1977
+年就提出来这个观点，让我们这些后辈只有佩服的份。</p>
+<p><strong>Business Intelligence, 1989</strong></p>
+<p>Howard Dresner 赋予了商业智能以现代概念：</p>
+<blockquote>
+<p>concepts and methods to improve business decision making by using
+fact-based support systems</p>
+</blockquote>
+<p><strong>The First Database Report, 1992</strong></p>
+<p>Crystal
+Reports(水晶报表)，较晚一些从事数据科学的童鞋可能没听过这款产品。想想那是
+1992 年，能够在 Windows
+上通过连接数据库形成一个数据报告是多么酷的事情。</p>
+<p><strong>The World Wide Web Explodes, 1995</strong></p>
+<p>互联网技术和应用开始井喷式爆发，我们面临的以及需要优化的问题是人类社会前所未有的，同时提供给了数据科学更多的可能性。</p>
+<p><strong>Data Mining and Knowledge Discovery, 1997</strong></p>
+<p>聚焦在数据挖掘的权威期刊，包括基础理论、数据挖掘方法、数据挖掘算法、知识发现过程、应用等。Data
+mining这个词是表示了从大型数据库中提取信息之意。</p>
+<p><strong>S(ACM Software System Award), 1998</strong></p>
+<p>S 语言由贝尔实验室的 John Chambers 发明，在 1998 年被授予 ACM
+软件系统奖。这是唯一的数据科学领域被授予奖项的系统，它永久的改变了人们分析数据的方式，是探索性数据分析的集大成之作。</p>
+<p><strong>Statistical Modeling: The Two Cultures, 2001</strong></p>
+<p>Leo Breiman
+在该论文中提到：在使用统计模型从数据中提取结论的过程中有两种文化。一个假定数据是由一个特定分布模型生成的。另一个使用算法模型，并把数据结构看作未知的。统计学界普遍致力于仅仅使用针对数据的模型。这种投入产生了无意义的理论、值得怀疑的结论，并让统计学家无法触及大量现实问题。算法模型，在理论与实践中，在统计学之外快速发展。它既可以被应用于庞大复杂的数据集，也可以在小数据集上建立精确信息量大的模型。如果我们这个领域的目标是使用数据解决问题，那么我们需要摆脱对纯粹基于数据模型的依赖，并使用更多样的工具。</p>
+<p><strong>Hadoop, 2006</strong></p>
+<p>离线分布式计算的基石，且免费，对硬件的要求不高。因为它的存在，所有机构都可以用较小的成本来处理海量的数据。记得
+2011 年之后，国内讲大数据如果不讲 Hadoop 就感觉非常不专业的样子。</p>
+<p><strong>Data scientist, 2008</strong></p>
+<p>Jeff Hammerbacher(Facebook) 和 DJ Patil(LinkedIn)
+开始使用数据科学家来描述他们的团队以及工作。从此以后，数据科学家这个名词开始广泛地被提起。</p>
+<p><strong>NOSQL, 2009</strong></p>
+<p>非关系型数据库，其口号是：</p>
+<blockquote>
+<p>select fun, profit from real_world where relational=false;</p>
+</blockquote>
+<p><strong>Deep Learning, 2015</strong></p>
+<p>深度学习其实并不是什么新鲜技术，人工神经网络在 20 世纪 50
+年代就出现了，但是受限于算力和要求的数据量，神经网络发展一直相对缓慢。2015
+年随着 Google
+在语音识别领域精度的极大提高（几项比赛的革命性效果），深度学习再一次火了起来。</p>
+<p>附代码:</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>lubridate<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>tidyverse<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">x <span class="operator">&lt;-</span> tribble<span class="punctuation">(</span></span><br><span class="line">  <span class="operator">~</span>event<span class="punctuation">,</span> <span class="operator">~</span>date<span class="punctuation">,</span> <span class="operator">~</span>type<span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;The Future of Data Analysis&#x27;</span><span class="punctuation">,</span> <span class="number">1962</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Relational Database&#x27;</span><span class="punctuation">,</span> <span class="number">1970</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Data science(Peter Naur)&#x27;</span><span class="punctuation">,</span> <span class="number">1974</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Two-Way Communication&#x27;</span><span class="punctuation">,</span> <span class="number">1975</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Exploratory Data Analysis&#x27;</span><span class="punctuation">,</span> <span class="number">1977</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Business Intelligence&#x27;</span><span class="punctuation">,</span> <span class="number">1989</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;The First Database Report&#x27;</span><span class="punctuation">,</span> <span class="number">1992</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;The World Wide Web Explodes&#x27;</span><span class="punctuation">,</span> <span class="number">1995</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Data Mining and Knowledge Discovery&#x27;</span><span class="punctuation">,</span> <span class="number">1997</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;S(ACM Software System Award)&#x27;</span><span class="punctuation">,</span> <span class="number">1998</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Statistical Modeling: The Two Cultures&#x27;</span><span class="punctuation">,</span> <span class="number">2001</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Hadoop&#x27;</span><span class="punctuation">,</span> <span class="number">2006</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Data scientist&#x27;</span><span class="punctuation">,</span> <span class="number">2008</span><span class="punctuation">,</span> <span class="string">&#x27;concept&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;NOSQL&#x27;</span><span class="punctuation">,</span> <span class="number">2009</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&#x27;Deep Learning&#x27;</span><span class="punctuation">,</span> <span class="number">2015</span><span class="punctuation">,</span> <span class="string">&#x27;system&#x27;</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line">positions <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0.5</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">0.5</span><span class="punctuation">,</span> <span class="number">1.0</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.0</span><span class="punctuation">,</span> <span class="number">1.5</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.5</span><span class="punctuation">)</span></span><br><span class="line">n <span class="operator">&lt;-</span> nrow<span class="punctuation">(</span>x<span class="punctuation">)</span></span><br><span class="line">event <span class="operator">&lt;-</span> x <span class="operator">|&gt;</span></span><br><span class="line">  mutate<span class="punctuation">(</span></span><br><span class="line">    date <span class="operator">=</span> as.Date<span class="punctuation">(</span>paste<span class="punctuation">(</span>x<span class="operator">$</span>date<span class="punctuation">,</span> <span class="string">&#x27;/01/01&#x27;</span><span class="punctuation">,</span> sep <span class="operator">=</span><span class="string">&#x27;&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    position <span class="operator">=</span> rep_len<span class="punctuation">(</span>positions<span class="punctuation">,</span> length.out <span class="operator">=</span> n<span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">year_dat <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span></span><br><span class="line">  date <span class="operator">=</span> seq<span class="punctuation">(</span>from <span class="operator">=</span> as.Date<span class="punctuation">(</span><span class="string">&#x27;1960-01-01&#x27;</span><span class="punctuation">)</span><span class="punctuation">,</span> to <span class="operator">=</span> as.Date<span class="punctuation">(</span><span class="string">&#x27;2016-12-31&#x27;</span><span class="punctuation">)</span><span class="punctuation">,</span> by <span class="operator">=</span> <span class="string">&quot;1 year&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  mutate<span class="punctuation">(</span></span><br><span class="line">    year <span class="operator">=</span> format<span class="punctuation">(</span>date<span class="punctuation">,</span> <span class="string">&quot;%Y&quot;</span><span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span></span><br><span class="line">year_dat<span class="operator">$</span>year<span class="punctuation">[</span><span class="punctuation">(</span><span class="number">1</span><span class="operator">:</span>nrow<span class="punctuation">(</span>year_dat<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%%</span> <span class="number">2</span> <span class="operator">==</span> <span class="number">1</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> event<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_segment<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> date<span class="punctuation">,</span> y <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> xend <span class="operator">=</span> date<span class="punctuation">,</span> yend <span class="operator">=</span> position<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_hline<span class="punctuation">(</span>yintercept <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> color <span class="operator">=</span> <span class="string">&quot;black&quot;</span><span class="punctuation">,</span> linewidth <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_label<span class="punctuation">(</span></span><br><span class="line">    aes<span class="punctuation">(</span>x <span class="operator">=</span> date<span class="punctuation">,</span> y <span class="operator">=</span> position<span class="punctuation">,</span> label <span class="operator">=</span> event<span class="punctuation">,</span> color <span class="operator">=</span> type<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    show.legend <span class="operator">=</span> <span class="literal">FALSE</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> date<span class="punctuation">,</span> y <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> color <span class="operator">=</span> type<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">             size <span class="operator">=</span> <span class="number">3</span><span class="punctuation">,</span> show.legend <span class="operator">=</span> <span class="literal">FALSE</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_text<span class="punctuation">(</span></span><br><span class="line">    data <span class="operator">=</span> year_dat<span class="punctuation">,</span></span><br><span class="line">    aes<span class="punctuation">(</span>x <span class="operator">=</span> date<span class="punctuation">,</span> y <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> label <span class="operator">=</span> year<span class="punctuation">)</span><span class="punctuation">,</span> angle <span class="operator">=</span> <span class="number">45</span><span class="punctuation">,</span> size <span class="operator">=</span> <span class="number">3.5</span><span class="punctuation">,</span> vjust <span class="operator">=</span> <span class="number">3</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme_void<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/07/03/bpr.html" rel="prev" title="贝叶斯个性化排序">
+                  <i class="fa fa-angle-left"></i> 贝叶斯个性化排序
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/24/zoom.html" rel="next" title="sharingan 自定义 CSS 特效">
+                  sharingan 自定义 CSS 特效 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

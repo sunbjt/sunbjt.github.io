@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前段时间在老家给小舅子补习高中数学，其中有一道数列的求解，题目是这样的：  a_1 &#x3D; 1  a_2 &#x3D; 1  a_n &#x3D; a_(n-1) + a_(n-2)   求 a_n 的通项表达。 解题思路是先构建等比数列 b_n，再将等比数列 b_n 变形回 a_n ，求得通项。 这道题实际就是费波那西数列的初等代数求法。费波那西数列在科学、自然界等很多领域都有表现， 比如我们常说的黄金分割比（1.61">
+<meta property="og:type" content="article">
+<meta property="og:title" content="费波那西数列和递归">
+<meta property="og:url" content="http://bjt.name/2012/05/01/fibonacci-number-recursion.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="前段时间在老家给小舅子补习高中数学，其中有一道数列的求解，题目是这样的：  a_1 &#x3D; 1  a_2 &#x3D; 1  a_n &#x3D; a_(n-1) + a_(n-2)   求 a_n 的通项表达。 解题思路是先构建等比数列 b_n，再将等比数列 b_n 变形回 a_n ，求得通项。 这道题实际就是费波那西数列的初等代数求法。费波那西数列在科学、自然界等很多领域都有表现， 比如我们常说的黄金分割比（1.61">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2012-04-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.289Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="Fibonacci">
+<meta property="article:tag" content="Julia">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://bjt.name/2012/05/01/fibonacci-number-recursion.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2012/05/01/fibonacci-number-recursion.html","path":"2012/05/01/fibonacci-number-recursion.html","title":"费波那西数列和递归"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>费波那西数列和递归 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2012/05/01/fibonacci-number-recursion.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="费波那西数列和递归 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          费波那西数列和递归
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2012-05-01 00:00:00" itemprop="dateCreated datePublished" datetime="2012-05-01T00:00:00+08:00">2012-05-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R-%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">R 技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>前段时间在老家给小舅子补习高中数学，其中有一道数列的求解，题目是这样的：</p>
+<ul>
+<li>a_1 = 1
+</li></li>
+<li>a_2 = 1
+</li></li>
+<li>a_n = a_(n-1) + a_(n-2)
+</li></li>
+</ul>
+<p>求 a_n 的通项表达。</p>
+<p>解题思路是先构建等比数列 b_n，再将等比数列 b_n 变形回 a_n
+，求得通项。
+这道题实际就是费波那西数列的初等代数求法。费波那西数列在科学、自然界等很多领域都有表现，
+比如我们常说的黄金分割比（1.618），即是两个相邻费波那西数的比值</p>
+<p><code>f(n + 1)/f(n) = (1 + sqrt(5))/2</code></p>
+<p>还有美丽的向日葵的花盘中果实：</p>
+<p><img
+src="http://www.uux.cn/attachments/2013/06/1_201306201346111LS9N.jpg" /></p>
+<span id="more"></span>
+<p>这个序列虽说非常有意思，但我当时并没有意识到在R中求解费波那西序列的时间问题。</p>
+<p>首先看一下，最为原始的、朴素的R代码：</p>
+<pre><code>fib &lt;- function(n)
+&#123;
+ifelse(n &lt; 2, n, fib(n - 1) + fib(n - 2))
+&#125;
+system.time(fib(25))</code></pre>
+<p>所需的时间是1.65s，时间相当长，那我们进行一下改写：</p>
+<pre><code>fib2 &lt;- function(n)
+&#123;
+if(n &lt; 2) n else Recall(n-1) + Recall(n-2)
+&#125;
+system.time(fib2(25))</code></pre>
+<p>所需时间是0.21s，通过改进if else 及 recall
+得到了一定提升，但仍然非常慢，继续：</p>
+<pre><code>library(compiler)
+enableJIT(3)
+fib3 &lt;- cmpfun(fib2)
+system.time(fib3(25))</code></pre>
+<p>需要0.19s，通过byte
+code编译方式，时间略微有所缩短，但依旧很慢。看来在R环境下，最高性能也就如此了。那试一试在R中调用C++代码的方式：</p>
+<pre><code>require(inline)
+incltxt &lt;- &#39;
+int fibonacci(const int x) &#123;
+if (x == 0) return(0);
+if (x == 1) return(1);
+return (fibonacci(x - 1)) + fibonacci(x - 2);
+&#125;&#39;
+fibRcpp &lt;- cxxfunction(signature(xs=&quot;int&quot;),
+plugin=&quot;Rcpp&quot;,
+incl=incltxt,
+body=&#39;
+int x = Rcpp::as&lt;int&gt;(xs);
+return Rcpp::wrap( fibonacci(x) );
+&#39;)
+start &lt;- Sys.time()
+fibRcpp(25)
+end &lt;- Sys.time()
+end - start</code></pre>
+<p>这里用system.time已经不能正确显示时间（显示为0秒），稍稍改了下格式，现在需要时间是0.07s（调用inline包，在R环境下编译C++）。</p>
+<p>是否还能够优化，答案是肯定的，直接上C。刚好有个gmp包刚好可以求费波那西数列，它是C语言级别的求解：</p>
+<pre><code>library(gmp)
+start &lt;- Sys.time()
+fibnum(25)
+end &lt;- Sys.time()
+end - start</code></pre>
+<p>所需时间进一步降低，为0.027s。那有看官说了，难道R语言在处理递归就这么不济？这不调用底层语言的话，性能也太寒碜了吧。其实不然，来个杀手锏（来自于R
+inforno，稍稍有点难理解）</p>
+<pre><code>fibonacci &lt;- local(&#123;                      
+  memo &lt;- c(1, 1, rep(NA, 100))           
+  f &lt;- function(x) &#123;                      
+    if(x == 0) return(0)                  
+    if(x &lt; 0) return(NA)                  
+    if(x &gt; length(memo))                  
+    stop(&quot;’x’ too big for implementation&quot;)
+    if(!is.na(memo[x])) return(memo[x])   
+    ans &lt;- f(x-2) + f(x-1)                
+    memo[x] &lt;&lt;- ans                       
+  ans                                     
+&#125;                                         
+&#125;)                                        
+start &lt;- Sys.time()                       
+fibonacci(25)                             
+end &lt;- Sys.time()                         
+end - start                               </code></pre>
+<p>时间是0.033s，略逊于调用优化了的C，但明显强于非优化的C++。还没完，实际上此序列是有线性算法的，大囧：</p>
+<pre><code>fib = function (x)           
+&#123;                            
+        if (x == 0)          
+                return (0)   
+        n1 = 0               
+        n2 = 1               
+        for (i in 1:(x-1)) &#123; 
+                sum = n1 + n2
+                n1 = n2      
+                n2 = sum     
+        &#125;                    
+        n2                   
+&#125;                            
+start &lt;- Sys.time()          
+fib(25)                      
+end &lt;- Sys.time()            
+end - start                  </code></pre>
+<p>所需时间是0.026s，基本上和优化的C一致。还能再快吗！！？？是的，还能。本文的最开头提到费波那西数列的初等代数求法，最终序列的通项可以用以下式子表示：</p>
+<pre><code>s &lt;- sqrt(5)                         
+fn &lt;- function(n)&#123;                   
+s/5 * (((1 + s)/2)^n - ((1 - s)/2)^n)
+&#125;                                    
+fibn &lt;- cmpfun(fn)                   
+start &lt;- Sys.time()                  
+fibn(25)                             
+end &lt;- Sys.time()                    
+end - start    </code></pre>
+<p>时间定格在0.019s，世界终于清静了……</p>
+<p>（注：gmp包中的求解方式没有详细考证C代码，貌似也是线性解法）</p>
+<p><strong>参考资料</strong></p>
+<ul>
+<li><a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Fibonacci_number%22%3Ehttp://en.wikipedia.org/wiki/Fibonacci_number">费波那西序列</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://stackoverflow.com/questions/6807068/why-is-my-recursive-function-so-slow-in-r">R中的递归</a></li>
+<li><a
+target="_blank" rel="noopener" href="http://www.johnmyleswhite.com/notebook/2012/03/31/julia-i-love-you/">julia和R讨论</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Fibonacci/" rel="tag"># Fibonacci</a>
+              <a href="/tags/Julia/" rel="tag"># Julia</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2012/04/13/r-language-enterprise.html" rel="prev" title="商业数据库对R语言的支持">
+                  <i class="fa fa-angle-left"></i> 商业数据库对R语言的支持
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2012/05/29/see-you-next-year.html" rel="next" title="R 会和郁彬">
+                  R 会和郁彬 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

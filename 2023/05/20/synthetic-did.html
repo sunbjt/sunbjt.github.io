@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 研究背景 1988 年 11 月，California 发起了一项名为”99 号提案“的选民倡议，该提案是美国第一个现代大规模烟草控制项目（次年 1 月正式生效）。在该法案的有两项主要内容：  California 的每包香烟香烟的消费税（cigarette excise tax）提高了 25 美分； 法案的所得收入专项用于控烟的教育与媒体宣传。  P.S. California 香烟消费税">
+<meta property="og:type" content="article">
+<meta property="og:title" content="合成双重差分法">
+<meta property="og:url" content="http://bjt.name/2023/05/20/synthetic-did.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="1. 研究背景 1988 年 11 月，California 发起了一项名为”99 号提案“的选民倡议，该提案是美国第一个现代大规模烟草控制项目（次年 1 月正式生效）。在该法案的有两项主要内容：  California 的每包香烟香烟的消费税（cigarette excise tax）提高了 25 美分； 法案的所得收入专项用于控烟的教育与媒体宣传。  P.S. California 香烟消费税">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/sdid.png">
+<meta property="article:published_time" content="2023-05-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-08T16:20:11.294Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/sdid.png">
+
+
+<link rel="canonical" href="http://bjt.name/2023/05/20/synthetic-did.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2023/05/20/synthetic-did.html","path":"2023/05/20/synthetic-did.html","title":"合成双重差分法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>合成双重差分法 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2023/05/20/synthetic-did.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="合成双重差分法 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          合成双重差分法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-20T00:00:00+08:00">2023-05-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="研究背景">1. 研究背景</h1>
+<p>1988 年 11 月，California 发起了一项名为”99
+号提案“的选民倡议，该提案是美国第一个现代大规模烟草控制项目（次年 1
+月正式生效）。在该法案的有两项主要内容：</p>
+<ol type="1">
+<li>California 的每包香烟香烟的消费税（cigarette excise tax）提高了 25
+美分；</li>
+<li>法案的所得收入专项用于控烟的教育与媒体宣传。</li>
+</ol>
+<p>P.S. California 香烟消费税现在是每包 87
+美分，为美国最高的州之一。</p>
+<p>该法案在后续引发了一系列关于室内清洁空气的地方立法。那问题来了：</p>
+<blockquote>
+<p>在 California
+该项法案的实施，对烟草控制是积极的还是消极的？影响有多大？</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="数据情况">2. 数据情况</h1>
+<p>美国各州从 1970 年开始有完整的香烟消费的数据，随着健康理念的深入，到
+2000 年大部分州也实施了禁烟措施。因此该案例的观察周期是从 1970 年至 2000
+年之间。出于研究准确性的考虑，删除了部分州的数据：</p>
+<ul>
+<li>期内采用其他一些大规模烟草控制计划的州（马萨诸塞州、亚利桑那州、俄勒冈州和佛罗里达州）</li>
+<li>在 1989 至 2000 年期间将州烟税提高 50
+美分或更高的州（阿拉斯加、夏威夷、马里兰，密歇根、新泽西、纽约、华盛顿、哥伦比亚特区）</li>
+</ul>
+<p>最后样本池中剩下 38
+个州，其他字包含了年份（Year），人均消费卷烟数（PacksPerCapita）。数据大概长这个样子：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">State</th>
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">PacksPerCapita</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alabama</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">89.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Arkansas</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">100.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Colorado</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">124.8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Connecticut</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">120.0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">...</td>
+<td style="text-align: right;">...</td>
+<td style="text-align: right;">...</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">West Virginia</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">107.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Wisconsin</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">80.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wyoming</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">90.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">California</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">41.6</td>
+</tr>
+</tbody>
+</table>
+<p>先用最简化的思路来看 99 法案是否有效。</p>
+<h1 id="双重差分-did">3. 双重差分 (DID)</h1>
+<p>双重差分（difference in
+differences）是一种常见的计量经济学方法，用于评估政策或干预措施的影响。它的基本思想是对比实验组和对照组在政策实施前后的差异，以确定政策的影响。</p>
+<p>California 控烟的这个案例中，DID 方法可以通过以下步骤进行：</p>
+<ol type="1">
+<li>确定实验组（加州）和对照组（其他州）；</li>
+<li>确定政策实施的时间节点（1970-1988 vs 1989-2000）；</li>
+<li>对比政策实施前后实验组和对照组之间的差异（第 1 次差异）；</li>
+<li>对比政策实施前后实验组内部和对照组内部之间的差异（第 2
+次差异）；</li>
+<li>比较第 3 步和第 4
+步的差异（所以叫做双重差分），以确定政策的影响。</li>
+</ol>
+<p>DID
+方法的优点是可以控制时间不变的因素，从而更准确地评估政策的影响。以上思想我们落在实际数据上：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">时间段</th>
+<th style="text-align: left;">人均消费卷烟数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">加州</td>
+<td style="text-align: left;">1970-1988</td>
+<td style="text-align: left;">116.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">加州</td>
+<td style="text-align: left;">1989-2000</td>
+<td style="text-align: left;">60.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">其他州</td>
+<td style="text-align: left;">1970-1988</td>
+<td style="text-align: left;">130.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">其他州</td>
+<td style="text-align: left;">1989-2000</td>
+<td style="text-align: left;">102.1</td>
+</tr>
+</tbody>
+</table>
+<p>结论是：加州从 116.2 下降到 60.3，其他州从 130.6 下降到
+102.1。加州的"对比降幅"是要高于其他州的，因此这项政策是有效果的。</p>
+<h1 id="合成双重差分-sdid-是什么">4. 合成双重差分 SDID 是什么？</h1>
+<p>Synthetic difference in differences
+(SDID)是一种利用合成控制组的方法来评估政策干预效果的分析技术。其基本原理是将政策实施地区的观测结果与一个合成控制组进行比较，以便更准确地衡量政策效果。</p>
+<p>SDID 方法的基本步骤如下：</p>
+<ol type="1">
+<li>选择一个与政策实施地区在政策实施前相似的合成控制组</li>
+<li>使用控制组的数据建立预测模型来估计政策实施地区在政策实施前的预期结果</li>
+<li>然后比较政策实施地区的观测结果与合成控制组的预测结果，以便评估政策干预效果。</li>
+</ol>
+<p>SDID方法可以更准确地评估政策干预效果，因为它可以控制其他可能影响结果的因素，并且可以更好地匹配政策实施地区和合成控制组的特征。</p>
+<p>以下是部分城市和部分年份的示例：</p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 18%" />
+<col style="width: 13%" />
+<col style="width: 12%" />
+<col style="width: 9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Year</th>
+<th style="text-align: right;">Alabama</th>
+<th style="text-align: right;">Arkansas</th>
+<th style="text-align: right;">Colorado</th>
+<th style="text-align: right;">Connecticut</th>
+<th style="text-align: right;">Delaware</th>
+<th style="text-align: right;">Georgia</th>
+<th style="text-align: right;">Idaho</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">89.8</td>
+<td style="text-align: right;">100.3</td>
+<td style="text-align: right;">124.8</td>
+<td style="text-align: right;">120.0</td>
+<td style="text-align: right;">155.0</td>
+<td style="text-align: right;">109.9</td>
+<td style="text-align: right;">102.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">95.4</td>
+<td style="text-align: right;">104.1</td>
+<td style="text-align: right;">125.5</td>
+<td style="text-align: right;">117.6</td>
+<td style="text-align: right;">161.1</td>
+<td style="text-align: right;">115.7</td>
+<td style="text-align: right;">108.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1972</td>
+<td style="text-align: right;">101.1</td>
+<td style="text-align: right;">103.9</td>
+<td style="text-align: right;">134.3</td>
+<td style="text-align: right;">110.8</td>
+<td style="text-align: right;">156.3</td>
+<td style="text-align: right;">117.0</td>
+<td style="text-align: right;">126.1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1973</td>
+<td style="text-align: right;">102.9</td>
+<td style="text-align: right;">108.0</td>
+<td style="text-align: right;">137.9</td>
+<td style="text-align: right;">109.3</td>
+<td style="text-align: right;">154.7</td>
+<td style="text-align: right;">119.8</td>
+<td style="text-align: right;">121.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">108.2</td>
+<td style="text-align: right;">109.7</td>
+<td style="text-align: right;">132.8</td>
+<td style="text-align: right;">112.4</td>
+<td style="text-align: right;">151.3</td>
+<td style="text-align: right;">123.7</td>
+<td style="text-align: right;">125.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">111.7</td>
+<td style="text-align: right;">114.8</td>
+<td style="text-align: right;">131.0</td>
+<td style="text-align: right;">110.2</td>
+<td style="text-align: right;">147.6</td>
+<td style="text-align: right;">122.9</td>
+<td style="text-align: right;">123.3</td>
+</tr>
+</tbody>
+</table>
+<p>我们需要构建一个 1989 年之后没有受到 99 法案影响的
+California，有一个非常容易想到的思路就是使用 1989 年之前的其他城市对
+California 进行<strong>拟合</strong>，求出来的模型应用在 1989
+年之后，即获得了一个的合成 California</p>
+<p>首先看一下拟合出来的模型什么样？</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">系数</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">6.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Colorado</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Connecticut</td>
+<td style="text-align: right;">0.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Idaho</td>
+<td style="text-align: right;">0.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Illinois</td>
+<td style="text-align: right;">0.16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Montana</td>
+<td style="text-align: right;">0.14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nebraska</td>
+<td style="text-align: right;">0.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nevada</td>
+<td style="text-align: right;">0.17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">New Hampshire</td>
+<td style="text-align: right;">0.01</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tennessee</td>
+<td style="text-align: right;">-0.24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Utah</td>
+<td style="text-align: right;">0.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">West Virginia</td>
+<td style="text-align: right;">0.07</td>
+</tr>
+</tbody>
+</table>
+<p>也就是说 California 的人均消费卷烟数可以这样表示：</p>
+<p><span class="math display">\[
+C_{California} = 6.59 + 0.05C_{Colorado} + 0.17C_{Connecticut} +
+0.04C_{Idaho} + \cdots + 0.07C_{West Virginia}
+\]</span></p>
+<p>这个公式合成了一个实际上并不存在的 California，我们假设</p>
+<ol type="1">
+<li>其他州在后续的时间没有大规模的变化；</li>
+<li>1988 年之前 California 可以被其他州的线性组合替代，1989
+年之后线性关系依然存在。</li>
+</ol>
+<p>这样我们就可以通过真实发生的 California 数据，对比这个合成 California
+数据，来观察政策带来的影响：</p>
+<p><img src="/upload/pic/sdid.png" /></p>
+<p>根据以上构建的合成双重差分法得到的分析结果看，加州实施的烟草控制计划的影响就非常显然了。在第
+99 号提案之后：</p>
+<ul>
+<li>California 每年的人均消费卷烟数逐年下降，且呈现扩大趋势；</li>
+<li>在 2000 年，California 年人均消费卷烟数比没有第 99
+号提案时的情况低了约 24 包。</li>
+</ul>
+<h1 id="其他问题的讨论">5. 其他问题的讨论</h1>
+<p>该方法很容易将线性模型升级为非线性模型，从笔者的实际业务操作上看，该方法的稳健性和解释性可以到大幅提升。</p>
+<h1 id="附数据和代码">6. 附数据和代码</h1>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#| message: false</span></span><br><span class="line"><span class="comment">## DID 部分</span></span><br><span class="line">library<span class="punctuation">(</span>tidyverse<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>knitr<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggplot2<span class="punctuation">)</span></span><br><span class="line">prop99_tr <span class="operator">&lt;-</span> read.csv<span class="punctuation">(</span><span class="string">&#x27;https://bjt.name/upload/csv/california_prop99.csv&#x27;</span><span class="punctuation">)</span></span><br><span class="line">prop99_tr<span class="operator">$</span>treated<span class="punctuation">[</span>prop99_tr<span class="operator">$</span>Year <span class="operator">&gt;=</span> <span class="number">1989</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="string">&#x27;1989-2000&#x27;</span></span><br><span class="line">prop99_tr<span class="operator">$</span>treated<span class="punctuation">[</span>prop99_tr<span class="operator">$</span>Year <span class="operator">&lt;</span> <span class="number">1989</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="string">&#x27;1970-1988&#x27;</span></span><br><span class="line">s_prop99_tr <span class="operator">&lt;-</span> prop99_tr <span class="operator">|&gt;</span> </span><br><span class="line">  group_by<span class="punctuation">(</span>State<span class="punctuation">,</span> treated<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  summarise<span class="punctuation">(</span>ave <span class="operator">=</span> mean<span class="punctuation">(</span>PacksPerCapita<span class="punctuation">)</span><span class="punctuation">,</span> .groups <span class="operator">=</span> <span class="string">&#x27;keep&#x27;</span><span class="punctuation">)</span></span><br><span class="line">s_prop99_tr <span class="operator">|&gt;</span> mutate<span class="punctuation">(</span></span><br><span class="line">  New_class <span class="operator">=</span> ifelse<span class="punctuation">(</span>State <span class="operator">==</span> <span class="string">&#x27;California&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;california&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;else&#x27;</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  group_by<span class="punctuation">(</span>New_class<span class="punctuation">,</span> treated<span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  summarise<span class="punctuation">(</span>v <span class="operator">=</span> mean<span class="punctuation">(</span>ave<span class="punctuation">)</span><span class="punctuation">,</span> .groups <span class="operator">=</span> <span class="string">&#x27;keep&#x27;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  kable<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">data_wide_all <span class="operator">&lt;-</span> prop99_tr <span class="operator">|&gt;</span> pivot_wider<span class="punctuation">(</span></span><br><span class="line">    id_cols <span class="operator">=</span> <span class="string">&quot;Year&quot;</span><span class="punctuation">,</span> </span><br><span class="line">    names_from <span class="operator">=</span> <span class="string">&quot;State&quot;</span><span class="punctuation">,</span> </span><br><span class="line">    values_from <span class="operator">=</span> <span class="string">&quot;PacksPerCapita&quot;</span></span><br><span class="line">  <span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 拟合 SDID 的线性模型</span></span><br><span class="line">data_wide <span class="operator">&lt;-</span> subset<span class="punctuation">(</span>data_wide_all<span class="punctuation">,</span> Year <span class="operator">&lt;</span> <span class="number">1989</span><span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>glmnet<span class="punctuation">)</span></span><br><span class="line">Y <span class="operator">=</span> data_wide<span class="operator">$</span>California</span><br><span class="line">X <span class="operator">=</span> select<span class="punctuation">(</span>data_wide<span class="punctuation">,</span><span class="operator">-</span><span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;Year&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;California&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> as.matrix<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">model_glmnet <span class="operator">&lt;-</span> cv.glmnet<span class="punctuation">(</span>y <span class="operator">=</span> Y<span class="punctuation">,</span> x <span class="operator">=</span> X <span class="punctuation">,</span> family <span class="operator">=</span> <span class="string">&#x27;gaussian&#x27;</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># model_glmnet</span></span><br><span class="line">coef<span class="punctuation">(</span>model_glmnet<span class="punctuation">,</span> s <span class="operator">=</span> <span class="string">&quot;lambda.min&quot;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="built_in">round</span><span class="punctuation">(</span><span class="number">2</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">X_all <span class="operator">&lt;-</span></span><br><span class="line">  select<span class="punctuation">(</span>data_wide_all<span class="punctuation">,</span><span class="operator">-</span><span class="built_in">c</span><span class="punctuation">(</span><span class="string">&#x27;Year&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;California&#x27;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> as.matrix<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">DID_data <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span></span><br><span class="line">  Year <span class="operator">=</span> data_wide_all<span class="operator">$</span>Year<span class="punctuation">,</span></span><br><span class="line">  California <span class="operator">=</span> data_wide_all<span class="operator">$</span>California<span class="punctuation">,</span></span><br><span class="line">  Synthetic <span class="operator">=</span> predict<span class="punctuation">(</span></span><br><span class="line">    model_glmnet<span class="punctuation">,</span> newx <span class="operator">=</span> X_all<span class="punctuation">,</span> s <span class="operator">=</span> <span class="number">0.1089</span><span class="punctuation">)</span><span class="punctuation">[</span><span class="punctuation">,</span><span class="number">1</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">)</span> <span class="operator">|&gt;</span> gather<span class="punctuation">(</span><span class="string">&#x27;Type&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;PacksPerCapita&#x27;</span><span class="punctuation">,</span> <span class="operator">-</span>Year<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 绘制差异图</span></span><br><span class="line">gs <span class="operator">&lt;-</span> tribble<span class="punctuation">(</span></span><br><span class="line">  <span class="operator">~</span>start<span class="punctuation">,</span> <span class="operator">~</span>end<span class="punctuation">,</span></span><br><span class="line">  <span class="number">1970</span><span class="punctuation">,</span> <span class="number">1988</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line">ggplot<span class="punctuation">(</span>data <span class="operator">=</span> DID_data<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Year<span class="punctuation">,</span> y <span class="operator">=</span> PacksPerCapita<span class="punctuation">,</span> colour <span class="operator">=</span> Type<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_line<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_rect<span class="punctuation">(</span></span><br><span class="line">    data <span class="operator">=</span> gs<span class="punctuation">,</span></span><br><span class="line">    aes<span class="punctuation">(</span></span><br><span class="line">      xmin <span class="operator">=</span> start<span class="punctuation">,</span></span><br><span class="line">      xmax <span class="operator">=</span> end<span class="punctuation">,</span></span><br><span class="line">      ymin <span class="operator">=</span> <span class="operator">-</span><span class="literal">Inf</span><span class="punctuation">,</span></span><br><span class="line">      ymax <span class="operator">=</span> <span class="literal">Inf</span></span><br><span class="line">    <span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    fill <span class="operator">=</span> <span class="string">&#x27;purple&#x27;</span><span class="punctuation">,</span></span><br><span class="line">    alpha <span class="operator">=</span> <span class="number">0.1</span><span class="punctuation">,</span></span><br><span class="line">    show.legend <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">,</span></span><br><span class="line">    inherit.aes <span class="operator">=</span> <span class="literal">FALSE</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">   labs<span class="punctuation">(</span>title <span class="operator">=</span> <span class="string">&#x27;California 在 1989 年实施的 99 号控烟法案对人均消费卷烟数的影响&#x27;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">    theme_minimal<span class="punctuation">(</span>base_family <span class="operator">=</span> <span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/11/13/operational-research.html" rel="prev" title="混合整数规划常用方法 R 实现">
+                  <i class="fa fa-angle-left"></i> 混合整数规划常用方法 R 实现
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/11/geo-tech.html" rel="next" title="时空数据科学概念和技术">
+                  时空数据科学概念和技术 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"light","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>
