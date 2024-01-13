@@ -24,6 +24,43 @@
   --highlight-gutter-foreground: #555;
   color-scheme: light;
 }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-bg-color: #282828;
+    --content-bg-color: #333;
+    --card-bg-color: #555;
+    --text-color: #ccc;
+    --blockquote-color: #bbb;
+    --link-color: #ccc;
+    --link-hover-color: #eee;
+    --brand-color: #ddd;
+    --brand-hover-color: #ddd;
+    --table-row-odd-bg-color: #282828;
+    --table-row-hover-bg-color: #363636;
+    --menu-item-bg-color: #555;
+    --theme-color: #222;
+    --btn-default-bg: #222;
+    --btn-default-color: #ccc;
+    --btn-default-border-color: #555;
+    --btn-default-hover-bg: #666;
+    --btn-default-hover-color: #ccc;
+    --btn-default-hover-border-color: #666;
+    --highlight-background: #272822;
+    --highlight-foreground: #ddd;
+    --highlight-gutter-background: #393a34;
+    --highlight-gutter-foreground: #cacaca;
+    color-scheme: dark;
+  }
+  img {
+    opacity: 0.75;
+  }
+  img:hover {
+    opacity: 0.9;
+  }
+  iframe {
+    color-scheme: light;
+  }
+}
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -184,7 +221,7 @@ body {
   background: var(--body-bg-color);
   box-sizing: border-box;
   color: var(--text-color);
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: LXGW WenKai, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1em;
   line-height: 2;
   min-height: 100%;
@@ -197,7 +234,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: LXGW WenKai, LXGW WenKai, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 30px 0 15px;
@@ -374,6 +411,36 @@ td {
   License: see project LICENSE
   Touched: 2021
 */pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#f3f3f3;color:#444}.hljs-comment{color:#697070}.hljs-punctuation,.hljs-tag{color:#444a}.hljs-tag .hljs-attr,.hljs-tag .hljs-name{color:#444}.hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-name,.hljs-selector-tag{font-weight:700}.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{color:#800}.hljs-section,.hljs-title{color:#800;font-weight:700}.hljs-link,.hljs-operator,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{color:#ab5656}.hljs-literal{color:#695}.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{color:#397300}.hljs-meta{color:#1f7199}.hljs-meta .hljs-string{color:#38a}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}
+@media (prefers-color-scheme: dark) {
+pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#272822;color:#ddd}.hljs-keyword,.hljs-literal,.hljs-name,.hljs-selector-tag,.hljs-strong,.hljs-tag{color:#f92672}.hljs-code{color:#66d9ef}.hljs-attribute,.hljs-link,.hljs-regexp,.hljs-symbol{color:#bf79db}.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-emphasis,.hljs-section,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-string,.hljs-subst,.hljs-template-tag,.hljs-template-variable,.hljs-title,.hljs-type,.hljs-variable{color:#a6e22e}.hljs-class .hljs-title,.hljs-title.class_{color:#fff}.hljs-comment,.hljs-deletion,.hljs-meta,.hljs-quote{color:#75715e}.hljs-doctag,.hljs-keyword,.hljs-literal,.hljs-section,.hljs-selector-id,.hljs-selector-tag,.hljs-title,.hljs-type{font-weight:700}
+}
+.expand-btn {
+  bottom: 0;
+  color: var(--highlight-foreground);
+  cursor: pointer;
+  display: none;
+  left: 0;
+  right: 0;
+  position: absolute;
+  text-align: center;
+}
+.fold-cover {
+  background-image: linear-gradient(to top, var(--highlight-background) 0, rgba(0,0,0,0) 100%);
+  bottom: 0;
+  display: none;
+  height: 50px;
+  left: 0;
+  right: 0;
+  position: absolute;
+}
+.highlight-fold {
+  max-height: 500px;
+  overflow-y: hidden !important;
+}
+.highlight-fold .expand-btn,
+.highlight-fold .fold-cover {
+  display: block;
+}
 code,
 kbd,
 figure.highlight,
@@ -409,7 +476,7 @@ pre figcaption a:hover {
 }
 pre,
 code {
-  font-family: consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
+  font-family: LXGW WenKai, consolas, Menlo, monospace, 'PingFang SC', 'Microsoft YaHei';
 }
 code {
   border-radius: 3px;
@@ -983,7 +1050,7 @@ pre code {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: LXGW WenKai, LXGW WenKai, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   line-height: 1.5;
@@ -1592,7 +1659,7 @@ pre code {
   width: 4px;
 }
 .post-body {
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: LXGW WenKai, LXGW WenKai, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   overflow-wrap: break-word;
 }
 @media (min-width: 1200px) {
@@ -1778,7 +1845,7 @@ pre code {
 }
 .posts-expand .post-meta-container {
   color: #999;
-  font-family: Lato, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: LXGW WenKai, LXGW WenKai, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   font-size: 0.75em;
   margin-top: 3px;
 }
@@ -2160,6 +2227,52 @@ ul.breadcrumb li:last-child {
   border-bottom-color: #111;
   color: #111;
 }
+@media (prefers-color-scheme: dark) {
+  .tag-cloud-0 {
+    border-bottom-color: #555;
+    color: #555;
+  }
+  .tag-cloud-1 {
+    border-bottom-color: #646464;
+    color: #646464;
+  }
+  .tag-cloud-2 {
+    border-bottom-color: #737373;
+    color: #737373;
+  }
+  .tag-cloud-3 {
+    border-bottom-color: #828282;
+    color: #828282;
+  }
+  .tag-cloud-4 {
+    border-bottom-color: #929292;
+    color: #929292;
+  }
+  .tag-cloud-5 {
+    border-bottom-color: #a1a1a1;
+    color: #a1a1a1;
+  }
+  .tag-cloud-6 {
+    border-bottom-color: #b0b0b0;
+    color: #b0b0b0;
+  }
+  .tag-cloud-7 {
+    border-bottom-color: #c0c0c0;
+    color: #c0c0c0;
+  }
+  .tag-cloud-8 {
+    border-bottom-color: #cfcfcf;
+    color: #cfcfcf;
+  }
+  .tag-cloud-9 {
+    border-bottom-color: #dedede;
+    color: #dedede;
+  }
+  .tag-cloud-10 {
+    border-bottom-color: #eee;
+    color: #eee;
+  }
+}
 mjx-container[jax='CHTML'][display='true'],
 .has-jax {
   overflow: auto hidden;
@@ -2348,7 +2461,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #aa3b69;
+  background: #224e37;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
