@@ -185,9 +185,9 @@ theme_config:
   giscus:
     enable: true
     repo: sunbjt/sunbjt.github.io
-    repo_id: MDEwOlJlcG9zaXRvcnkzMjUwNTM4Mjg=
+    repo_id: R_kgDOLBq4Mw
     category: Announcements
-    category_id: DIC_kwDOE1_thM4CXmOs
+    category_id: DIC_kwDOLBq4M84CcZd2
     # Available values: pathname | url | title | og:title
     mapping: url
     # Available values: 0 | 1 
