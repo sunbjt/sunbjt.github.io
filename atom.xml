@@ -580,9 +580,9 @@ https://github.com/rexyai/RestRserve&lt;/p&gt;
     <category term="R 技巧" scheme="http://bjt.name/categories/R-%E6%8A%80%E5%B7%A7/"/>
     
     
-    <category term="fiery" scheme="http://bjt.name/tags/fiery/"/>
-    
     <category term="http" scheme="http://bjt.name/tags/http/"/>
+    
+    <category term="fiery" scheme="http://bjt.name/tags/fiery/"/>
     
   </entry>
   
@@ -621,11 +621,11 @@ href=&quot;https://jeroen.github.io/opencpu-slides/&quot;&gt;介绍&lt;/a&gt;：
     
     <category term="redis" scheme="http://bjt.name/tags/redis/"/>
     
-    <category term="http" scheme="http://bjt.name/tags/http/"/>
-    
     <category term="opencpu" scheme="http://bjt.name/tags/opencpu/"/>
     
     <category term="json" scheme="http://bjt.name/tags/json/"/>
+    
+    <category term="http" scheme="http://bjt.name/tags/http/"/>
     
   </entry>
   
