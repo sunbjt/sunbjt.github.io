@@ -20,18 +20,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="本文可以帮助大家理解 ChatGPT 这类的大语言模型是如何在我们的日常生活中发挥作用。 1. 解决的是什么问题？ 假如你叫刘弱(强)西(东)，现在经营一家售卖食品的电商平台 Bmazon，拥有 70000 件各类食品（包括零食、高点、巧克力、糖果、猫粮、狗粮……）。这些商品对应有自己的描述和顾客购买使用后的评价。如果有一个机器人，它能通过和客户对话，总结顾客的潜在购买意图，给出推荐商品。这样聪明">
+    <meta name="description" content="本文可以帮助大家理解 ChatGPT 这类的大语言模型是如何在我们的日常生活中发挥作用。 1. 解决的是什么问题？ 假如你叫刘弱(强)西(东)，现在经营一家售卖食品的电商平台 Bmazon，拥有 70000 件各类食品（包括零食、糕点、巧克力、糖果、猫粮、狗粮……）。这些商品对应有自己的描述和顾客购买使用后的评价。如果有一个机器人，它能通过和客户对话，总结顾客的潜在购买意图，给出推荐商品。这样聪明">
 <meta property="og:type" content="article">
 <meta property="og:title" content="90 行代码实现问答型商品推荐系统">
 <meta property="og:url" content="http://bjt.name/2024/01/13/local-gpt.html">
 <meta property="og:site_name" content="Beta">
-<meta property="og:description" content="本文可以帮助大家理解 ChatGPT 这类的大语言模型是如何在我们的日常生活中发挥作用。 1. 解决的是什么问题？ 假如你叫刘弱(强)西(东)，现在经营一家售卖食品的电商平台 Bmazon，拥有 70000 件各类食品（包括零食、高点、巧克力、糖果、猫粮、狗粮……）。这些商品对应有自己的描述和顾客购买使用后的评价。如果有一个机器人，它能通过和客户对话，总结顾客的潜在购买意图，给出推荐商品。这样聪明">
+<meta property="og:description" content="本文可以帮助大家理解 ChatGPT 这类的大语言模型是如何在我们的日常生活中发挥作用。 1. 解决的是什么问题？ 假如你叫刘弱(强)西(东)，现在经营一家售卖食品的电商平台 Bmazon，拥有 70000 件各类食品（包括零食、糕点、巧克力、糖果、猫粮、狗粮……）。这些商品对应有自己的描述和顾客购买使用后的评价。如果有一个机器人，它能通过和客户对话，总结顾客的潜在购买意图，给出推荐商品。这样聪明">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://bjt.name/upload/pic/nuts.jpg">
 <meta property="og:image" content="https://nlp.stanford.edu/projects/glove/images/man_woman.jpg">
 <meta property="og:image" content="http://bjt.name/upload/pic/langchain.png">
 <meta property="article:published_time" content="2024-01-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-14T03:05:24.545Z">
+<meta property="article:modified_time" content="2024-01-14T11:15:00.175Z">
 <meta property="article:author" content="刘思喆">
 <meta property="article:tag" content="数据科学">
 <meta name="twitter:card" content="summary">
@@ -236,7 +236,7 @@
 <h1 id="解决的是什么问题">1. 解决的是什么问题？</h1>
 <p>假如你叫刘弱(强)西(东)，现在经营一家售卖食品的电商平台 Bmazon，拥有
 70000
-件各类食品（包括零食、高点、巧克力、糖果、猫粮、狗粮……）。这些商品对应有自己的描述和顾客购买使用后的评价。如果有一个机器人，它能通过和客户对话，总结顾客的潜在购买意图，给出推荐商品。这样聪明的机器人能不能来一个呢？</p>
+件各类食品（包括零食、糕点、巧克力、糖果、猫粮、狗粮……）。这些商品对应有自己的描述和顾客购买使用后的评价。如果有一个机器人，它能通过和客户对话，总结顾客的潜在购买意图，给出推荐商品。这样聪明的机器人能不能来一个呢？</p>
 <p>先随便来一个用户购买咨询：</p>
 <blockquote>
 <p>有什么好吃的坚果推荐购买吗？</p>
@@ -260,19 +260,19 @@ Mixed Nuts, Antioxidant Mix</a></li>
 </ul>
 <p>这三款产品，它们长这个样子：</p>
 <p><img src="/upload/pic/nuts.jpg" width="500px"/></p>
-<p>是不是很神奇？这个引擎可以用 90
-行代码实现。喔？有点意思……且听我讲讲怎么实现这个引擎。</p>
+<p>是不是很神奇？这个问答型引擎可以用 90
+行代码实现。喔？有点意思……且听我讲讲如何实现。</p>
 <span id="more"></span>
 <h1 id="原料准备">2. 原料准备</h1>
-<p>我们要构建一个问答型的商品推荐系统，领域内的文本（知识）是关键。知乎上的问答显然无法支撑这个想法，亚马逊的商品评论数据是很好的选择。当有了这些文本数据后，领域内的信息互动就能够做到了（用户的咨询可以找到相似的评论文本）。除此之外，还需要一个对话模型，可以将信息组织成人理解的语言。</p>
+<p>我们要构建一个问答型的商品推荐系统，领域内的文本（知识）是关键。知乎上的问答显然无法支撑这个想法，亚马逊的商品评论数据是很好的选择。当有了这些文本数据后，领域内的信息互动就能够做到了（用户的咨询可以找到相似的评论文本）。除此之外，还需要一个对话模型，可以将信息组织成人理解的语言。也就是说，需要两个关键原料：</p>
 <ol type="1">
-<li>本地知识库：Amazon 在 1999 - 2012 年 25 万用户在 7 万食物商品上的 56
-万条<a
+<li>本地知识库：选用了 Amazon 在 1999 - 2012 年 25 万用户在 7
+万食物商品上的 56 万条<a
 target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews/data">评论详情</a>。</li>
 <li>可调用的高性能的大语言模型：<a
 target="_blank" rel="noopener" href="https://tongyi.aliyun.com">阿里通义千问的 720 亿参数规模的
-Qwen-72B</a>。另外，笔者对比了
-OpenAI、本地部署、国产大模型……心酸过程不细表。</li>
+Qwen-72B</a>。这是笔者对比了
+OpenAI、本地部署、国产大模型……之后的选择，过程不做赘述。</li>
 </ol>
 <h2 id="amazon-的购买行为数据">2.1. Amazon 的购买行为数据</h2>
 <p>稍稍瞄一眼，原始的数据长啥样：</p>
@@ -346,7 +346,7 @@ OpenAI、本地部署、国产大模型……心酸过程不细表。</li>
 </tr>
 </tbody>
 </table>
-<p>我们最关心的评论文本，ID = 1 的用户是这么评价：</p>
+<p>以及我们最关心的评论文本。ID = 1 的用户是这么评价：</p>
 <blockquote>
 <p>I have bought several of the Vitality canned dog food products and
 have found them all to be of good quality. The product looks more like a
@@ -359,9 +359,9 @@ and she appreciates this product better than most.</p>
 actually small sized unsalted. Not sure if this was an error or if the
 vendor intended to represent the product as ""Jumbo"".</p>
 </blockquote>
-<p>细扒的话，会发现用户评论信息内存在大量非英文字符，以及超链接相关文本。用正则表达式处理成纯文本是其中的一个小步骤。</p>
+<p>细扒的话，会发现用户评论信息内存在大量非英文字符，以及超链接文本。用正则表达式处理成纯文本是其中的一个小步骤。</p>
 <h2 id="阿里通义千问大模型">2.2. 阿里通义千问大模型</h2>
-<p>国产大模型孰优孰劣不好评价，市面上也有很多评测标准，基本上各家都会找到有利于自己的一些测评结果，反正大家都是第一，哈哈。从本质来看的话，数据集多样性和丰富度、计算资源（算力）、模型架构和算法技巧（工程师能力）四个方面是关键要素。从调用方式上判断，阿里通义大语言模型更适合我的工作环境，因为调用接口仅需要安装
+<p>国产大模型孰优孰劣不好评价，市面上也有很多评测标准，基本上各家都会找到有利于自己的一些测评结果，反正大家都是第一。从本质上看的话，数据集多样性和丰富度、计算资源（算力）、模型架构和算法技巧（工程师能力）四个方面是关键要素。从调用方式上判断，阿里通义大语言模型更适合我的工作环境，因为调用接口仅需要安装
 Python 的一个包：</p>
 <blockquote>
 <p>pip3 install dashscope</p>
@@ -397,8 +397,8 @@ tokens，覆盖这个场景绰绰有余。</p>
 <p>这里面有这几个关键词：好吃、坚果、推荐、购买。如果用户的意图可以通过这四个词的向量
 <strong><em>相加</em></strong>
 就好了，甚至用户表达了：我不喜欢混合坚果。那么，“混合”这个词能够用
-<strong><em>减去</em></strong>
-的方式来计算，那就完美了！要满足这样的设想，源自于斯坦福大学的 GloVe
+<strong><em>相减</em></strong>
+的方式来处理，那就完美了！要满足这样的设想，源自于斯坦福大学的 GloVe
 算法刚好适用。算法细节客官可以参见<a
 target="_blank" rel="noopener" href="https://nlp.stanford.edu/projects/glove/">这里</a>。官网上给了一个通过语料训练得到的词汇关系，直观的体现了
 Glove 算法的优雅：</p>
@@ -413,8 +413,8 @@ man - woman, king - queen, brother - sister
 <blockquote>
 <p>man - woman = king - queen，那么 queen = king - man + woman！</p>
 </blockquote>
-<p>这个算法原理非常适合这个场景下，既然词向量的"加减"代表意义的变化，那么就可以“暴力”地获得句子向量，以及兴趣向量（不是最优，后文有解释）。</p>
-<h1 id="关键中间过程">3. 关键中间过程</h1>
+<p>这个算法原理非常适合这个场景，既然词向量的"加减"代表意义的变化，那么就可以“暴力”地获得句子向量，以及兴趣向量（不是最优，后文有解释）。</p>
+<h1 id="关键过程描述">3. 关键过程描述</h1>
 <p>90
 行详细代码我放在了全文之后，这里摘取一部分中间的关键过程，用于说明实现细节。</p>
 <p>第一部分是通过 GloVe 算法生成的“词向量”，单词的数量有 23000，随便用 6
@@ -489,8 +489,8 @@ man - woman, king - queen, brother - sister
 </tr>
 </tbody>
 </table>
-<p>第二部分是“评论向量”。如前文描述，既然我们使用 GloVe
-算法，那么整段评论可以表达为“词向量”的“加和”。随机选取 5
+<p>第二部分是“评论向量”。如前文描述，利用 GloVe
+算法，整段评论可以表达为“词向量”的“加和”。随机选取 5
 组评论对应的“评论向量”（仅取了前 5 维，总计 50 维）：</p>
 <table>
 <thead>
@@ -596,19 +596,19 @@ target="_blank" rel="noopener" href="https://github.com/chatchat-space/Langchain
 <p><img src="/upload/pic/langchain.png" /></p>
 <p>实际上同“问答型商品推荐系统”的方案是完全一致的，各自对应关系：</p>
 <ul>
-<li>1-2-3-4-5-6-7 对应步骤一</li>
-<li>8-9-10 对应步骤二</li>
-<li>11-12-13 对应步骤三</li>
-<li>14-15 对应步骤四</li>
+<li>1-2-3-4-5-6-7 对应步骤一，评论的向量化；</li>
+<li>8-9-10 对应步骤二，Query 的向量化；</li>
+<li>11-12-13 对应步骤三，返回评论的 Chunks；</li>
+<li>14-15 对应步骤四，利用大语言模型返回答案。</li>
 </ul>
-<p>各位看官可以根据本文思路和代码生成一个“基于大语言模型的本地知识助手”也是很轻松的。</p>
+<p>各位看官根据本文思路和代码生成一个“基于大语言模型的本地知识助手”也是很轻松的。</p>
 <h1 id="工程化讨论">5. 工程化讨论</h1>
-<p>如果看官不是工程师背景，文章到此结束。下面讨论从工程效果、性能的一些细节问题。</p>
+<p>如果看官不是工程师背景，文章到此结束。下面讨论工程效果、性能的一些细节问题。</p>
 <h2 id="为什么用-embedding">5.1. 为什么用 embedding</h2>
-<p>正常的话，构建本地知识助手有两种可能的技术方向 Fine-Tuning 和
-Embedding。但前者需要的硬件资源巨大，即便是用云端的资源，也需要在开源大模型基础上再训练，要么用自己的算法工程师的“人天”，要么买云商算法工程师的“人天”，成本巨大。</p>
+<p>正常的话，构建本地知识助手有两种可能的技术方向 fine-tuning 和
+embedding。但前者需要的硬件资源巨大，即便是用云端的资源，也需要在开源大模型基础上再训练，要么用自己的算法工程师的“人天”，要么买云商算法工程师的“人天”，成本巨大。</p>
 <p>相比较下，embedding
-的技术框架更为简单，并且还有个无法拒绝的诱惑：本地知识库时常会有新增或更新，embedding
+的技术框架更为简单，并且还有个无法拒绝的优点：本地知识库时常会有新增或更新，embedding
 重新训练模型（向量化）的成本几乎可以忽略不计。</p>
 <h2 id="embedding-的其他可能">5.2. embedding 的其他可能</h2>
 <p>可能在第 3 节有客观会有疑问，既然是通过 query
@@ -736,7 +736,7 @@ embedding 模型的话，可以考虑将用户历史上不喜欢的 query
 <h2 id="语料中没有的答案">5.5. 语料中没有的答案</h2>
 <p>通过点击流记录用户的无返回结果，针对于这些 bad case
 增加规则和异常处理逻辑。</p>
-<p>刘弱(强)西(东)！兴奋不？创业去吧，哈哈哈~~</p>
+<p>刘弱（强）西（东），你兴奋不？创业去吧，哈哈哈~~</p>
 <h1 id="实现代码">6. 实现代码</h1>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 使用数据 https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews/data</span></span><br><span class="line">library<span class="punctuation">(</span>data.table<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>stopwords<span class="punctuation">)</span></span><br><span class="line">require<span class="punctuation">(</span>text2vec<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>stringr<span class="punctuation">)</span></span><br><span class="line">file <span class="operator">&lt;-</span> <span class="string">&#x27;/Users/liusizhe/Downloads/archive/Reviews.csv&#x27;</span></span><br><span class="line">x <span class="operator">&lt;-</span> fread<span class="punctuation">(</span>file<span class="punctuation">)</span></span><br><span class="line">x <span class="operator">&lt;-</span> x<span class="punctuation">[</span><span class="operator">!</span>duplicated<span class="punctuation">(</span>x<span class="operator">$</span>Text<span class="punctuation">)</span><span class="punctuation">,</span> <span class="punctuation">]</span> <span class="comment"># 为了简化问题，剔除重复的评价</span></span><br><span class="line">str_pipe <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>text<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  text <span class="operator">|&gt;</span> str_replace_all<span class="punctuation">(</span><span class="string">&#x27;&lt;a href=.*/a&gt;&#x27;</span><span class="punctuation">,</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="comment"># 剔除商品超链接</span></span><br><span class="line">    str_replace_all<span class="punctuation">(</span><span class="string">&quot;&lt;[^&gt;]+&gt;&quot;</span><span class="punctuation">,</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="comment"># 剔除这种 &lt;br /br&gt;</span></span><br><span class="line">    str_replace_all<span class="punctuation">(</span><span class="string">&quot;[[:punct:]]&quot;</span><span class="punctuation">,</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="comment"># 剔除符号，如,.等</span></span><br><span class="line">    str_replace_all<span class="punctuation">(</span><span class="string">&quot;\\d+&quot;</span><span class="punctuation">,</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="comment"># 剔除数字</span></span><br><span class="line">    tolower<span class="punctuation">(</span><span class="punctuation">)</span> <span class="comment"># 全部小写化</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">plaintext <span class="operator">&lt;-</span> str_pipe<span class="punctuation">(</span>x<span class="operator">$</span>Text<span class="punctuation">)</span> <span class="comment"># 获得干净的文本内容</span></span><br><span class="line">tokens <span class="operator">&lt;-</span> paste<span class="punctuation">(</span>plaintext<span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&#x27; &#x27;</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> space_tokenizer<span class="punctuation">(</span><span class="punctuation">)</span> <span class="comment"># 利用空白 tokens 化</span></span><br><span class="line">it <span class="operator">=</span> itoken<span class="punctuation">(</span>tokens<span class="punctuation">,</span> progressbar <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 构建 vocabulary 并剔除停止词，以及剔除词频过低的 term</span></span><br><span class="line">vocab <span class="operator">&lt;-</span> create_vocabulary<span class="punctuation">(</span>it<span class="punctuation">,</span> stopwords <span class="operator">=</span> stopwords<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">  prune_vocabulary<span class="punctuation">(</span>term_count_min <span class="operator">=</span> <span class="number">15L</span><span class="punctuation">)</span></span><br><span class="line">vectorizer <span class="operator">&lt;-</span> vocab_vectorizer<span class="punctuation">(</span>vocab<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 构建 term-co-occurence matrix 和 document-term matrix</span></span><br><span class="line">tcm <span class="operator">&lt;-</span> create_tcm<span class="punctuation">(</span>it<span class="punctuation">,</span> vectorizer<span class="punctuation">,</span> skip_grams_window <span class="operator">=</span> <span class="number">5L</span><span class="punctuation">)</span></span><br><span class="line">dtm <span class="operator">&lt;-</span> create_dtm<span class="punctuation">(</span>it<span class="punctuation">,</span> vectorizer<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 通过 GloVe 算法将 tcm 分解为 rank = 50 的向量</span></span><br><span class="line">glove <span class="operator">&lt;-</span> GlobalVectors<span class="operator">$</span>new<span class="punctuation">(</span>rank <span class="operator">=</span> <span class="number">50</span><span class="punctuation">,</span> x_max <span class="operator">=</span> <span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">wv_main <span class="operator">&lt;-</span> glove<span class="operator">$</span>fit_transform<span class="punctuation">(</span></span><br><span class="line">  tcm<span class="punctuation">,</span></span><br><span class="line">  n_iter <span class="operator">=</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">  convergence_tol <span class="operator">=</span> <span class="number">0.01</span><span class="punctuation">,</span></span><br><span class="line">  n_threads <span class="operator">=</span> <span class="number">8</span></span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 获得词向量</span></span><br><span class="line">wv_context <span class="operator">&lt;-</span> glove<span class="operator">$</span>components</span><br><span class="line">word_vectors <span class="operator">&lt;-</span> wv_main <span class="operator">+</span> t<span class="punctuation">(</span>wv_context<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 构建 document 的 rank 表征向量</span></span><br><span class="line">document_vectors <span class="operator">&lt;-</span> dtm <span class="operator">%*%</span> word_vectors</span><br><span class="line"></span><br><span class="line"><span class="comment">## 定义用户 query 信息处理函数。入参有 6 个：</span></span><br><span class="line"><span class="comment">## 1.sentence：用户 query</span></span><br><span class="line"><span class="comment">##   2.review：用户评论的纯文本</span></span><br><span class="line"><span class="comment">##     3.wvec：词向量</span></span><br><span class="line"><span class="comment">##       4.db: 文档向量</span></span><br><span class="line"><span class="comment">##        5.n：控制最相似的 reviews 数量，默认为 10</span></span><br><span class="line"><span class="comment">##      6.hint:用于同大模型交互的 prompt</span></span><br><span class="line"><span class="comment">## 输出有两部分 1.传递给大模型的 prompt 2.对应的推荐（语义相似）商品 ID</span></span><br><span class="line">query2chunks <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>sentence<span class="punctuation">,</span> review<span class="punctuation">,</span> wvec<span class="punctuation">,</span> db<span class="punctuation">,</span> hint<span class="punctuation">,</span> n <span class="operator">=</span> <span class="number">10</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  st_token <span class="operator">&lt;-</span> sentence <span class="operator">|&gt;</span></span><br><span class="line">    str_pipe<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">    space_tokenizer<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span></span><br><span class="line">    unlist<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  sentence_id <span class="operator">&lt;-</span> match<span class="punctuation">(</span>st_token<span class="punctuation">,</span> vocab<span class="operator">$</span>term<span class="punctuation">,</span> nomatch <span class="operator">=</span> <span class="number">0</span><span class="punctuation">)</span></span><br><span class="line">  sentence_vector <span class="operator">&lt;-</span> wvec<span class="punctuation">[</span>sentence_id<span class="punctuation">,</span> <span class="punctuation">]</span> <span class="operator">|&gt;</span> colSums<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> t<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  cos_sim <span class="operator">=</span> sim2<span class="punctuation">(</span></span><br><span class="line">    x <span class="operator">=</span> as.matrix<span class="punctuation">(</span>db<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    y <span class="operator">=</span> sentence_vector<span class="punctuation">,</span></span><br><span class="line">    method <span class="operator">=</span> <span class="string">&quot;cosine&quot;</span><span class="punctuation">,</span></span><br><span class="line">    norm <span class="operator">=</span> <span class="string">&quot;l2&quot;</span></span><br><span class="line">  <span class="punctuation">)</span></span><br><span class="line">  nn <span class="operator">&lt;-</span> head<span class="punctuation">(</span>sort<span class="punctuation">(</span>cos_sim<span class="punctuation">[</span><span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">]</span><span class="punctuation">,</span> decreasing <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span><span class="punctuation">,</span> n<span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="built_in">names</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="built_in">as.numeric</span><span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">  query_info <span class="operator">&lt;-</span> review<span class="punctuation">[</span>nn<span class="punctuation">]</span> <span class="operator">|&gt;</span> unique<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> paste<span class="punctuation">(</span>collapse <span class="operator">=</span> <span class="string">&#x27; &#x27;</span><span class="punctuation">)</span></span><br><span class="line">  prompt <span class="operator">&lt;-</span> paste<span class="punctuation">(</span>hint<span class="punctuation">,</span> query_info<span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span><span class="built_in">list</span> <span class="punctuation">(</span>text <span class="operator">=</span> prompt<span class="punctuation">,</span> n <span class="operator">=</span> nn<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">prompt_words <span class="operator">&lt;-</span> <span class="string">&quot;下面的英文由多款商品的评论构成，请将这些商品的特性做一个中文总结，字数不超过 150 字：&quot;</span></span><br><span class="line">prompt <span class="operator">&lt;-</span> query2chunks<span class="punctuation">(</span></span><br><span class="line">  sentence <span class="operator">=</span> <span class="string">&quot;Are there any delicious nuts recommended to buy?&quot;</span><span class="punctuation">,</span></span><br><span class="line">  review <span class="operator">=</span> plaintext<span class="punctuation">,</span></span><br><span class="line">  wvec <span class="operator">=</span> word_vectors<span class="punctuation">,</span></span><br><span class="line">  db <span class="operator">=</span> document_vectors<span class="punctuation">,</span></span><br><span class="line">  hint <span class="operator">=</span> prompt_words</span><br><span class="line"><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 将组装好的 prompt 传递到阿里通义大模型，返回我们要求的人话</span></span><br><span class="line">require<span class="punctuation">(</span>reticulate<span class="punctuation">)</span></span><br><span class="line">use_python<span class="punctuation">(</span><span class="string">&quot;/usr/local/bin/python3&quot;</span><span class="punctuation">)</span></span><br><span class="line">dashscope <span class="operator">&lt;-</span> import<span class="punctuation">(</span><span class="string">&#x27;dashscope&#x27;</span><span class="punctuation">)</span> <span class="comment"># pip3 install dashscope</span></span><br><span class="line">dashscope<span class="operator">$</span>api_key <span class="operator">&lt;-</span> <span class="string">&#x27;&#x27;</span> <span class="comment"># 填入你的 key</span></span><br><span class="line">response <span class="operator">&lt;-</span> dashscope<span class="operator">$</span>Generation<span class="operator">$</span><span class="built_in">call</span><span class="punctuation">(</span>model <span class="operator">=</span> <span class="string">&#x27;qwen-max&#x27;</span><span class="punctuation">,</span></span><br><span class="line">                                      messages <span class="operator">=</span> <span class="built_in">list</span><span class="punctuation">(</span>dict<span class="punctuation">(</span></span><br><span class="line">                                        role <span class="operator">=</span> <span class="string">&#x27;user&#x27;</span><span class="punctuation">,</span> content <span class="operator">=</span> prompt<span class="operator">$</span>text</span><br><span class="line">                                      <span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment">## 打印阿里通义大模型的结果，并返回推荐商品购买链接</span></span><br><span class="line">response<span class="operator">$</span>output<span class="operator">$</span>text</span><br><span class="line">paste<span class="punctuation">(</span><span class="string">&#x27;https://www.amazon.com/gp/product/&#x27;</span><span class="punctuation">,</span> x<span class="operator">$</span>ProductId<span class="punctuation">[</span>prompt<span class="operator">$</span>n<span class="punctuation">]</span><span class="punctuation">,</span> sep <span class="operator">=</span> <span class="string">&#x27;&#x27;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
 
