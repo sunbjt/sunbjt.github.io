@@ -45,10 +45,10 @@
     --btn-default-hover-bg: #666;
     --btn-default-hover-color: #ccc;
     --btn-default-hover-border-color: #666;
-    --highlight-background: #272822;
-    --highlight-foreground: #ddd;
-    --highlight-gutter-background: #393a34;
-    --highlight-gutter-foreground: #cacaca;
+    --highlight-background: #00002a;
+    --highlight-foreground: #d0d0fa;
+    --highlight-gutter-background: #14143e;
+    --highlight-gutter-foreground: #bbbbe5;
     color-scheme: dark;
   }
   img {
@@ -412,7 +412,13 @@ td {
   Touched: 2021
 */pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#f3f3f3;color:#444}.hljs-comment{color:#697070}.hljs-punctuation,.hljs-tag{color:#444a}.hljs-tag .hljs-attr,.hljs-tag .hljs-name{color:#444}.hljs-attribute,.hljs-doctag,.hljs-keyword,.hljs-meta .hljs-keyword,.hljs-name,.hljs-selector-tag{font-weight:700}.hljs-deletion,.hljs-number,.hljs-quote,.hljs-selector-class,.hljs-selector-id,.hljs-string,.hljs-template-tag,.hljs-type{color:#800}.hljs-section,.hljs-title{color:#800;font-weight:700}.hljs-link,.hljs-operator,.hljs-regexp,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-symbol,.hljs-template-variable,.hljs-variable{color:#ab5656}.hljs-literal{color:#695}.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-code{color:#397300}.hljs-meta{color:#1f7199}.hljs-meta .hljs-string{color:#38a}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}
 @media (prefers-color-scheme: dark) {
-pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#272822;color:#ddd}.hljs-keyword,.hljs-literal,.hljs-name,.hljs-selector-tag,.hljs-strong,.hljs-tag{color:#f92672}.hljs-code{color:#66d9ef}.hljs-attribute,.hljs-link,.hljs-regexp,.hljs-symbol{color:#bf79db}.hljs-addition,.hljs-built_in,.hljs-bullet,.hljs-emphasis,.hljs-section,.hljs-selector-attr,.hljs-selector-pseudo,.hljs-string,.hljs-subst,.hljs-template-tag,.hljs-template-variable,.hljs-title,.hljs-type,.hljs-variable{color:#a6e22e}.hljs-class .hljs-title,.hljs-title.class_{color:#fff}.hljs-comment,.hljs-deletion,.hljs-meta,.hljs-quote{color:#75715e}.hljs-doctag,.hljs-keyword,.hljs-literal,.hljs-section,.hljs-selector-id,.hljs-selector-tag,.hljs-title,.hljs-type{font-weight:700}
+/*!
+  Theme: Outrun Dark
+  Author: Hugo Delahousse (http://github.com/hugodelahousse/)
+  License: ~ MIT (or more permissive) [via base16-schemes-source]
+  Maintainer: @highlightjs/core-team
+  Version: 2021.09.0
+*/pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{color:#d0d0fa;background:#00002a}.hljs ::selection,.hljs::selection{background-color:#30305a;color:#d0d0fa}.hljs-comment{color:#50507a}.hljs-tag{color:#b0b0da}.hljs-operator,.hljs-punctuation,.hljs-subst{color:#d0d0fa}.hljs-operator{opacity:.7}.hljs-bullet,.hljs-deletion,.hljs-name,.hljs-selector-tag,.hljs-template-variable,.hljs-variable{color:#ff4242}.hljs-attr,.hljs-link,.hljs-literal,.hljs-number,.hljs-symbol,.hljs-variable.constant_{color:#fc8d28}.hljs-class .hljs-title,.hljs-title,.hljs-title.class_{color:#f3e877}.hljs-strong{font-weight:700;color:#f3e877}.hljs-addition,.hljs-code,.hljs-string,.hljs-title.class_.inherited__{color:#59f176}.hljs-built_in,.hljs-doctag,.hljs-keyword.hljs-atrule,.hljs-quote,.hljs-regexp{color:#0ef0f0}.hljs-attribute,.hljs-function .hljs-title,.hljs-section,.hljs-title.function_,.ruby .hljs-property{color:#66b0ff}.diff .hljs-meta,.hljs-keyword,.hljs-template-tag,.hljs-type{color:#f10596}.hljs-emphasis{color:#f10596;font-style:italic}.hljs-meta,.hljs-meta .hljs-keyword,.hljs-meta .hljs-string{color:#f003ef}.hljs-meta .hljs-keyword,.hljs-meta-keyword{font-weight:700}
 }
 .expand-btn {
   bottom: 0;
@@ -2461,7 +2467,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #224e37;
+  background: #2fe7ff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);

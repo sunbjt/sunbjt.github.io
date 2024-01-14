@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://nlp.stanford.edu/projects/glove/images/man_woman.jpg">
 <meta property="og:image" content="http://bjt.name/upload/pic/langchain.png">
 <meta property="article:published_time" content="2024-01-12T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-13T17:05:13.234Z">
+<meta property="article:modified_time" content="2024-01-14T03:05:24.545Z">
 <meta property="article:author" content="刘思喆">
 <meta property="article:tag" content="数据科学">
 <meta name="twitter:card" content="summary">
@@ -268,11 +268,11 @@ Mixed Nuts, Antioxidant Mix</a></li>
 <ol type="1">
 <li>本地知识库：Amazon 在 1999 - 2012 年 25 万用户在 7 万食物商品上的 56
 万条<a
-target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews/data">评论详情</a></li>
+target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/snap/amazon-fine-food-reviews/data">评论详情</a>。</li>
 <li>可调用的高性能的大语言模型：<a
 target="_blank" rel="noopener" href="https://tongyi.aliyun.com">阿里通义千问的 720 亿参数规模的
-Qwen-72B</a>，笔者对比了
-OpenAI、本地部署方式、国产大模型……心酸过程不细表。</li>
+Qwen-72B</a>。另外，笔者对比了
+OpenAI、本地部署、国产大模型……心酸过程不细表。</li>
 </ol>
 <h2 id="amazon-的购买行为数据">2.1. Amazon 的购买行为数据</h2>
 <p>稍稍瞄一眼，原始的数据长啥样：</p>
@@ -346,7 +346,7 @@ OpenAI、本地部署方式、国产大模型……心酸过程不细表。</li>
 </tr>
 </tbody>
 </table>
-<p>我们最关心的评论文本，比如 ID = 1 的用户是这么评价：</p>
+<p>我们最关心的评论文本，ID = 1 的用户是这么评价：</p>
 <blockquote>
 <p>I have bought several of the Vitality canned dog food products and
 have found them all to be of good quality. The product looks more like a
@@ -361,8 +361,8 @@ vendor intended to represent the product as ""Jumbo"".</p>
 </blockquote>
 <p>细扒的话，会发现用户评论信息内存在大量非英文字符，以及超链接相关文本。用正则表达式处理成纯文本是其中的一个小步骤。</p>
 <h2 id="阿里通义千问大模型">2.2. 阿里通义千问大模型</h2>
-<p>国产大模型孰优孰劣不好评价，市面上也有很多评测标准，基本上各家都会找到有利于自己的一些测评结果，反正大家都是第一，哈哈。从本质来看的话，数据集多样性和丰富度、计算资源（算力）、模型架构和算法技巧（工程师能力）四个方面最为关键。从调用方式上判断，阿里通义大语言模型更适合我的工作方式，因为使用
-Python 调用仅需要安装一个包：</p>
+<p>国产大模型孰优孰劣不好评价，市面上也有很多评测标准，基本上各家都会找到有利于自己的一些测评结果，反正大家都是第一，哈哈。从本质来看的话，数据集多样性和丰富度、计算资源（算力）、模型架构和算法技巧（工程师能力）四个方面是关键要素。从调用方式上判断，阿里通义大语言模型更适合我的工作环境，因为调用接口仅需要安装
+Python 的一个包：</p>
 <blockquote>
 <p>pip3 install dashscope</p>
 </blockquote>
@@ -373,22 +373,22 @@ Qwen-7B、Qwen-72B、Qwen-Plus、Qwen-Max 效果，参数规模达到千亿级�
 Qwen-Max
 表现最好。刚好上周阿里团队到公司有一次交流，详细分享了各类模型使用细节。阿里的产品同事同样也推荐使用
 Qwen-Max：效果最优，当然也最贵！Qwen-Max 的 API 调用限定用户输入为 6k
-tokens，这个场景绰绰有余。</p>
+tokens，覆盖这个场景绰绰有余。</p>
 <h2 id="技术框架">2.3. 技术框架</h2>
-<p>实现前文演示的机器人，核心实现步骤只有 4 步：</p>
-<ol type="1">
-<li>通过 embedding
+<p>实现前文演示的机器人，核心实现步骤只有四个步骤：</p>
+<ul>
+<li>步骤一：通过 embedding
 技术，将所有评论映射到低维向量空间，获得“评论向量”。</li>
-<li>将查询的 Query 利用同样的 embedding 技术，转化为低维 “Query
+<li>步骤二：将查询的 Query 利用同样的 embedding 技术，转化为低维 “Query
 向量”。</li>
-<li>比对 Query
+<li>步骤三：比对 Query
 和评论的相似度（向量相似度），召回最相似评论的集合（Chunks）。</li>
-<li>将这些 Chunks 重新组织成 prompt
+<li>步骤四：将这些 Chunks 重新组织成 prompt
 丢进大模型里，利用大模型的语言组织能力返回答案，同时返回商品清单。</li>
-</ol>
+</ul>
 <p>第 1 步需要提前做好预处理，评论向量的结果用于后续步骤。第 2
-步是问答型商品推荐系统用户的问询部分，也是唯一的输入。第 4
-步是返回的部分，包含了回答内容、商品链接两部分。</p>
+步是问答型商品推荐系统用户的问询部分，也是该系统的唯一输入。第 4
+步是问答返回的结果，包含了推荐商品的文字内容、商品链接两部分。</p>
 <h2 id="细节讨论">2.4. 细节讨论</h2>
 <p>想象一下用户的问询：</p>
 <blockquote>
@@ -411,10 +411,9 @@ alt="man-woman" />
 man - woman, king - queen, brother - sister
 的距离基本是相等的，也就是说：</p>
 <blockquote>
-<p>既然 man - woman = king - queen，那么 queen = king - man +
-woman！</p>
+<p>man - woman = king - queen，那么 queen = king - man + woman！</p>
 </blockquote>
-<p>这个算法原理非常适合这个场景下，我们对于用户 query 的意图理解。</p>
+<p>这个算法原理非常适合这个场景下，既然词向量的"加减"代表意义的变化，那么就可以“暴力”地获得句子向量，以及兴趣向量（不是最优，后文有解释）。</p>
 <h1 id="关键中间过程">3. 关键中间过程</h1>
 <p>90
 行详细代码我放在了全文之后，这里摘取一部分中间的关键过程，用于说明实现细节。</p>
@@ -490,9 +489,8 @@ woman！</p>
 </tr>
 </tbody>
 </table>
-<p>第二部分是“评论向量”，既然我们使用 GloVe
-算法，那么整段评论就是“词向量”的
-<strong><em>加和</em></strong>。随机选取 5
+<p>第二部分是“评论向量”。如前文描述，既然我们使用 GloVe
+算法，那么整段评论可以表达为“词向量”的“加和”。随机选取 5
 组评论对应的“评论向量”（仅取了前 5 维，总计 50 维）：</p>
 <table>
 <thead>
@@ -596,12 +594,19 @@ target="_blank" rel="noopener" href="https://github.com/chatchat-space/Langchain
 生成回答</p>
 </blockquote>
 <p><img src="/upload/pic/langchain.png" /></p>
-<p>实际上同“问答型商品推荐系统”的方案是完全一致的，只是用在了不同的方向而已。</p>
+<p>实际上同“问答型商品推荐系统”的方案是完全一致的，各自对应关系：</p>
+<ul>
+<li>1-2-3-4-5-6-7 对应步骤一</li>
+<li>8-9-10 对应步骤二</li>
+<li>11-12-13 对应步骤三</li>
+<li>14-15 对应步骤四</li>
+</ul>
+<p>各位看官可以根据本文思路和代码生成一个“基于大语言模型的本地知识助手”也是很轻松的。</p>
 <h1 id="工程化讨论">5. 工程化讨论</h1>
-<p>如果看官不是工程师背景，文章到此结束。下面讨论从工程化效果、性能的一些细节问题。</p>
+<p>如果看官不是工程师背景，文章到此结束。下面讨论从工程效果、性能的一些细节问题。</p>
 <h2 id="为什么用-embedding">5.1. 为什么用 embedding</h2>
 <p>正常的话，构建本地知识助手有两种可能的技术方向 Fine-Tuning 和
-Embedding。但前者需要的硬件资源巨大，即便是用云端的资源，也需要在现有的开源大模型基础上再训练，要么用自己的算法工程师的“人天”，要么买云商算法工程师的“人天”。</p>
+Embedding。但前者需要的硬件资源巨大，即便是用云端的资源，也需要在开源大模型基础上再训练，要么用自己的算法工程师的“人天”，要么买云商算法工程师的“人天”，成本巨大。</p>
 <p>相比较下，embedding
 的技术框架更为简单，并且还有个无法拒绝的诱惑：本地知识库时常会有新增或更新，embedding
 重新训练模型（向量化）的成本几乎可以忽略不计。</p>
@@ -610,12 +615,13 @@ Embedding。但前者需要的硬件资源巨大，即便是用云端的资源�
 搜索相关文档，我用一个文本搜索的数据库（比如
 Lucene）直接创建索引直接搜不就行了吗，为什么非要用 embedding
 的技术来做处理？想象一下，我们从文字中感知到的信息除了词汇外，还有语法、语义、情感、情绪、主题、上下文等，这些信息是无法只通过词汇来表达出的。前文中也出现了一些词汇，比如
-nuts 和 peanuts, buy 和 buying 等，显然效果会更好。</p>
+nuts 和 peanuts, buy 和 buying 这样的效果，embedding
+显然效果会更好。</p>
 <p>另外还可以直接调用大厂的 embedding
-算法直接返回你需要的内容。“评论向量”通过 API
-全部获得后再本地化部署，用户 query
-向量可以实时获得。大厂（顶级互联网公司）发布的模型语料更佳丰富、考虑的细节更多，效果必然更佳。比如这里是另外一个本地部署例子，调用
-<a
+算法直接返回你需要的素材：“评论向量”通过调用接口的方式全部获得后再本地化部署，用户
+query
+向量可以通过实时接口获得（也可本地部署）。大厂（顶级互联网公司）发布的模型语料更佳丰富、考虑的细节更多，效果更佳。比如这里是一个本地部署文档向量和
+Query 向量的例子，方案采用的是 <a
 target="_blank" rel="noopener" href="https://huggingface.co/jinaai/jina-embedding-t-en-v1">jina.ai</a>开源的的向量化模型：</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>lsa<span class="punctuation">)</span></span><br><span class="line">require<span class="punctuation">(</span>reticulate<span class="punctuation">)</span></span><br><span class="line"><span class="comment">## pip3 install sentence_transformers</span></span><br><span class="line">sent_transformers <span class="operator">&lt;-</span> import<span class="punctuation">(</span><span class="string">&quot;sentence_transformers&quot;</span><span class="punctuation">)</span> </span><br><span class="line">model <span class="operator">&lt;-</span> sent_transformers<span class="operator">$</span>SentenceTransformer<span class="punctuation">(</span><span class="string">&quot;/Users/liusizhe/huggingface/jinaai&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 自定义句子列表</span></span><br><span class="line">sentences <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;how is the weather today&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;What is the current weather like today?&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;how to implement quick sort in python?&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;what is the capital of China?&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;Beijing&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;delicious nuts&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;nuts&quot;</span><span class="punctuation">,</span></span><br><span class="line">               <span class="string">&quot;delicious&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 使用预训练模型将句子 embedding</span></span><br><span class="line">embeddings <span class="operator">&lt;-</span> model<span class="operator">$</span>encode<span class="punctuation">(</span>sentences<span class="punctuation">)</span></span><br><span class="line">cosine<span class="punctuation">(</span>t<span class="punctuation">(</span>embeddings<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">|&gt;</span> <span class="built_in">round</span><span class="punctuation">(</span><span class="number">2</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
 <p>这 8 段文本之间的 两两 cosine 距离是：</p>
@@ -710,7 +716,7 @@ target="_blank" rel="noopener" href="https://huggingface.co/jinaai/jina-embeddin
 向量化的方式，向量化存储以及相似度计算就是关键问题了。下面的代码实际上就是将“评论向量”放置到了内存中，利用
 sim2 函数做了相似度运算（y 是 query 向量）</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cos_sim <span class="operator">=</span> sim2<span class="punctuation">(</span></span><br><span class="line">  x <span class="operator">=</span> as.matrix<span class="punctuation">(</span>db<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  y <span class="operator">=</span> sentence_vector<span class="punctuation">,</span></span><br><span class="line">  method <span class="operator">=</span> <span class="string">&quot;cosine&quot;</span><span class="punctuation">,</span></span><br><span class="line">  norm <span class="operator">=</span> <span class="string">&quot;l2&quot;</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
-<p>这点小数据量花销还好，一旦我们为了更复杂的表征，向量维度几千维，评论数量几百亿，存储和计算都是工程难题。太阳底下没有新鲜事，前人已经给出非常完备的解决方案，比如</p>
+<p>这点小数据量性能的花销还好，一旦我们为了更复杂的表征，向量维度几千维，评论数量几百亿，存储和计算都是工程难题。不过好在，太阳底下没有新鲜事，前人已经给出非常完备的解决方案，比如</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/faiss">Faiss</a>：Meta
 开源的向量数据库，不必加载到内存，支持欧式距离（L2）和点积（dot
