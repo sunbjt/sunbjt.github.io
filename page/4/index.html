@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,106 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2018/07/03/bpr.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2018/07/03/bpr.html" class="post-title-link" itemprop="url">贝叶斯个性化排序</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-03 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-03T00:00:00+08:00">2018-07-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Bayesian Personalized Ranking
+是基于隐式反馈数据的非常通用的个性化模型，一般实现使用的是 matrix
+factorization 机制，利用随机梯度下降来求解。</p>
+<p>假设用来表达训练集的三元组为 <span
+class="math inline">\((u,i,j)\)</span>，只需要找到“最优化”的用户的 f
+维向量表征 <span class="math inline">\(w_{uf}\)</span>，positive item i
+的 f 维向量表征 <span class="math inline">\(h_{if}\)</span>，negative
+item j 的 f 维向量表征 <span
+class="math inline">\(h_{jf}\)</span>，则建模完毕。</p>
+<p>它有以下几点优势：</p>
+<ul>
+<li>不关注于拟合的具体数值损失最小，而是关注于 item 的排序关系</li>
+<li>由于特殊的负采样策略，导致它的结果相对偏 High-Precision &amp;
+Low-Recall</li>
+<li>因为是潜变量模型，预测只是向量的相乘，工程化性能优异</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/03/bpr.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -544,102 +644,8 @@ target="_blank" rel="noopener" href="https://jeroen.github.io/opencpu-slides/">�
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2016/11/19/jdbc-hive-r.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/11/19/jdbc-hive-r.html" class="post-title-link" itemprop="url">利用 JDBC 驱动连接 R 和 Hive</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2016-11-19 00:00:00" itemprop="dateCreated datePublished" datetime="2016-11-19T00:00:00+08:00">2016-11-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/R-%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">R 技巧</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>更新在最前面：</p>
-<p>以下工作已经被团队小伙伴打成了 R 包，具体安装可以参考 lengyuyeke 的
-github 项目，位置是这里 https://github.com/lengyuyeke/RHJDBC</p>
-<h1 id="一次更新">一次更新</h1>
-<p>几年前写过一篇简单的<a
-href="http://bjt.name/2012/12/RHive-install">博客</a>来讲如何利用 RHive
-协同操作 Hive 和 R。这个包貌似很久未做维护，不是太好用，其实 RHive
-包底层通过 JDBC 调用数据，所以通过 RJDBC
-其实是更简单的方式。废话少说，直接贴代码：</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span><span class="string">&quot;DBI&quot;</span><span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span><span class="string">&quot;rJava&quot;</span><span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span><span class="string">&quot;RJDBC&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>l <span class="keyword">in</span> list.files<span class="punctuation">(</span><span class="string">&#x27;/opt/org/apache/hive/1.1.1/hive-on-mr/lib/&#x27;</span><span class="punctuation">,</span> full.names <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">&#123;</span> .jaddClassPath<span class="punctuation">(</span>l<span class="punctuation">)</span><span class="punctuation">&#125;</span></span><br><span class="line">drv <span class="operator">&lt;-</span> JDBC<span class="punctuation">(</span><span class="string">&quot;org.apache.hive.jdbc.HiveDriver&quot;</span><span class="punctuation">,</span> <span class="string">&quot;/opt/org/apache/hive/1.1.1/hive-on-mr/lib/hive-jdbc-1.1.1-standalone.jar&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="keyword">for</span><span class="punctuation">(</span>l <span class="keyword">in</span> list.files<span class="punctuation">(</span><span class="string">&#x27;/opt/org/apache/hadoop/2.7.3/share/hadoop/common/&#x27;</span><span class="punctuation">,</span> full.names <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">&#123;</span> .jaddClassPath<span class="punctuation">(</span>l<span class="punctuation">)</span><span class="punctuation">&#125;</span></span><br><span class="line">conn <span class="operator">&lt;-</span> dbConnect<span class="punctuation">(</span>drv<span class="punctuation">,</span> <span class="string">&quot;jdbc:hive2://10.0.2.9:10000/default&quot;</span><span class="punctuation">,</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span> <span class="string">&quot;&quot;</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">show_databases <span class="operator">&lt;-</span> dbGetQuery<span class="punctuation">(</span>conn<span class="punctuation">,</span> <span class="string">&quot;describe dwd.dwd_user_dim_user_base&quot;</span><span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>knitr<span class="punctuation">)</span></span><br><span class="line">kable<span class="punctuation">(</span>show_databases<span class="punctuation">)</span> <span class="comment"># table&#x27;s meta data, for gollum wiki</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Get data from hive</span></span><br><span class="line">d <span class="operator">&lt;-</span> dbGetQuery<span class="punctuation">(</span>conn<span class="punctuation">,</span> <span class="string">&#x27;select * from ods.user limit 10&#x27;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2016/11/19/jdbc-hive-r.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

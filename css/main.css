@@ -222,7 +222,7 @@ body {
   box-sizing: border-box;
   color: var(--text-color);
   font-family: LXGW WenKai, 'PingFang SC', 'Microsoft YaHei', sans-serif;
-  font-size: 1.08em;
+  font-size: 1em;
   line-height: 2;
   min-height: 100%;
   position: relative;
@@ -2467,7 +2467,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #d64039;
+  background: #ffe463;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);

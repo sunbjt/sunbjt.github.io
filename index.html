@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">95</span>
+          <span class="site-state-item-count">96</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,194 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2024/09/01/scm.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/09/01/scm.html" class="post-title-link" itemprop="url">合成控制法的原理和扩展实现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2024-09-01T00:00:00+08:00">2024-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="原理">1. 原理</h1>
+<p>合成控制法（Synthetic Control Method, 简称
+SCM）是一种用于评估政策干预效果的统计方法，特别适用于只有一个或少数几个单位接受了干预的情况。这种方法通过构建一个“合成控制”组来模拟未接受干预的单位，从而估计干预的效果。</p>
+<p>假设我们有 <span class="math inline">\(J+1\)</span> 个单元，其中第 1
+个单元是处理单元，其余 <span class="math inline">\(J\)</span>
+个单元是对照单元。我们观测到每个单元在 <span
+class="math inline">\(T\)</span> 个时间段内的结果变量 <span
+class="math inline">\(Y\)</span> 和协变量 <span
+class="math inline">\(X\)</span>。</p>
+<p>对于协变量 <span
+class="math inline">\(X_i\)</span>，我们可以定义一个权重矩阵 <span
+class="math inline">\(V\)</span> 来反映不同协变量向量的重要性。假设
+<span class="math inline">\(X_i\)</span> 包含了 <span
+class="math inline">\(k\)</span> 个向量。<span
+class="math inline">\(i\)</span> 是列，<span
+class="math inline">\(k\)</span> 是行，则 <span
+class="math inline">\(V\)</span> 可以是一个 <span
+class="math inline">\(k \times k\)</span>
+的对角矩阵，其中对角线上的元素代表每个（行）向量的相对重要性。</p>
+<p>定义：</p>
+<ul>
+<li><span class="math inline">\(Y_{it}\)</span>：单元 <span
+class="math inline">\(i\)</span> 在时间 <span
+class="math inline">\(t\)</span> 的结果变量。</li>
+<li><span class="math inline">\(X_{i}\)</span>：单元 <span
+class="math inline">\(i\)</span> 的协变量。</li>
+<li><span class="math inline">\(V_{k \times k}\)</span>：<span
+class="math inline">\(X_{i}\)</span> 中 <span
+class="math inline">\(k\)</span> 个向量的权重。</li>
+</ul>
+<p>用一个经典的美国加州控烟效果的数据集来说明，<span
+class="math inline">\(X_i\)</span> 长这样：</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Tennessee</th>
+<th style="text-align: right;">Georgia</th>
+<th style="text-align: right;">Texas</th>
+<th style="text-align: right;">Utah</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">lnincome</td>
+<td style="text-align: right;">0.157</td>
+<td style="text-align: right;">0.157</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">0.165</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">beer</td>
+<td style="text-align: right;">0.126</td>
+<td style="text-align: right;">0.123</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">0.138</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">age15to24</td>
+<td style="text-align: right;">0.161</td>
+<td style="text-align: right;">0.152</td>
+<td style="text-align: right;">0.165</td>
+<td style="text-align: right;">0.150</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">retprice</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">0.167</td>
+<td style="text-align: right;">0.149</td>
+<td style="text-align: right;">0.191</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigsale1975</td>
+<td style="text-align: right;">0.126</td>
+<td style="text-align: right;">0.130</td>
+<td style="text-align: right;">0.148</td>
+<td style="text-align: right;">0.125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cigsale1980</td>
+<td style="text-align: right;">0.140</td>
+<td style="text-align: right;">0.150</td>
+<td style="text-align: right;">0.149</td>
+<td style="text-align: right;">0.134</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigsale1988</td>
+<td style="text-align: right;">0.155</td>
+<td style="text-align: right;">0.168</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.145</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math inline">\(X_i\)</span>
+的列向量则是美国各个州的表现，行向量有 7 个，分别对应的是</p>
+<ol type="1">
+<li>在 1970 年至 1988
+年之间的平均数：收入的对数（lnicome）、消费的啤酒量（beer）、15 至 24
+岁的人口比例、香烟售卖均价。</li>
+<li>以及重点关注的 1975、1980、1988 年香烟售卖量。</li>
+</ol>
+<p>这里需要注意的一点是，由于研究目的或者数据记录缺失等问题，<span
+class="math inline">\(X_i\)</span> 很可能不是一个面板数据。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2024/09/01/scm.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -573,103 +761,8 @@ Research）是一门应用于管理有组织系统的科学，最早的朴素思
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2021/09/28/statistician.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/09/28/statistician.html" class="post-title-link" itemprop="url">数据科学家能力素质模型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-09-28 00:00:00" itemprop="dateCreated datePublished" datetime="2021-09-28T00:00:00+08:00">2021-09-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/" itemprop="url" rel="index"><span itemprop="name">数据思维</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>话说在遥远的 2012
-年的某天，我突然感慨：作为一名数据挖掘工程师，要做好本职工作非常不易。
-于是在微博上吐槽了一句，刚好被“数据挖掘和数据分析”的大 V
-转发，引发了数据科学圈的广泛转发和讨论，
-很多位大佬都给出了自己对于数据科学所需要能力的理解。</p>
-<p>话题的争议性体现在一千多个转发上，放在今天必然是一篇 10 万+
-的文章。不扯别的，看看当时吐槽的是什么？</p>
-<p><img src="/upload/pic/statistician.jpeg" width="500px"/></p>
-<p>几个关键词：技术、市场、工具、战略、管理、沟通影响力……
-当然数据挖掘的内核已经随着 21
-世纪最性感的数据科学家这一职业变的更加与时俱进了，然而我们依然还是有困惑。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2021/09/28/statistician.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
