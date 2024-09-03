@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://bjt.name/upload/pic/scm3.png">
 <meta property="og:image" content="http://bjt.name/upload/pic/scm4.png">
 <meta property="article:published_time" content="2024-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-02T15:31:20.375Z">
+<meta property="article:modified_time" content="2024-09-03T16:19:37.427Z">
 <meta property="article:author" content="刘思喆">
 <meta property="article:tag" content="数据科学">
 <meta name="twitter:card" content="summary">
@@ -263,7 +263,7 @@ class="math inline">\(X_{i}\)</span> 中 <span
 class="math inline">\(k\)</span> 个向量的权重。</li>
 </ul>
 <p>用一个经典的美国加州控烟效果的数据集来说明，<span
-class="math inline">\(X_i\)</span> 长这样：</p>
+class="math inline">\(X_i\)</span> 的示例数据如下：</p>
 <table>
 <thead>
 <tr class="header">
@@ -338,7 +338,7 @@ class="math inline">\(X_i\)</span> 长这样：</p>
 class="math inline">\(X_i\)</span> 很可能不是一个面板数据。</p>
 <span id="more"></span>
 <p><span class="math inline">\(Y_{jt}\)</span> 表示的是各个州在 1970 至
-2000 年之间的每年香烟消费量，这是我们最关注部分，部分数据如下：</p>
+2000 年之间的每年香烟消费量，这是我们最关注部分。示例数据如下：</p>
 <table>
 <thead>
 <tr class="header">
@@ -465,24 +465,22 @@ class="math inline">\(Y_i\)</span>（业务表达为起始初始值相同）。�
 <p><span class="math display">\[\min_{V} \left(Z_1 - Z_0
 W^{(V)}\right)^{T} \left(Z_1 - Z_0 W^{(V)}\right)\]</span></p>
 <ul>
-<li><span class="math inline">\(Z_1\)</span> 和 <span
-class="math inline">\(Z_0\)</span> 分别是，在处理时间段 <span
-class="math inline">\(T\)</span> 内，处理组结果变量和 <span
-class="math inline">\(J\)</span> 个对照组结果变量。</li>
-<li><span class="math inline">\(W^{(V)}\)</span> 基于 <span
+<li><span class="math inline">\(V\)</span> 是 <span
+class="math inline">\(k\)</span> 个协变量向量的权重。</li>
+<li><span class="math inline">\(W^{(V)}\)</span> 是合成控制组（<span
+class="math inline">\(J\)</span> 个对照单元）的权重向量，基于 <span
 class="math inline">\(X_1\)</span> 和 <span
 class="math inline">\(X_0\)</span> 求解。<span
 class="math inline">\(X_1\)</span> 和 <span
 class="math inline">\(X_0\)</span> 分别是，处理组协变量和 <span
 class="math inline">\(J\)</span> 个对照组协变量。</li>
+<li><span class="math inline">\(Z_1\)</span> 和 <span
+class="math inline">\(Z_0\)</span> 分别是，在处理时间段 <span
+class="math inline">\(T\)</span> 内，处理组结果变量和 <span
+class="math inline">\(J\)</span> 个对照组结果变量。</li>
 </ul>
-<p>在这个目标下要优化两个参数：</p>
-<ol type="1">
-<li><span class="math inline">\(V\)</span> 是 <span
-class="math inline">\(k\)</span> 个协变量向量的权重。</li>
-<li><span class="math inline">\(W\)</span> 是合成控制组（<span
-class="math inline">\(J\)</span> 个对照单元）的权重向量。</li>
-</ol>
+<p><span class="math inline">\(V\)</span> 和 <span
+class="math inline">\(W\)</span> 是需要优化两个参数。</p>
 <blockquote>
 <p>请注意，合成控制法是本质是用 <span class="math inline">\(V\)</span>
 找合成结果变量，最小化 <span
@@ -505,7 +503,7 @@ class="math inline">\(W\)</span></h2>
 W\right|_V\)</span>，即：</p>
 <p><span class="math display">\[\left|X_1 - X_0 W\right|_V^2 = \left(X_1
 - X_0 W\right)^{T} V \left(X_1 - X_0 W\right)\]</span></p>
-<p>我们可以通过求解以下方程来找到 <span
+<p>可以通过求解以下方程来找到 <span
 class="math inline">\(W\)</span>：</p>
 <p><span class="math display">\[\min_W \left(X_1 - X_0 W\right)^{T} V
 \left(X_1 - X_0 W\right) = \min_W (X_1^T V X_1 - 2 X_1^T V X_0 W + W^T
@@ -588,8 +586,13 @@ class="math inline">\(W, V\)</span>
 的最优值。但实际上，大家仔细想想：难道我们不清楚协变量中各个向量的重要性吗？用模型算一个最优的
 <span class="math inline">\(V\)</span>
 你敢直接用吗？业务解释性如何？</p>
-<p>我们可否用一个更加通用的损失函数，能够同时考虑结果变量和协变量？答案显然是可以的！考虑协变量的权重
-<span class="math inline">\(V\)</span> 的求解，有几种思路可供参考：</p>
+<p>我们可否用一个更加通用的损失函数，能够同时考虑结果变量和协变量？答案显然是可以的！一旦通过某种手段求解了
+<span class="math inline">\(V\)</span>，简单的将 <span
+class="math inline">\(LOSS^X\)</span> 和 <span
+class="math inline">\(LOSS^Y\)</span>
+加起来就是解法之一。下面我们看看这个方法的可行性和效果。</p>
+<p>首先是协变量的权重 <span class="math inline">\(V\)</span>
+的求解，有几种思路可供参考：</p>
 <ol type="1">
 <li>基于先验业务，为每个协变量赋予一个权重，比如 AHP 专家评分法。</li>
 <li>如果 <span class="math inline">\(X_i\)</span> 同 <span
@@ -601,11 +604,11 @@ class="math inline">\(Y_i\)</span>
 </ol>
 <h2 id="机器学习估计-v">3.1. 机器学习估计 <span
 class="math inline">\(V\)</span></h2>
-<p>从数据出发，想象一下什么因素会影响到每年的香烟消费量？<span
+<p>从数据出发，什么因素会影响到各州的香烟消费量？<span
 class="math inline">\(X_i\)</span> 中 4
 个要素：收入的对数（lnicome）、消费的啤酒量（beer）、15 至 24
-岁的人口比例（age15to24）、香烟售卖均价（retprice）。以及各州本身，他们也是影响的关键因素。</p>
-<p>那数据可以构建这样（各州被转换为了特征）：</p>
+岁的人口比例（age15to24）、香烟售卖均价（retprice）。当然，各州的本身，它们也是影响香烟消费量的关键因素。</p>
+<p>数据可以构建这样（各州本身被转换为了 0,1 特征）：</p>
 <table>
 <colgroup>
 <col style="width: 4%" />
@@ -755,7 +758,7 @@ class="math inline">\(X_i\)</span> 中 4
 </tr>
 </tbody>
 </table>
-<p>有非常多的机器学习方法，可以获得每个特征的重要性。比如通过随机森林的特征重要程度，在去除州的影响之后，测算得到
+<p>各位看官看到这里，应该有感觉了，有太多机器学习方法可以获得每个特征的重要性。比如通过随机森林找到各个特征的重要程度，去除州的影响之后，测算得到
 <span class="math inline">\(V\)</span> 为：</p>
 <table>
 <thead>
@@ -775,9 +778,9 @@ class="math inline">\(X_i\)</span> 中 4
 </tr>
 </tbody>
 </table>
-<p>这个权重同我们从常识视角的感知相对一致，最大影响因素是价格，其次是15-24
-岁人口，其次是收入，最后是啤酒的销量。当然这个方法只能要求协变量 <span
-class="math inline">\(X_i\)</span> 是面板数据，像原始论文那样，把
+<p>这个权重同我们的常识相对一致：刨除州本身的影响后，最大影响因素依次是香烟价格、15-24
+岁人口、收入的对数、啤酒销量。需要注意的是，这种求解方法只适应于协变量
+<span class="math inline">\(X_i\)</span> 是面板数据，像原始论文那样，把
 1975、1980、1988 年的香烟销售量同样作为协变量，这个方法不适用。</p>
 <h2 id="合并损失函数">3.2. 合并损失函数</h2>
 <p>只要 <span class="math inline">\(V\)</span>
@@ -792,15 +795,15 @@ X_0 W\right)^{T} V \left(X_1 - X_0 W) \right)
 <p>其中，<span class="math inline">\(\lambda\)</span>
 是一个权重，用于平衡结果变量和协变量的拟合程度。是更倾向于结果变量一致，还是协变量。</p>
 <p>注意：为了保证 <span class="math inline">\(\lambda\)</span>
-权重有效，结果变量和协变量需要归一化，比如这里利用的是“单位向量归一化”：</p>
+权重有效，结果变量和协变量需要归一化，比如这里利用的是“单位向量归一化”方法：</p>
 <p><span class="math display">\[
 \text{normalized}(x_i) = \frac{x_i}{\sqrt{\sum_{j=1}^{n} x_j^2}}
 \]</span></p>
 <h2 id="系数和模型表现-1">3.3. 系数和模型表现</h2>
 <p><span class="math inline">\(\lambda = 1\)</span>
-时，结果变量和协变量的权重相等。</p>
-<p>在前面 <span class="math inline">\(V\)</span>
-的权重控制下，后两项的相似程度更接近，对我们业务解释会更加友好。</p>
+时，结果变量和协变量拟合程度的权重相等。</p>
+<p>在 <span class="math inline">\(V\)</span>
+的权重控制下，后两项的相似程度更接近，对业务解释显然更加友好。</p>
 <table>
 <thead>
 <tr class="header">
@@ -837,13 +840,15 @@ X_0 W\right)^{T} V \left(X_1 - X_0 W) \right)
 </tr>
 </tbody>
 </table>
-<p><span class="math inline">\(W\)</span> 的数量居然还更少！</p>
+<p>而且 <span class="math inline">\(W\)</span> 的不为 0
+的数量居然还更少（合成州数量少）！</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">           name    w</span><br><span class="line"><span class="number">1</span>      Colorado <span class="number">0.03</span></span><br><span class="line"><span class="number">2</span>   Connecticut <span class="number">0.10</span></span><br><span class="line"><span class="number">3</span>       Montana <span class="number">0.24</span></span><br><span class="line"><span class="number">4</span>        Nevada <span class="number">0.21</span></span><br><span class="line"><span class="number">5</span> New Hampshire <span class="number">0.04</span></span><br><span class="line"><span class="number">6</span>          Utah <span class="number">0.38</span></span><br></pre></td></tr></table></figure>
 <p>合成的 <span class="math inline">\(\hat{Y}_{1t}\)</span> 同原始 <span
 class="math inline">\(Y_{1t}\)</span> 的对比曲线如下图所示：</p>
 <p><img src="/upload/pic/scm2.png" /></p>
 <p><span class="math inline">\(\lambda = 0.01\)</span>
-时，这个结果更倾向于协变量的拟合，reprice 几乎完全相似。</p>
+时，这个结果更倾向于协变量的拟合，可以看到：合成的协变量向量，除
+lnincome 外，几乎完全一致。</p>
 <table>
 <thead>
 <tr class="header">
@@ -883,8 +888,8 @@ class="math inline">\(Y_{1t}\)</span> 的对比曲线如下图所示：</p>
 <p>合成的 <span class="math inline">\(\hat{Y}_{1t}\)</span> 同原始 <span
 class="math inline">\(Y_{1t}\)</span> 的对比曲线如下图所示：</p>
 <p><img src="/upload/pic/scm3.png" /></p>
-<p>有细微的差别，在结果变量的拟合上比 <span
-class="math inline">\(\lambda=1\)</span> 时要差一些。</p>
+<p>从结果变量的拟合结果上看，两者有细微的差别。因为权重低，整体表现要比
+<span class="math inline">\(\lambda=1\)</span> 时要差一些。</p>
 <h1 id="同时做变量选择">4. 同时做变量选择</h1>
 <p>设想以下需求场景：</p>
 <ul>

@@ -4,7 +4,7 @@
   <url>
     <loc>http://bjt.name/2024/09/01/scm.html</loc>
     
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -38,15 +38,6 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/categories/index.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://bjt.name/history/index.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -65,7 +56,34 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/categories/index.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2021/02/13/subway.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2021/09/28/statistician.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2022/11/13/operational-research.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -92,16 +110,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2022/11/13/operational-research.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2021/09/28/statistician.html</loc>
+    <loc>http://bjt.name/2018/11/18/timeline.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -119,34 +128,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2018/11/18/timeline.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://bjt.name/2019/03/24/zoom.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2019/10/02/china-gdp.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2019/10/21/url-handle.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -164,6 +146,15 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2019/10/02/china-gdp.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2019/10/05/zhihu-reading.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -173,7 +164,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2020/04/12/value.html</loc>
+    <loc>http://bjt.name/2019/10/21/url-handle.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -191,7 +182,34 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2020/04/12/value.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2015/12/10/neual-network-r.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2015/12/12/spark-or-r.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2016/04/19/duplicated-function.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -218,24 +236,6 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2015/12/10/neual-network-r.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2016/04/19/duplicated-function.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://bjt.name/2016/11/19/jdbc-hive-r.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -246,15 +246,6 @@
   
   <url>
     <loc>http://bjt.name/2017/04/28/opencpu-application.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2017/05/26/fiery-http-server.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -281,6 +272,15 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2017/05/26/fiery-http-server.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2013/06/29/open-blas-r.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -299,7 +299,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2013/09/09/emacs-configure.html</loc>
+    <loc>http://bjt.name/2013/09/30/association-rules.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -308,7 +308,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2013/09/30/association-rules.html</loc>
+    <loc>http://bjt.name/2013/09/09/emacs-configure.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -326,7 +326,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2015/01/01/year-end-summary.html</loc>
+    <loc>http://bjt.name/2014/09/06/mail-from-audience.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -335,7 +335,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2014/09/06/mail-from-audience.html</loc>
+    <loc>http://bjt.name/2015/01/01/year-end-summary.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -371,6 +371,15 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2012/07/06/parallel-computing-r.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2012/09/04/ming-dynasty.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -381,15 +390,6 @@
   
   <url>
     <loc>http://bjt.name/2012/11/16/something-about-lottery.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2012/07/06/parallel-computing-r.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -425,7 +425,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2013/05/20/china-r-conference.html</loc>
+    <loc>http://bjt.name/2013/05/11/big-data-r-application.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -443,52 +443,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2013/05/11/big-data-r-application.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2011/08/18/r-and-sql-datamining.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2011/11/29/conference-all-the-time.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2012/02/21/love-always-lonely.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2012/02/29/text-mining.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2012/03/19/text-mining-in-r.html</loc>
+    <loc>http://bjt.name/2013/05/20/china-r-conference.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -506,7 +461,16 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2012/02/16/nba-knicks-lin.html</loc>
+    <loc>http://bjt.name/2011/11/29/conference-all-the-time.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2011/08/18/r-and-sql-datamining.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -524,7 +488,43 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2012/02/16/nba-knicks-lin.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2012/02/21/love-always-lonely.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2012/03/19/text-mining-in-r.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2012/04/13/r-language-enterprise.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/2012/02/29/text-mining.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -578,7 +578,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2010/11/21/google-r-code-style.html</loc>
+    <loc>http://bjt.name/2010/10/12/r-cartoon-batch.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -587,7 +587,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2010/10/12/r-cartoon-batch.html</loc>
+    <loc>http://bjt.name/2010/11/21/google-r-code-style.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -686,7 +686,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2010/01/16/rockets-heat-assists-network.html</loc>
+    <loc>http://bjt.name/2010/01/22/nba-top-50-scorers-performance.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -695,7 +695,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2010/01/22/nba-top-50-scorers-performance.html</loc>
+    <loc>http://bjt.name/2010/01/26/chinese-earthquake-visualization.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -713,7 +713,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2010/01/26/chinese-earthquake-visualization.html</loc>
+    <loc>http://bjt.name/2010/01/16/rockets-heat-assists-network.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -732,15 +732,6 @@
   
   <url>
     <loc>http://bjt.name/2009/05/29/r-journal.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2009/06/03/real-estate-bubble-data-beijing.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -776,7 +767,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2009/07/29/ibm-spss-acquisition.html</loc>
+    <loc>http://bjt.name/2009/07/26/welfare-lottery-justice.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -785,7 +776,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2009/07/26/welfare-lottery-justice.html</loc>
+    <loc>http://bjt.name/2009/07/29/ibm-spss-acquisition.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -812,6 +803,15 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2009/09/05/r-cran-package-networks.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2009/10/12/invisible-man.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -830,16 +830,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2009/09/05/r-cran-package-networks.html</loc>
-    
-    <lastmod>2024-01-08</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/2008/10/09/quantile-nine-algorithms.html</loc>
+    <loc>http://bjt.name/2009/06/03/real-estate-bubble-data-beijing.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -857,7 +848,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2008/12/15/r-conference-ruc-china.html</loc>
+    <loc>http://bjt.name/2008/10/09/quantile-nine-algorithms.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -866,7 +857,7 @@
   </url>
   
   <url>
-    <loc>http://bjt.name/2008/12/20/chinese-ring-puzzle.html</loc>
+    <loc>http://bjt.name/2008/12/15/r-conference-ruc-china.html</loc>
     
     <lastmod>2024-01-08</lastmod>
     
@@ -902,6 +893,15 @@
   </url>
   
   <url>
+    <loc>http://bjt.name/2008/12/20/chinese-ring-puzzle.html</loc>
+    
+    <lastmod>2024-01-08</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://bjt.name/2009/04/28/spss-pasw.html</loc>
     
     <lastmod>2024-01-08</lastmod>
@@ -913,7 +913,7 @@
 
   <url>
     <loc>http://bjt.name/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -921,483 +921,483 @@
   
   <url>
     <loc>http://bjt.name/tags/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/PASW/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/SPSS/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/R-Journal/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/John-Chambers/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/IBM/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/datamining/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/%E5%BD%A9%E7%A5%A8/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/IBM/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/voronoi/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/Norman-Nie/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/REvolution/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/LaTeX/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/Sweave/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/networks/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/sna/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/Norman-Nie/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/REvolution/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/LaTeX/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/Sweave/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/Mandelbrot-set/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/%E5%88%86%E5%BD%A2/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/basketball/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/heatmap/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/%E7%AF%AE%E7%90%83/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/ESLII/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/earth-quake/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/ESLII/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/basketball/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/Oracle/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/emacs/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/google/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/ImageMagick/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/emacs/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/google/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/data-mining/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/Survey/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/animation/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/SQL/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/R%E4%BC%9A%E8%AE%AE/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/text-mining/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/word-cloud/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/topic-model/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/tm/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/XML/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/chart/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/R%E4%BC%9A%E8%AE%AE/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/SQL/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/topic-model/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/text-mining/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/tm/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/XML/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/word-cloud/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/Fibonacci/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/Julia/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/Data-Mining/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/KDnuggets/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/bigdata/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/history/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/bigdata/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/beamer/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/friends/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/useR/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/parallel/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/business/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://bjt.name/tags/markdown/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <loc>http://bjt.name/tags/friends/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/useR/</loc>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/parallel/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/apriori/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/FP-tree/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/markdown/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/redis/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/wiki/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/jiebaR/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/pictrue/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/tools/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/jiebaR/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/opencpu/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/json/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/http/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/tags/fiery/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/sharingan/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/slides/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/secure-hash/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/password/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/reading/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/crawler/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/tags/management/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/tags/fiery/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -1406,70 +1406,70 @@
   
   <url>
     <loc>http://bjt.name/categories/%E4%BA%B2%E5%8E%86/</loc>
-    <lastmod>2024-09-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://bjt.name/categories/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E7%8E%A9%E6%95%B0%E6%8D%AE/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E7%AF%AE%E7%90%83/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://bjt.name/categories/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E6%97%A7%E9%97%BB/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E6%95%B0%E6%8D%AE%E6%80%9D%E7%BB%B4/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E6%9C%89%E6%84%8F%E6%80%9D%E7%9A%84/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/R-%E6%8A%80%E5%B7%A7/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://bjt.name/categories/%E5%B7%A5%E5%85%B7%E6%8A%80%E5%B7%A7/</loc>
-    <lastmod>2024-09-02</lastmod>
+    <lastmod>2024-09-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
