@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://bjt.name/upload/pic/scm3.png">
 <meta property="og:image" content="http://bjt.name/upload/pic/scm4.png">
 <meta property="article:published_time" content="2024-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-13T01:13:13.654Z">
+<meta property="article:modified_time" content="2024-09-13T01:50:18.033Z">
 <meta property="article:author" content="刘思喆">
 <meta property="article:tag" content="数据科学">
 <meta name="twitter:card" content="summary">
@@ -1027,8 +1027,8 @@ href="https://bjt.name/2023/05/20/synthetic-did.html">SDID</a>。</p>
 <h1 id="总结">6. 总结</h1>
 <p>本文注意力主要集中在如何更便捷的求解合成控制法中的参数，并没有更多的讨论安慰剂检验等其他细节。合成控制法是一个非常好的，用于估计政策或活动影响变化的框架。算法细节上使用嵌套优化的方法，非常优雅。但它也有一定局限性，有改进的可能：</p>
 <ol type="1">
-<li>使用完全最优化的方法可能会出现过拟合的情况，不利于估计因果效用。</li>
-<li>合并损失的方式是可行方法之一，但需要留意，<span
+<li>使用嵌套完全最优化的方法可能会出现过拟合的情况，模型存在稳定性问题，不利于估计因果效用。</li>
+<li>合并损失的方式是可行方法之一，可以控制输出变量和协变量的权重。但需要留意，<span
 class="math inline">\(X\)</span> 和 <span
 class="math inline">\(Y\)</span> 都要做归一化处理。</li>
 <li>引入全新的损失函数，增加正则项，借助通用机器学习框架，可以解决权重
