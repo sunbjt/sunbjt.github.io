@@ -20,19 +20,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1. 原理 合成控制法（Synthetic Control Method, 简称 SCM）是一种用于评估政策干预效果的统计方法，特别适用于只有一个或少数几个单位接受了干预的情况。这种方法通过构建一个“合成控制”组来模拟未接受干预的单位，从而估计干预的效果。 假设我们有 \(J+1\) 个单元，其中第 1 个单元是处理单元，其余 \(J\) 个单元是对照单元。我们观测到每个单元在 \(T\) 个时间">
+    <meta name="description" content="1. 案例场景 假设你是肯德基的门店运营负责人，某天，你们决定在某家分店（称为 A 店）推出买一送一的促销活动。你想评估这项促销活动的效果，看看它是否提高了这家分店的销售额。 这个评价问题在于，你只有一家分店进行了促销活动，其他的分店都没有进行相同的促销。你无法直接比较 A 店的销售额和没有进行促销的分店的销售额，因为这些分店可能本身就存在很多差异，比如地理位置、人流量等因素。 但通过使用其他分店">
 <meta property="og:type" content="article">
 <meta property="og:title" content="合成控制法的原理和扩展实现">
 <meta property="og:url" content="http://bjt.name/2024/09/01/scm.html">
 <meta property="og:site_name" content="Beta">
-<meta property="og:description" content="1. 原理 合成控制法（Synthetic Control Method, 简称 SCM）是一种用于评估政策干预效果的统计方法，特别适用于只有一个或少数几个单位接受了干预的情况。这种方法通过构建一个“合成控制”组来模拟未接受干预的单位，从而估计干预的效果。 假设我们有 \(J+1\) 个单元，其中第 1 个单元是处理单元，其余 \(J\) 个单元是对照单元。我们观测到每个单元在 \(T\) 个时间">
+<meta property="og:description" content="1. 案例场景 假设你是肯德基的门店运营负责人，某天，你们决定在某家分店（称为 A 店）推出买一送一的促销活动。你想评估这项促销活动的效果，看看它是否提高了这家分店的销售额。 这个评价问题在于，你只有一家分店进行了促销活动，其他的分店都没有进行相同的促销。你无法直接比较 A 店的销售额和没有进行促销的分店的销售额，因为这些分店可能本身就存在很多差异，比如地理位置、人流量等因素。 但通过使用其他分店">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://bjt.name/upload/pic/scm1.png">
 <meta property="og:image" content="http://bjt.name/upload/pic/scm2.png">
 <meta property="og:image" content="http://bjt.name/upload/pic/scm3.png">
 <meta property="og:image" content="http://bjt.name/upload/pic/scm4.png">
 <meta property="article:published_time" content="2024-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-09-03T16:19:37.427Z">
+<meta property="article:modified_time" content="2024-09-13T01:13:13.654Z">
 <meta property="article:author" content="刘思喆">
 <meta property="article:tag" content="数据科学">
 <meta name="twitter:card" content="summary">
@@ -232,9 +232,44 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="原理">1. 原理</h1>
-<p>合成控制法（Synthetic Control Method, 简称
-SCM）是一种用于评估政策干预效果的统计方法，特别适用于只有一个或少数几个单位接受了干预的情况。这种方法通过构建一个“合成控制”组来模拟未接受干预的单位，从而估计干预的效果。</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="案例场景">1. 案例场景</h1>
+<p>假设你是肯德基的门店运营负责人，某天，你们决定在某家分店（称为 A
+店）推出买一送一的促销活动。你想评估这项促销活动的效果，看看它是否提高了这家分店的销售额。</p>
+<p>这个评价问题在于，你只有一家分店进行了促销活动，其他的分店都没有进行相同的促销。你无法直接比较
+A
+店的销售额和没有进行促销的分店的销售额，因为这些分店可能本身就存在很多差异，比如地理位置、人流量等因素。</p>
+<p>但通过使用其他分店（控制组）的数据来构建一个“虚拟”的对照组，这个虚拟的对照组在没有促销的情况下表现得和
+A 店相似。通过比较促销之后实际的 A
+店和这个虚拟对照组的业绩，就可以评估促销活动的效果。</p>
+<ul>
+<li>收集 A 店在促销活动前后的一段时间内的销售数据。</li>
+<li>收集其他分店在同一时间段内的销售数据。</li>
+<li>选择一些影响销售额的关键特征，比如每天的顾客数量、人均消费额等。</li>
+</ul>
+<p>通过对其他分店的特征进行加权平均，构建一个“合成”分店，使其在促销活动开始之前的特征与
+A 店尽可能相似。例如，假设你选择了三家分店 B、C 和
+D，它们在促销开始前的特征分别是：</p>
+<ul>
+<li>B 店：顾客数量 100 人，人均消费额 20 元；</li>
+<li>C 店：顾客数量 150 人，人均消费额 25 元；</li>
+<li>D 店：顾客数量 200 人，人均消费额 30 元。</li>
+</ul>
+<p>如果你发现 A 店在促销开始前的特征是顾客数量 150 人，人均消费额 25
+元，那么你可以给 B、C、D 店分配权重，使得加权平均后的特征与 A
+店相近。比如，权重可能是 B 店 20%，C 店 60%，D 店 20%。</p>
+<p>实际和合成控制组有这样的比较效果：</p>
+<ul>
+<li>促销活动前 A
+店销售额序列和合成组（由其他分店加权平均得到）销售额序列基本一致。</li>
+<li>活动后，比较 A 店的实际销售额与合成控制组的预测销售额。</li>
+<li>如果 A
+店的实际销售额显著高于合成控制组的预测销售额，那么可以认为促销活动是有效的。</li>
+</ul>
+<p>以上是一个简单的原理说明，下面从详细的数学理论做完整推导和扩展。</p>
+<span id="more"></span>
+<h1 id="数学原理">2. 数学原理</h1>
+<p>以上方法被称为合成控制法（Synthetic Control Method, 简称
+SCM），它是一种用于评估政策干预效果的统计方法，特别适用于只有一个或少数几个单位接受了干预的情况。这种方法通过构建一个“合成控制”组来模拟未接受干预的单位，从而估计干预的效果。</p>
 <p>假设我们有 <span class="math inline">\(J+1\)</span> 个单元，其中第 1
 个单元是处理单元，其余 <span class="math inline">\(J\)</span>
 个单元是对照单元。我们观测到每个单元在 <span
@@ -262,7 +297,7 @@ class="math inline">\(i\)</span> 的协变量。</li>
 class="math inline">\(X_{i}\)</span> 中 <span
 class="math inline">\(k\)</span> 个向量的权重。</li>
 </ul>
-<p>用一个经典的美国加州控烟效果的数据集来说明，<span
+<p>换一个经典的美国加州控烟效果的数据集来说明，<span
 class="math inline">\(X_i\)</span> 的示例数据如下：</p>
 <table>
 <thead>
@@ -336,7 +371,6 @@ class="math inline">\(X_i\)</span> 的示例数据如下：</p>
 </ol>
 <p>这里需要注意的一点是，由于研究目的或者数据记录缺失等问题，<span
 class="math inline">\(X_i\)</span> 很可能不是一个面板数据。</p>
-<span id="more"></span>
 <p><span class="math inline">\(Y_{jt}\)</span> 表示的是各个州在 1970 至
 2000 年之间的每年香烟消费量，这是我们最关注部分。示例数据如下：</p>
 <table>
@@ -460,7 +494,7 @@ class="math inline">\(Y_i\)</span>（业务表达为起始初始值相同）。�
 被考虑了。这也合成控制法的核心思想之一。</p>
 <p>在实际应用中，协变量 <span class="math inline">\(X_i\)</span>
 通常包括一些在处理前已知的、与结果变量相关的特征。通过将这些协变量纳入合成控制组的构建过程中，可以提高合成控制组的合理程度，从而更准确地估计因果效应。</p>
-<h1 id="嵌套最优化">2. 嵌套最优化</h1>
+<h1 id="嵌套最优化">3. 嵌套最优化</h1>
 <p>前文描述是一个非常粗略的解释，合成控制法的的实际优化目标是：</p>
 <p><span class="math display">\[\min_{V} \left(Z_1 - Z_0
 W^{(V)}\right)^{T} \left(Z_1 - Z_0 W^{(V)}\right)\]</span></p>
@@ -497,7 +531,7 @@ class="math inline">\(V\)</span> 使得 <span
 class="math inline">\(\left(Z_1 - Z_0 W^{(V)}\right)^{T} \left(Z_1 - Z_0
 W^{(V)}\right)\)</span> 最小化。</li>
 </ol>
-<h2 id="第一步优化-w">2.1. 第一步：优化 <span
+<h2 id="第一步优化-w">3.1. 第一步：优化 <span
 class="math inline">\(W\)</span></h2>
 <p>首先，我们需要最小化 <span class="math inline">\(\left|X_1 - X_0
 W\right|_V\)</span>，即：</p>
@@ -553,7 +587,7 @@ class="math inline">\(X_1\)</span> 是常数阵，任意给定 <span
 class="math inline">\(V\)</span>，都可以求得符合条件的 <span
 class="math inline">\(W\)</span>，使得 <span
 class="math inline">\(\left|X_1 - X_0 W\right|_V^2\)</span> 最小。</p>
-<h2 id="第二步优化-v">2.2. 第二步：优化 <span
+<h2 id="第二步优化-v">3.2. 第二步：优化 <span
 class="math inline">\(V\)</span></h2>
 <p>使用第一步中优化得到的 <span
 class="math inline">\(W\)</span>，接着最小化：</p>
@@ -571,7 +605,7 @@ class="math inline">\(V\)</span> 使得上述表达式最小化。</p>
 <p>当然，将最优的 <span class="math inline">\(V\)</span>
 求解出来后，还需要重新执行一遍第一步，以获得最优 <span
 class="math inline">\(W\)</span>。</p>
-<h2 id="系数和模型表现">2.3. 系数和模型表现</h2>
+<h2 id="系数和模型表现">3.3. 系数和模型表现</h2>
 <p>使用前述方式计算各个参数，<span class="math inline">\(V\)</span>
 的结果为：</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">      v.names    v</span><br><span class="line"><span class="number">1</span>    lnincome <span class="number">0.15</span></span><br><span class="line"><span class="number">2</span>        beer <span class="number">0.17</span></span><br><span class="line"><span class="number">3</span>   age15to24 <span class="number">0.07</span></span><br><span class="line"><span class="number">4</span>    retprice <span class="number">0.01</span></span><br><span class="line"><span class="number">5</span> cigsale1975 <span class="number">0.39</span></span><br><span class="line"><span class="number">6</span> cigsale1980 <span class="number">0.14</span></span><br><span class="line"><span class="number">7</span> cigsale1988 <span class="number">0.08</span></span><br></pre></td></tr></table></figure>
@@ -580,7 +614,7 @@ class="math inline">\(W\)</span>。</p>
 <p>合成的 <span class="math inline">\(\hat{Y}_{1t}\)</span> 同原始 <span
 class="math inline">\(Y_{1t}\)</span> 的对比曲线如下图所示：</p>
 <p><img src="/upload/pic/scm1.png" /></p>
-<h1 id="重定义损失函数">3. 重定义损失函数</h1>
+<h1 id="重定义损失函数">4. 重定义损失函数</h1>
 <p>合成控制法通过嵌套最优化的方法，得到两个参数 <span
 class="math inline">\(W, V\)</span>
 的最优值。但实际上，大家仔细想想：难道我们不清楚协变量中各个向量的重要性吗？用模型算一个最优的
@@ -602,7 +636,7 @@ class="math inline">\(X_i\)</span> 各个向量的对 <span
 class="math inline">\(Y_i\)</span>
 的影响，影响权重即为协变量的重要性。</li>
 </ol>
-<h2 id="机器学习估计-v">3.1. 机器学习估计 <span
+<h2 id="机器学习估计-v">4.1. 机器学习估计 <span
 class="math inline">\(V\)</span></h2>
 <p>从数据出发，什么因素会影响到各州的香烟消费量？<span
 class="math inline">\(X_i\)</span> 中 4
@@ -782,7 +816,7 @@ class="math inline">\(X_i\)</span> 中 4
 岁人口、收入的对数、啤酒销量。需要注意的是，这种求解方法只适应于协变量
 <span class="math inline">\(X_i\)</span> 是面板数据，像原始论文那样，把
 1975、1980、1988 年的香烟销售量同样作为协变量，这个方法不适用。</p>
-<h2 id="合并损失函数">3.2. 合并损失函数</h2>
+<h2 id="合并损失函数">4.2. 合并损失函数</h2>
 <p>只要 <span class="math inline">\(V\)</span>
 就绪，就可以优化以下损失函数以求解 <span
 class="math inline">\(w\)</span>。这个损失函数由 <span
@@ -799,7 +833,7 @@ X_0 W\right)^{T} V \left(X_1 - X_0 W) \right)
 <p><span class="math display">\[
 \text{normalized}(x_i) = \frac{x_i}{\sqrt{\sum_{j=1}^{n} x_j^2}}
 \]</span></p>
-<h2 id="系数和模型表现-1">3.3. 系数和模型表现</h2>
+<h2 id="系数和模型表现-1">4.3. 系数和模型表现</h2>
 <p><span class="math inline">\(\lambda = 1\)</span>
 时，结果变量和协变量拟合程度的权重相等。</p>
 <p>在 <span class="math inline">\(V\)</span>
@@ -890,7 +924,7 @@ class="math inline">\(Y_{1t}\)</span> 的对比曲线如下图所示：</p>
 <p><img src="/upload/pic/scm3.png" /></p>
 <p>从结果变量的拟合结果上看，两者有细微的差别。因为权重低，整体表现要比
 <span class="math inline">\(\lambda=1\)</span> 时要差一些。</p>
-<h1 id="同时做变量选择">4. 同时做变量选择</h1>
+<h1 id="同时做变量选择">5. 同时做变量选择</h1>
 <p>设想以下需求场景：</p>
 <ul>
 <li>假如观测的段 <span class="math inline">\(T\)</span> 为
@@ -904,7 +938,7 @@ W\)</span> 的平方误差，但如果模型过拟合怎么办？泛化能力过
 class="math inline">\(w\)</span> 的限制条件，不再要求 <span
 class="math inline">\(\sum_{j=2}^{J+1} w_j = 1\)</span> 且 <span
 class="math inline">\(w_j \geq 0\)</span> 这两个条件。</p>
-<h2 id="具体实现过程">4.1. 具体实现过程</h2>
+<h2 id="具体实现过程">5.1. 具体实现过程</h2>
 <p>在合成控制法中，我们更关注的是结果变量 <span
 class="math inline">\(Y\)</span> 的拟合，而协变量 <span
 class="math inline">\(X\)</span> 主要用于辅助构建合成控制组。通过权重
@@ -967,7 +1001,7 @@ class="math inline">\(X\)</span> 合并在一起，并使用类似 LASSO
 class="math inline">\(\mathbf{w}\)</span>。在这个框架下，我们就可以采用交叉验证的方法来选择
 MSE
 效果最好的参数来构建模型，也可以更灵活地处理结果变量和协变量的关系，同时进行变量选择和系数收缩。</p>
-<h2 id="转化为弹性网络问题">4.2. 转化为弹性网络问题</h2>
+<h2 id="转化为弹性网络问题">5.2. 转化为弹性网络问题</h2>
 <p>也可以将它改写成 Elastic Net 模型形式：</p>
 <p><span class="math display">\[
 \min_{\mathbf{w}} \left\{ \frac{1}{T} \sum_{t=1}^{T} \left(
@@ -979,7 +1013,7 @@ MSE
 class="math inline">\(\lambda\)</span>
 通过交叉验证的机器学习框架，求解泛化能力最好，且能让 loss 最小的 <span
 class="math inline">\(w\)</span>。</p>
-<h2 id="系数和模型结果">4.3. 系数和模型结果</h2>
+<h2 id="系数和模型结果">5.3. 系数和模型结果</h2>
 <p>需要注意的是，这种方法很灵活，不需要协变量为面板数据。</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">            X_synth    X1</span><br><span class="line">lnincome      <span class="number">0.131</span> <span class="number">0.164</span></span><br><span class="line">beer          <span class="number">0.145</span> <span class="number">0.161</span></span><br><span class="line">age15to24     <span class="number">0.128</span> <span class="number">0.160</span></span><br><span class="line">retprice      <span class="number">0.130</span> <span class="number">0.165</span></span><br><span class="line">cigsale1975   <span class="number">0.141</span> <span class="number">0.144</span></span><br><span class="line">cigsale1980   <span class="number">0.135</span> <span class="number">0.137</span></span><br><span class="line">cigsale1988   <span class="number">0.127</span> <span class="number">0.125</span></span><br></pre></td></tr></table></figure>
 <p>合成的 <span class="math inline">\(\hat{Y}_{1t}\)</span> 同原始 <span
@@ -990,15 +1024,18 @@ class="math inline">\(Y_{1t}\)</span> 的对比曲线如下图所示：</p>
 的拟合程度，而不想考虑协变量 <span class="math inline">\(X_i\)</span>
 的影响。恭喜你，你发现了一种新的方法——<a
 href="https://bjt.name/2023/05/20/synthetic-did.html">SDID</a>。</p>
-<h1 id="总结">5. 总结</h1>
-<p>本文注意力主要集中在如何更便捷的求解合成控制法中的参数，并没有更多的讨论安慰剂检验等其他细节。合成控制法是一个非常好的，用于估计政策影响变化的框架。算法细节上使用嵌套优化的方法，非常优雅。但它也有一定局限性，有改进的可能：</p>
+<h1 id="总结">6. 总结</h1>
+<p>本文注意力主要集中在如何更便捷的求解合成控制法中的参数，并没有更多的讨论安慰剂检验等其他细节。合成控制法是一个非常好的，用于估计政策或活动影响变化的框架。算法细节上使用嵌套优化的方法，非常优雅。但它也有一定局限性，有改进的可能：</p>
 <ol type="1">
 <li>使用完全最优化的方法可能会出现过拟合的情况，不利于估计因果效用。</li>
-<li>合并损失的方式是可行方法之一，但需要进行归一化处理。</li>
+<li>合并损失的方式是可行方法之一，但需要留意，<span
+class="math inline">\(X\)</span> 和 <span
+class="math inline">\(Y\)</span> 都要做归一化处理。</li>
 <li>引入全新的损失函数，增加正则项，借助通用机器学习框架，可以解决权重
 <span class="math inline">\(w\)</span>
 维度过高，以及提升模型的稳健性。</li>
 </ol>
+<p>注：三个方法实现的 R 代码 1000 多行，太长，先不贴到原文了。</p>
 
     </div>
 
