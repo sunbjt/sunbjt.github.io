@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-count">97</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,100 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2010/06/08/oracle-data-mining-r.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/06/08/oracle-data-mining-r.html" class="post-title-link" itemprop="url">Oracle数据库开始支持R语言</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2010-06-08 00:00:00" itemprop="dateCreated datePublished" datetime="2010-06-08T00:00:00+08:00">2010-06-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>一则令人兴奋的简讯：</p>
+<p>据<a href="http://blogs.oracle.com/" target="_blank">Oracle官方博客</a>
+最近更新的
+<a href="http://blogs.oracle.com/datamining/2010/05/new_r_interface_to_oracle_data_mining_available_for_download.html" target="_self">New
+R Interface to Oracle Data Mining Available for
+Download</a>，甲骨文开始正式支持R语言在Oracle数据库中的应用（简单的非官方说法是：甲骨文贡献了一个提供Oracle和R之间接口的附加包）。</p>
+<p>援引博客中对R-ODM(R-Oracle Data Mining)的介绍：</p>
+<p>R-ODM is especially useful for:</p>
+<ol type="1">
+<li>Quick prototyping of vertical or domain-based applications where the
+Oracle Database supports the application</li>
+<li>Scripting of "production" data mining methodologies</li>
+<li>Customizing graphics of ODM data mining results (examples:
+<a target="_blank" rel="noopener" href="http://www.oracle.com/technology/products/bi/odm/images/rodm_classification.jpg">classification</a>,
+<a target="_blank" rel="noopener" href="http://www.oracle.com/technology/products/bi/odm/images/rodm_regression.jpg">regression</a>,
+<a target="_blank" rel="noopener" href="http://www.oracle.com/technology/products/bi/odm/images/rodm_anomaly_detection.jpg">anomaly
+detection</a>)</li>
+</ol>
+<p>众所周知，R在实现原型算法方面有着不可替代的巨大优势。诚然，通过R实现的一般性数据挖掘算法都可以嵌入到数据库中，但Oracle提供的这个接口，极大地提高了挖掘算法的部署效率。</p>
+<p>今天（2010.06.08），<a href="http://cran.r-project.org/" target="_self">CRAN</a>上更新了<a href="http://cran.r-project.org/web/packages/RODM/index.html" target="_self">RODM</a>包的1.0-2版本，支持Windows、Linux、MacOS
+X系统。</p>
+<p>下面是RODM包帮助文档中的一个例子，可以初步地体会算法高效的部署：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">## Not run:</span><br><span class="line">x1 &lt;- 2 * runif(200)</span><br><span class="line">noise &lt;- 3 * runif(200) - 1.5</span><br><span class="line">y1 &lt;- 2 + 2*x1 + x1*x1 + noise</span><br><span class="line">dataset &lt;- data.frame(x1, y1)</span><br><span class="line">names(dataset) &lt;- c(&quot;X1&quot;, &quot;Y1&quot;)</span><br><span class="line">RODM_create_dbms_table(DB, &quot;dataset&quot;)   # Push the training table to the database</span><br><span class="line"></span><br><span class="line">glm &lt;- RODM_create_glm_model(database = DB,    # Create ODM GLM model</span><br><span class="line">                             data_table_name = &quot;dataset&quot;,</span><br><span class="line">                             target_column_name = &quot;Y1&quot;,</span><br><span class="line">                             mining_function = &quot;regression&quot;)</span><br><span class="line"></span><br><span class="line">glm2 &lt;- RODM_apply_model(database = DB,    # Predict training data</span><br><span class="line">                             data_table_name = &quot;dataset&quot;,</span><br><span class="line">                             model_name = &quot;GLM_MODEL&quot;,</span><br><span class="line">                             supplemental_cols = &quot;X1&quot;)</span><br><span class="line">windows(height=8, width=12)</span><br><span class="line">plot(x1, y1, pch=20, col=&quot;blue&quot;)</span><br><span class="line">points(x=glm2$model.apply.results[, &quot;X1&quot;],</span><br><span class="line">       glm2$model.apply.results[, &quot;PREDICTION&quot;], pch=20, col=&quot;red&quot;)</span><br><span class="line">legend(0.5, 9, legend = c(&quot;actual&quot;, &quot;GLM regression&quot;), pch = c(20, 20),</span><br><span class="line">                col = c(&quot;blue&quot;, &quot;red&quot;),</span><br><span class="line">                pt.bg =  c(&quot;blue&quot;, &quot;red&quot;), cex = 1.20, pt.cex=1.5, bty=&quot;n&quot;)</span><br><span class="line"></span><br><span class="line">RODM_drop_model(DB, &quot;GLM_MODEL&quot;)            # Drop the model</span><br><span class="line">RODM_drop_dbms_table(DB, &quot;dataset&quot;)   # Drop the database table</span><br><span class="line">RODM_close_dbms_connection(DB)</span><br><span class="line">RODM_close_dbms_connection(DB)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说一句题外话：R的影响力除了在统计分析领域（SAS、SPSS、Statistica已经都开始支持R接口）外，已然发展到了商业数据库领域。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -591,262 +685,6 @@ Colv=NA去掉</p>
 <p><strong>补充：</strong></p>
 <p>早上起来发现 David Smith
 同样更新了<a href="http://blog.revolution-computing.com/2010/01/how-to-make-a-heat-map-in-r.html" target="_blank">博客</a>。唉，这厮嗅觉也忒灵敏！哈哈</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2010/01/16/rockets-heat-assists-network.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/01/16/rockets-heat-assists-network.html" class="post-title-link" itemprop="url">火箭对热火比赛(20100116)中，火箭球员的助攻网络关系</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2010-01-16 00:00:00" itemprop="dateCreated datePublished" datetime="2010-01-16T00:00:00+08:00">2010-01-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>本场比赛前7分钟火箭发挥还不错，最高取得了10分的领先（11-21），但受上一场力拼森林狼三个加时影响，火箭诸将体能逐渐不支，慢慢失去优势。虽然巴丁格整场替补发挥出色，无奈，随着阿里扎上篮不进，比分定格在了115-106。</p>
-<p>相比热火发烫的53.6%投篮命中率，火箭发挥比较正常，48.7%。火箭唯一问题出现在了失误方面，8-15，如果火箭失误控制的好，也许结果可能是另外一个结果。</p>
-<p>比赛过程中，杨毅提到（大致意思）：由于没有超级球星，火箭必须比其他球队付出更多的努力才能获得胜利，也就是说其他球队会从容地为季后赛调整状态。火箭没有这个资本，为了常规赛的成绩，火箭进入疲劳期的时间要更早。要保证后面的球队成绩，要么莫雷尽最大能力交易，补充火箭；要么阿德尔曼通过更加合理细致的轮转，让每个核心球员得到充分休息。</p>
-<p>问题来了：在不改变现有火箭球员结构的前提下，火箭的战术轮转体系中，球员的位置如何？</p>
-<p>引子：</p>
-<p>本场比赛火箭一共20个助攻，Brooks 和 Battier
-分别助攻了最高的5个和4个。每次助攻都会涉及两位球员，那么本场比赛所有助攻结果综合在一起，即我们将助攻者和被助攻者之间的关系使用社会网络关系表现出来，会有一些有趣的现象：</p>
-<p><img src="/upload/pic/hou.png" /></p>
-<p>注释：</p>
-<p>箭头方向是助攻方向，比如最下面的是 Shane Battier 给 Chuck Hayes
-的助攻。</p>
-整理几个重要的关键点来评论一下：
-<ol>
-<li>
-Brooks
-无疑是比赛的发起者，我们发现他的助攻几乎包括了中锋、前锋位置的所有人（但不包括阿里扎，好像我记得有个镜头阿里扎要球，Brooks
-没有理会）。
-</li>
-<li>
-Battier
-既是助攻的受益者，又是助攻的发起者。个人一直比较喜欢的球员，篮球智商非常高。
-</li>
-<li>
-Budinger
-这场比赛发挥出色，同队友给予其的帮助分不开。我们看到很多个球员对其都有直接帮助。
-</li>
-<li>
-Andersen
-从助攻网络关系角度看，属于一个策应型中锋，而且是由里向外策应的那类。从比赛中观察，似乎球风有些偏软（本赛季我第一次看直播比赛
-^_^）
-</li>
-<li>
-<span style="text-decoration: line-through;">Ariza
-接受的助攻并不多，只有 Battier 的一次，其他都是给别人的助攻，和 Brooks
-一样，属于个人能力比较强，擅于自己创造得分机会的球员。</span>
-</li>
-</ol>
-<p>假如：</p>
-我是教练组成员，我提议（单从本场比赛结果看）：
-<ol>
-<li>
-Brooks、Battier、Ariza、Andersen
-在火箭进攻体系中位置比较重要，轮转的时候尽量保证其中的两人或三人同时在场。
-</li>
-<li>
-Budinger 属于绝好的替补球员，但似乎不适合同 Battier、Hayes 同时在场。
-</li>
-<li>
-<span style="text-decoration: line-through;">Lowry
-在组织进攻方面能力欠佳，使用上须谨慎。</span>
-</li>
-</ol>
-<p>更新分割:</p>
-<hr />
-<p>40场比赛助攻数据同时考虑，结果有些凌乱：</p>
-<p><img src="/upload/pic/hou40.png" /></p>
-<p>注：这个赛季火箭队有一些球员实际上并没有真正的进入轮转，比如"Tracy
-McGrady","Mike Harris","Jermaine Taylor","Pops Mensah-Bonsu","Brian
-Cook"。虽然有些球员（比如麦蒂）的确对球队的（被）助攻仍有帮助，但贡献非常有限。出于结果整洁性的考虑，上图已将这些球员因素剔除。</p>
-<p>由于绘图算法使用的是
-<a href="http://en.wikipedia.org/wiki/Force-based_algorithms" target="_blank">Force-based_algorithms</a>，也就是说这种算法做出的图，边（edges）会尽可能的少。解释为，对球员关系的影响就是：</p>
-<p><strong>同其他球员关系比较多的球员将绘制的比较靠近中心，而关系较少的球员会绘制在相对靠外的位置。</strong></p>
-<p>重新观察火箭队助攻网络图，发现：</p>
-<p>1月16日对热火比赛中，Kyle Lowry 和 Trevor Ariza
-发挥的确出了问题，尤其是 Lowry 这点上。</p>
-如果我们求解这个网络中各个球员的<a href="http://en.wikipedia.org/wiki/Page_rank" target="_blank">
-page rank</a> 值，可以认为是每个球员同其他球员助攻的关键程度。
-<table border="1">
-<tbody>
-<tr>
-<th>
-</th>
-<th>
-Name
-</th>
-<th>
-PageRank
-</th>
-</tr>
-<tr>
-<td align="right">
-1
-</td>
-<td>
-Aaron Brooks
-</td>
-<td align="right">
-0.1690
-</td>
-</tr>
-<tr>
-<td align="right">
-2
-</td>
-<td>
-Trevor Ariza
-</td>
-<td align="right">
-0.1496
-</td>
-</tr>
-<tr>
-<td align="right">
-5
-</td>
-<td>
-Luis Scola
-</td>
-<td align="right">
-0.1334
-</td>
-</tr>
-<tr>
-<td align="right">
-3
-</td>
-<td>
-Kyle Lowry
-</td>
-<td align="right">
-0.1268
-</td>
-</tr>
-<tr>
-<td align="right">
-7
-</td>
-<td>
-Shane Battier
-</td>
-<td align="right">
-0.1099
-</td>
-</tr>
-<tr>
-<td align="right">
-8
-</td>
-<td>
-Carl Landry
-</td>
-<td align="right">
-0.0966
-</td>
-</tr>
-<tr>
-<td align="right">
-9
-</td>
-<td>
-Chase Budinger
-</td>
-<td align="right">
-0.0741
-</td>
-</tr>
-<tr>
-<td align="right">
-4
-</td>
-<td>
-Chuck Hayes
-</td>
-<td align="right">
-0.0724
-</td>
-</tr>
-<tr>
-<td align="right">
-6
-</td>
-<td>
-David Andersen
-</td>
-<td align="right">
-0.0681
-</td>
-</tr>
-</tbody>
-</table>
-<p>Brooks、Ariza、Scola、Lowry、Battier
-在助攻重要性角度上，占据球队的前五位。如何使用“田忌赛马”的策略制胜，则是教练组的问题。</p>
-<p>让我欣慰的是 Hayes 的重要程度要比 Andersen
-要好，单单从上一场比赛上看，Andersen 发挥的有些超常。</p>
-<p>P.S. 维基百科上没有区别 “有向网络”和“无向网络”的 page rank
-，上个表中的 page rank
-值属于“无向网络”值，同上面的图略有区别（有向网络中，Lowry 的关键性仅比
-Hayes 高，有些无奈）。</p>
 
       
     </div>

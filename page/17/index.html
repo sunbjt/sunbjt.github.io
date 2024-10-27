@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">96</span>
+          <span class="site-state-item-count">97</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,172 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/08/08/farey-sequence-fractions.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/08/08/farey-sequence-fractions.html" class="post-title-link" itemprop="url">从小数到分数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2009-08-08T00:00:00+08:00">2009-08-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>
+很多时候，在社会调研中会出现一些小数（或百分数），而这些数字背后隐藏的信息也常常被统计人关注。比如
+<a href="http://www.cos.name/" target="_blank">COS
+主站</a>上的这篇文章--<a href="http://cos.name/2009/04/from-proportion-to-conclusion/" target="_blank">《从调查报告中的比例数字说统计人如何甄别统计假象》</a>，yihui
+生动地为我们展示了一种考量问题的思路。
+</p>
+<p>
+正如文章中所说的，如果我们对数字足够敏感的话，很容易判断出 0.6667
+的分数是 2/3 ，0.625 的分数是 5/8，0.14286 的分数是
+1/7。但我们的经验毕竟有限，不可能穷尽所有的数字，通过一个算法来确定分数是十分有必要的。
+</p>
+<p>
+法里序列（<a href="http://en.wikipedia.org/wiki/Farey_sequence" target="_blank">farey
+sequence</a>）也是考虑这类问题的一个角度。如果给定法里序列的 n
+足够大，那么我们必定能够将逼近出一个和小数相等的分数<em>F</em><sub>i</sub>[j]。
+</p>
+<p>
+法里序列 <em>F</em><sub>i</sub> （i=1 到 n）：
+</p>
+<dl>
+<dd>
+<em>F</em><sub>1</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>2</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>2</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>3</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>3</sub>, <sup>1</sup>⁄<sub>2</sub>,
+<sup>2</sup>⁄<sub>3</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>4</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>4</sub>, <sup>1</sup>⁄<sub>3</sub>,
+<sup>1</sup>⁄<sub>2</sub>, <sup>2</sup>⁄<sub>3</sub>,
+<sup>3</sup>⁄<sub>4</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>5</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>5</sub>, <sup>1</sup>⁄<sub>4</sub>,
+<sup>1</sup>⁄<sub>3</sub>, <sup>2</sup>⁄<sub>5</sub>,
+<sup>1</sup>⁄<sub>2</sub>, <sup>3</sup>⁄<sub>5</sub>,
+<sup>2</sup>⁄<sub>3</sub>, <sup>3</sup>⁄<sub>4</sub>,
+<sup>4</sup>⁄<sub>5</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>6</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>6</sub>, <sup>1</sup>⁄<sub>5</sub>,
+<sup>1</sup>⁄<sub>4</sub>, <sup>1</sup>⁄<sub>3</sub>,
+<sup>2</sup>⁄<sub>5</sub>, <sup>1</sup>⁄<sub>2</sub>,
+<sup>3</sup>⁄<sub>5</sub>, <sup>2</sup>⁄<sub>3</sub>,
+<sup>3</sup>⁄<sub>4</sub>, <sup>4</sup>⁄<sub>5</sub>,
+<sup>5</sup>⁄<sub>6</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>7</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>7</sub>, <sup>1</sup>⁄<sub>6</sub>,
+<sup>1</sup>⁄<sub>5</sub>, <sup>1</sup>⁄<sub>4</sub>,
+<sup>2</sup>⁄<sub>7</sub>, <sup>1</sup>⁄<sub>3</sub>,
+<sup>2</sup>⁄<sub>5</sub>, <sup>3</sup>⁄<sub>7</sub>,
+<sup>1</sup>⁄<sub>2</sub>, <sup>4</sup>⁄<sub>7</sub>,
+<sup>3</sup>⁄<sub>5</sub>, <sup>2</sup>⁄<sub>3</sub>,
+<sup>5</sup>⁄<sub>7</sub>, <sup>3</sup>⁄<sub>4</sub>,
+<sup>4</sup>⁄<sub>5</sub>, <sup>5</sup>⁄<sub>6</sub>,
+<sup>6</sup>⁄<sub>7</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+<dd>
+<em>F</em><sub>8</sub> = {<sup>0</sup>⁄<sub>1</sub>,
+<sup>1</sup>⁄<sub>8</sub>, <sup>1</sup>⁄<sub>7</sub>,
+<sup>1</sup>⁄<sub>6</sub>, <sup>1</sup>⁄<sub>5</sub>,
+<sup>1</sup>⁄<sub>4</sub>, <sup>2</sup>⁄<sub>7</sub>,
+<sup>1</sup>⁄<sub>3</sub>, <sup>3</sup>⁄<sub>8</sub>,
+<sup>2</sup>⁄<sub>5</sub>, <sup>3</sup>⁄<sub>7</sub>,
+<sup>1</sup>⁄<sub>2</sub>, <sup>4</sup>⁄<sub>7</sub>,
+<sup>3</sup>⁄<sub>5</sub>, <sup>5</sup>⁄<sub>8</sub>,
+<sup>2</sup>⁄<sub>3</sub>, <sup>5</sup>⁄<sub>7</sub>,
+<sup>3</sup>⁄<sub>4</sub>, <sup>4</sup>⁄<sub>5</sub>,
+<sup>5</sup>⁄<sub>6</sub>, <sup>6</sup>⁄<sub>7</sub>,
+<sup>7</sup>⁄<sub>8</sub>, <sup>1</sup>⁄<sub>1</sub>}
+</dd>
+</dl>
+<p>
+但这个过程会比较麻烦，<em>F</em><sub>1000</sub> 已经达到300927
+个数字。幸好 R 中的 MASS 包提供了 fractions
+函数。这个函数使用有理近似的方式，将小数转化为分数（连分数）形式。比如<a href="http://cos.name/2009/04/from-proportion-to-conclusion/" target="_blank">《从调查报告中的比例数字说统计人如何甄别统计假象》</a>中提到的
+29.1667% 这个数值：
+</p>
+<p>
+&gt; fractions(0.291667) <br /> [1] 7/24
+</p>
+<p>
+不过，既然是近似算法，这个函数对小数的精确度要求还是蛮高的，而且最好不要用无理数去逗人家。
+</p>
+<p>
+<span dir="ltr">&gt; fractions(pi) <br /> [1] 4272943/1360120</span>
+</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -555,120 +721,6 @@ Windows 版本）</li>
 给出了最优的解法，即<a title="埃拉托斯特尼筛法" target="_blank" rel="noopener" href="http://zh.wikipedia.org/w/index.php?title=埃拉托斯特尼筛法&amp;variant=zh-cn">埃拉托斯特尼筛法</a>：</li>
 </ol>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prime3<span class="operator">&lt;-</span><span class="keyword">function</span><span class="punctuation">(</span>m<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">    x<span class="operator">&lt;-</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">2</span><span class="operator">:</span>m<span class="punctuation">)</span> ; y<span class="operator">&lt;-</span><span class="literal">NULL</span></span><br><span class="line">    <span class="keyword">repeat</span><span class="punctuation">&#123;</span></span><br><span class="line">        z<span class="operator">&lt;-</span>x<span class="punctuation">[</span><span class="punctuation">(</span>x<span class="operator">%%</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="operator">!=</span><span class="number">0</span><span class="punctuation">]</span> ; y<span class="operator">&lt;-</span><span class="built_in">c</span><span class="punctuation">(</span>y<span class="punctuation">,</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">        <span class="keyword">if</span><span class="punctuation">(</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="operator">&gt;</span><span class="built_in">sqrt</span><span class="punctuation">(</span>m<span class="punctuation">)</span><span class="punctuation">)</span><span class="keyword">break</span></span><br><span class="line">        x<span class="operator">&lt;-</span>z</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="built_in">c</span><span class="punctuation">(</span>y<span class="punctuation">,</span>z<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/06/13/france-flight-poisson.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/06/13/france-flight-poisson.html" class="post-title-link" itemprop="url">法航被流星击中的概率</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2009-06-13 00:00:00" itemprop="dateCreated datePublished" datetime="2009-06-13T00:00:00+08:00">2009-06-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>以前由于职业的原因，经常全国各地的乱飞。虽说飞机的出事概率仅仅相当于陆上交通工具的百分之一，但每次上飞机前，总会怯怯的问自己："这次上去能不能好好的下来？"上去的话，一般都是塞上耳机，打开笔记本--看
-R。说实话，我还是更喜欢心灵的飞翔，而不是坐着飞机去感受加速度。</p>
-<p>一般商用喷气式飞机的稳定性很高，即使有突然事件造成损害，大部分飞机都能保证安全或部分安全地着陆。引发安全问题的事件可能是：</p>
-<ul>
-<li>skin or door failure leading to cabin pressure explosion</li>
-<li>gross upset leading to airspeeds and/or G loadings far in excess of
-design limits</li>
-<li>attack by military weapons * bird strike * flight through volcanic
-ash</li>
-<li>engine explosion</li>
-<li>collision with ground structures during takeoff</li>
-</ul>
-<p>但如果被流星击中呢？流星的速度可以达到 25,000 km/hr（约 7000m/s
-），还是很可怕的。</p>
-<p>David Smith 在
-<a href="http://blog.revolution-computing.com/2009/06/how-much-of-a-threat-are-meteors-to-aviation.html" target="_blank">How
-much of a threat are meteors to aviation?</a>
-这篇博客里给出了，法航客机被流星击中的概率，计算方法比较科学：</p>
-<ol type="1">
-<li>每小时有 125 颗流星"光临"地球，且都是超音速飞行的；</li>
-<li>平均飞机的面积占地球总面积的5.7e-13；</li>
-<li>法航 447 客机预计飞行的时间为 11 小时。</li>
-</ol>
-<p>这种小概率事件我们可以使用 Poisson
-分布去拟合，那么飞机被击中的概率就是</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 - ppois(0,5.7e-13*125*11) </span><br><span class="line">[1] 7.8375e-10</span><br></pre></td></tr></table></figure>
-<p>飞机被流星击中的概率为7.8375e-10，即<span
-class="post-footers">第一位7前面有10个零。观众可能没有直观印象，举个例子：双色球的中一等奖的概率是
-5.642994e-08</span>，飞机被流星击中的概率是它的百分之一，<span
-class="post-footers">相差两个数量级。</span></p>
-<p><span class="post-footers">David Smith 而后又给了一个今后 20
-年，所有飞机至少有一架被击中的概率（他给的数据没看明白，直接引用
-<a target="_blank" rel="noopener" href="http://blogs.discovermagazine.com/cosmicvariance/author/jconway/">John</a>
-给的数据）：</span></p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="operator">-</span> ppois<span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span><span class="number">720e6</span><span class="operator">*</span><span class="number">5.7e-13</span><span class="operator">*</span><span class="number">125</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="number">0.05000637</span></span><br></pre></td></tr></table></figure>
-<p>很可怕吧！今后二十年，至少有一架被陨石击中的概率达到了 5%
-！已经不是小概率事件了！</p>
 
       
     </div>
