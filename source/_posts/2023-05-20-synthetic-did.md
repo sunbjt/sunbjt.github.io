@@ -3,7 +3,8 @@ layout: post
 title: 合成双重差分法
 status: publish
 type: post
-category: 算法
+category: 因果推断
+published: true
 ---
 
 # 1. 研究背景
