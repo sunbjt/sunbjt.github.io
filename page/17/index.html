@@ -127,13 +127,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-count">98</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -163,6 +163,118 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/08/29/aquatics-center-voronoi.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/08/29/aquatics-center-voronoi.html" class="post-title-link" itemprop="url">水立方和 Voronoi 原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-08-29 00:00:00" itemprop="dateCreated datePublished" datetime="2009-08-29T00:00:00+08:00">2009-08-29</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>还记得第一次看到<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Beijing_National_Aquatics_Center">水立方</a>时的惊讶么？</p>
+<p>是什么这么吸引我们？是有如天空般的颜色？还是那气泡似的形状？</p>
+<p><img src="/upload/pic/Watercube.jpg" /></p>
+<p>从水立方的外墙结构上看，不但外观美观，而且十分紧凑。水立方外墙为什么会有这样的性质，是因为它上应用了一项最优化的技术，即<a href="http://en.wikipedia.org/wiki/Voronoi" target="_blank">Voronoi</a>
+原理。</p>
+<a href="http://en.wikipedia.org/wiki/Voronoi" target="_blank">Voronoi</a>
+图也常常被称为 Dirichlet 格局（Dirichlet
+tessellation）。通俗讲，其原理是一项从点到面的技术。它的每个多边形只有一个"生成点"，而这个多边形上的每个点到"生成点"的距离总是比到其他"生成点"的距离要小（是不是想到了
+K-means 算法？）。
+<div style="page-break-after: always;">
+<span style="display: none;"> </span>
+</div>
+<p>在建筑设计上，有设计人员争论这类方法定义为“参数化设计”。认为这种方法不能同传统的、依靠灵感的设计方式相比，因为这种方法高度依赖计算机，只需要简单改变若干参数就能得到设计方案。但这个论断，恰恰忽略了“参数化设计”背后的数学意义。</p>
+<p>既然
+<a href="http://en.wikipedia.org/wiki/Voronoi" target="_blank">Voronoi</a>
+是一种最优化的算法，那么除在建筑学上给我们带来的美轮美奂的视觉效果外，它在空间统计上同样也有应用。</p>
+<p>下面，我根据各个省会城市（包括香港、澳门）的地理位置，利用 Voronoi
+原理，计算每个省最佳控制范围（使用红色的线条标记）：</p>
+<p><img src="/upload/pic/China.png" /></p>
+虽然理论值（最优）和现实值（行政区划、地理）总有差距，但是，比较一下会发现一些值得探讨的现象：
+<ul>
+<li>
+<div>
+内蒙古应该好好的规划一下，从东边到西边实在太远了，把西边的划给宁夏可能好点；东边划给北京、东三省；
+</div>
+</li>
+<li>
+<div>
+河北北部，不论是属于北京还是天津都会好些，记得我小的时候，宁可去北京、天津，也不乐意去遥远的省会--石家庄；
+</div>
+</li>
+<li>
+<div>
+青海应该把甘肃的北部包括进去；
+</div>
+</li>
+<li>
+<div>
+上海、香港、澳门有一部分管辖区也也不错么：）
+</div>
+</li>
+</ul>
+<p>整体上看，大部分省的行政区划还是符合 Voronoi
+原理。也就是说，单纯从空间距离的角度来看，我国的行政区划还是比较不错的。，</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -640,105 +752,6 @@ Chambers.</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/06/24/prime-numbers-r.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/06/24/prime-numbers-r.html" class="post-title-link" itemprop="url">素数的求法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2009-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2009-06-24T00:00:00+08:00">2009-06-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>COS
-上有人问过如何<a target="_blank" rel="noopener" href="http://cos.name/bbs/read.php?tid=12781">求1～100的素数</a>。虽说这个问题没准就是计算机系大一新生的一道作业题，但对我这个几乎没有任何
-C
-编程经验的人来说，似乎还是有些挑战。花了几分钟整理了一下思路，既然素数的定义是只能被1和自身整除，那么：</p>
-<ol type="1">
-<li>如果第 n
-个数，不能它前面的所有的数字（不包括1）整除，那么即为定义。但需要遍历所有数字，效率肯定不好。</li>
-<li>如果 n 不能被 n 前面的所有素数整除的话，那么 n
-应该是下一个素数（后来知道这个是<a title="算术基本定理" target="_blank" rel="noopener" href="http://zh.wikipedia.org/w/index.php?title=算术基本定理&amp;variant=zh-cn">算术基本定理</a>）。</li>
-</ol>
-<p>根据第二点思路，写出 R 代码：</p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">prime2 <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>m<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">    x <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">2</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">7</span><span class="punctuation">,</span><span class="number">11</span><span class="punctuation">)</span></span><br><span class="line">    <span class="keyword">for</span><span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">13</span><span class="operator">:</span>m<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="keyword">if</span><span class="punctuation">(</span><span class="operator">!</span><span class="built_in">any</span><span class="punctuation">(</span>i<span class="operator">%%</span>x <span class="operator">==</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span> x <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span>x<span class="punctuation">,</span>i<span class="punctuation">)</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="built_in">return</span><span class="punctuation">(</span>x<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>即给出前 5 个素数，而后寻找第 6 个素数；再根据 6 个素数找第 7
-个；类推……；直至 n。</p>
-<p>很快又有两种解法：</p>
-<ol type="1">
-<li>cloud_wei 的另外的实现方式：glm包的 isprime 函数（这个包似乎没有
-Windows 版本）</li>
-<li>jo3vul31l3
-给出了最优的解法，即<a title="埃拉托斯特尼筛法" target="_blank" rel="noopener" href="http://zh.wikipedia.org/w/index.php?title=埃拉托斯特尼筛法&amp;variant=zh-cn">埃拉托斯特尼筛法</a>：</li>
-</ol>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">prime3<span class="operator">&lt;-</span><span class="keyword">function</span><span class="punctuation">(</span>m<span class="punctuation">)</span><span class="punctuation">&#123;</span></span><br><span class="line">    x<span class="operator">&lt;-</span><span class="built_in">c</span><span class="punctuation">(</span><span class="number">2</span><span class="operator">:</span>m<span class="punctuation">)</span> ; y<span class="operator">&lt;-</span><span class="literal">NULL</span></span><br><span class="line">    <span class="keyword">repeat</span><span class="punctuation">&#123;</span></span><br><span class="line">        z<span class="operator">&lt;-</span>x<span class="punctuation">[</span><span class="punctuation">(</span>x<span class="operator">%%</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span><span class="operator">!=</span><span class="number">0</span><span class="punctuation">]</span> ; y<span class="operator">&lt;-</span><span class="built_in">c</span><span class="punctuation">(</span>y<span class="punctuation">,</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="punctuation">)</span></span><br><span class="line">        <span class="keyword">if</span><span class="punctuation">(</span>x<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span><span class="operator">&gt;</span><span class="built_in">sqrt</span><span class="punctuation">(</span>m<span class="punctuation">)</span><span class="punctuation">)</span><span class="keyword">break</span></span><br><span class="line">        x<span class="operator">&lt;-</span>z</span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="built_in">c</span><span class="punctuation">(</span>y<span class="punctuation">,</span>z<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/18/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -751,7 +764,7 @@ Windows 版本）</li>
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

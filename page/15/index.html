@@ -127,13 +127,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-count">98</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -163,6 +163,148 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2010/01/22/nba-top-50-scorers-performance.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2010/01/22/nba-top-50-scorers-performance.html" class="post-title-link" itemprop="url">NBA联盟50位顶级球员的指标表现</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2010-01-22 00:00:00" itemprop="dateCreated datePublished" datetime="2010-01-22T00:00:00+08:00">2010-01-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>有点标题党的嫌疑，实际是介绍如何使用 R 绘制 heatmap 的文章。</p>
+<p>今天无意间在<a href="http://flowingdata.com/about/" target="_blank">Flowingdata</a>看到一篇关于如何使用
+R 来做 heatmap
+的文章（请移步到<a href="http://flowingdata.com/2010/01/21/how-to-make-a-heatmap-a-quick-and-easy-solution/" target="_blank">这里</a>）。虽然
+heatmap 只是 R 中一个很普通的图形函数，但这个例子使用了2008-2009赛季 NBA
+50个顶级球员数据做了一个极佳的演示，效果非常不错。对 R
+大致了解的童鞋可以直接在 R console 上敲</p>
+<p><strong>？heatmap</strong></p>
+<p>直接查看帮助即可。</p>
+<p>没有接触过 R 的童鞋继续围观，下面会仔细介绍如何使用 R 实现 NBA
+50位顶级球员指标表现热图：</p>
+关于
+heatmap，中文一般翻译为“热图”，其统计意义<a href="http://en.wikipedia.org/wiki/Heatmap" target="_blank">wiki</a>上解释的很清楚：
+<blockquote>
+A <strong>heat map</strong> is a graphical representation of data where
+the values taken by a
+<a title="Variable (mathematics)" target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Variable_%28mathematics%29">variable</a>
+in a two-dimensional map are represented as colors.Heat maps originated
+in 2D displays of the values in a data matrix. Larger values were
+represented by small dark gray or black squares (pixels) and smaller
+values by lighter squares.
+</blockquote>
+下面这个图即是<a href="http://flowingdata.com/about/" target="_blank">Flowingdata</a>用一些
+<a href="http://www.r-project.org" target="_blank">R</a> 函数对2008-2009
+赛季NBA
+50名顶级球员指标做的一个热图（点击参看<a href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png" target="_blank">大图</a>）：
+<p style="text-align: center;">
+<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"></a>
+</p>
+<p style="text-align: center;">
+<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1.png"><img class="aligncenter size-medium wp-image-10542" title="heatmap1" src="http://bjt.cos.name/wp-content/uploads/2010/01/heatmap1-300x289.png" alt="" width="300" height="289" /></a>
+</p>
+<p><strong>先解释一下数据：</strong></p>
+<p>这里共列举了50位球员，估计爱好篮球的童鞋对上图右边的每个名字都会耳熟能详。这些球员每个人会有19个指标，包括打了几场球（G)、上场几分钟（MIN)、得分（PTS)……这样就行成了一个50行×19列的矩阵。但问题是，数据有些多，需要使用一种比较好的办法来展示，So
+it comes, heatmap!</p>
+<p>简单的说明：</p>
+<p>比如从上面的热图上观察得分前3名（Wade、James、Bryant）PTS、FGM、FGA比较高，但Bryant的FTM、FTA和前两者就差一些；Wade在这三人中STL是佼佼者；而James的DRB和TRB又比其他两人好一些……</p>
+<p>姚明的3PP（3 Points
+Percentage）这条数据很有意思，非常出色！仔细查了一下这个数值，居然是100%。仔细回想一下，似乎那个赛季姚明好像投过一个3分，并且中了，然后再也没有3p。这样本可真够小的！</p>
+<p><strong>最后是如何做这个热图（做了些许修改）：</strong></p>
+<p><span style="color: #993366;">Step 0. Download R</span></p>
+<p>R
+官网：<a target="_blank" rel="noopener" href="http://www.r-project.org">http://www.r-project.org</a>，它是免费的。官网上面提供了Windows,Mac,Linux版本（或源代码）的R程序。</p>
+<p><span style="color: #993366;">Step 1. Load the data</span></p>
+<p>R 可以支持网络路径，使用读取csv文件的函数read.csv。</p>
+读取数据就这么简单：
+<pre lang="rsplus">read.csv("http://datasets.flowingdata.com/ppg2008.csv", sep=",")</pre>
+<p><span style="color: #993366;">Step 2. Sort data</span></p>
+<p>按照球员得分，将球员从小到大排序：</p>
+<pre lang="rsplus">nba <- nba[order(nba$PTS),]</pre>
+<p><code>当然也可以选择MIN,BLK,STL之类指标</code></p>
+<p><span style="color: #993366;">Step 3. Prepare data</span></p>
+<p>把行号换成行名（球员名称）：</p>
+<pre lang="rsplus">row.names(nba) <- nba$Name</pre>
+<p><code>去掉第一列行号：</code></p>
+<pre lang="rsplus">nba <- nba[,2:20] # or nba <- nba[,-1]</pre>
+<p><span style="color: #993366;">Step 4. Prepare data, again</span></p>
+<p>把 data frame 转化为我们需要的矩阵格式：</p>
+<pre lang="rsplus">nba_matrix <- data.matrix(nba)</pre>
+<p><span style="color: #993366;">Step 5. Make a heatmap</span></p>
+<p>R 的默认还会在图的左边和上边绘制 dendrogram，使用Rowv=NA,
+Colv=NA去掉</p>
+<pre lang="rsplus">heatmap(nba_matrix, Rowv=NA, Colv=NA, col=cm.colors(256), revC=FALSE, scale='column')</pre>
+<p><code>这样就得到了上面的那张热图。</code></p>
+<p><span style="color: #993366;">Step 6. Color selection</span></p>
+<p>或者想把热图中的颜色换一下：</p>
+<pre lang="rsplus">heatmap(nba_matrix, Rowv=NA, Colv=NA, col=heat.colors(256), revC=FALSE, scale="column", margins=c(5,10))</pre>
+<p><code><strong>延伸阅读：</strong></code></p>
+<p><code>来自于kerimcan和<a target="_blank" rel="noopener" href="http://periscopic.com/">krees</a>这些人的讨论：</code></p>
+<p><code><strong><a rel="nofollow noopener" target="_blank" href="http://sekhon.polisci.berkeley.edu/stats/html/heatmap.html">http://sekhon.polisci.berkeley.edu/stats/html/heatmap.html</a>
+<a rel="nofollow noopener" target="_blank" href="http://enotacoes.wordpress.com/2007/11/16/easy-guide-to-drawing-heat-maps-to-pdf-with-r-with-color-key/">http://enotacoes.wordpress.com/2007/11/16/easy-guide-to-drawing-heat-maps-to-pdf-with-r-with-color-key/</a></strong></code></p>
+<p><strong>补充：</strong></p>
+<p>早上起来发现 David Smith
+同样更新了<a href="http://blog.revolution-computing.com/2010/01/how-to-make-a-heat-map-in-r.html" target="_blank">博客</a>。唉，这厮嗅觉也忒灵敏！哈哈</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -809,156 +951,6 @@ src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/scale6.png" /></p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/12/14/r-conference.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/12/14/r-conference.html" class="post-title-link" itemprop="url">中国 R 语言会议趣闻</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2009-12-14 00:00:00" itemprop="dateCreated datePublished" datetime="2009-12-14T00:00:00+08:00">2009-12-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%B2%E5%8E%86/" itemprop="url" rel="index"><span itemprop="name">亲历</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="北京场">北京场</h1>
-<p>拖到今天写随笔，还是有很多想法！不过大家已经先我一步，已经有太云那儿，菁菁师妹那儿，还有遥远的<a
-target="_blank" rel="noopener" href="http://yihui.name/cn/2009/12/snow-in-ames-and-2nd-chinese-r-conference">益辉</a>那儿。</p>
-<h2 id="月-5-日">12 月 5 日：</h2>
-<ul>
-<li>堰平师弟非常辛苦，记得刚刚得知 yihui
-师弟远赴美国后，我就在想，第二届会议
-谁来组织？当时脑子里的第一印象就是堰平师弟，后来 yihui 临走前，大家去 K
-歌，我还特意问了一下 yihui，果不其然……</li>
-<li>高涛、李程从统计图形角度对 R
-软件进行了介绍，虽然我平日用的图形也很多，但这么系统详细的总结一定没少花心血。当时第一印象是台下的
-SPSS China 和 SAS China 的兄弟姐妹听了是什么感受……（罪过罪过）</li>
-<li>菁菁师妹第一次认识是在 cos 上有一篇关于 RExcel
-的用法的文章。师妹像极了我我大学时的同学，刚到会场时险些脱口而出。更令我惊讶的师妹的涉猎，江山辈出人才，巾帼不让须眉！</li>
-<li>钟其顶大哥以前就认识，记得第一次谋面谈的是 PLS，没想到的是 machine
-learing 的算法在食品行业居然有这么多的应用，佩服佩服！</li>
-<li>肖楠关于《R 环境安全特征初探和前瞻》给了大家一个全新的认识 R
-的视角，记得会前我还特意询问了一下，结果听了一遍还是没懂。直到演讲一半时我才终于恍然大悟，是啊！R
-的这个特性如果被人利用，损失可就大了！</li>
-<li>石油大学宫雨教授：通读 40 万行 R 代码的绝世牛人，从 IT
-应用角度重新诠释 R 的优劣势。太牛了，没啥说的……</li>
-<li>刘永生老师使用 R
-的时间也非常超前，2001（2003）已经开始在中国地质环境检测院使用
-R，又一个孤独的世外高人。</li>
-<li>奚谭去年就见到一次，非常严谨的一个帅哥。讲的灰色系统理论，以前没怎么听过，有时间序列的感觉。太云那提了一句“统计界貌似关注很少”，自己有些孤陋寡闻了……</li>
-<li>祝迎春的本子里居然装的是正版
-SPSS，晚间调侃“他笔记本里单软件就得100w+，大家赶紧打劫去，啊哈哈”。</li>
-<li>孙晓燕一行特地从北大深圳研究生院过来，虽然我不懂心理学，虽然没听太懂，但实在感动……</li>
-</ul>
-<h2 id="月-6-日">12 月 6 日：</h2>
-<ul>
-<li>左辰应该是第三次见面了，印象最深的是他以前的一篇关于降维的博文，才俊</li>
-<li>太云的矩阵可视化又一次让我吃了一惊，关系的学科和技术太多了。相关矩阵都描述不了，我这文字就更不用提了，大家移步至<a target="_blank" rel="noopener" href="http://taiyun.cos.name/">优秀是一种习惯</a>，或者直接参考
-corrplot 包。</li>
-<li>陈丽云，山东大学的超级才女，和太云一样，看看<a target="_blank" rel="noopener" href="http://www.loyhome.cn/">博客</a>啥都知道了。</li>
-<li>孙蝶，大P小N——开始还真没猜到是啥，听报告发现原来是变量大于样本数据的处理，又一次见到
-lasso，额……</li>
-<li>王化儒博士在空间分析上的 R
-应用也非常精彩，举止儒雅，尤其是从北师过来的，倍感亲切！</li>
-<li>QSAR
-是啥可能这辈子我都不会搞清楚了，但依稀记得演讲者马斌好像是手抄4000+数据的那个牛人，哈哈</li>
-<li>丁鹏演讲时说的“估计我很难把 Winbugs 讲清楚”，呵呵，青年学者中一杆
-Bayes 大旗！</li>
-<li>黄志一的 WebR-R
-给在座的科研人员打了一剂兴奋剂，要知道“云计算”可是现在主流</li>
-</ul>
-<p>辛苦的会务组：</p>
-<ol type="1">
-<li>陈主席、范师弟、邱师弟（可爱的人）、关师妹，两位学弟</li>
-<li>中南一行，当然还有远在美国的 yihui 。</li>
-</ol>
-<p>遗憾：</p>
-<ol type="1">
-<li>得知吴喜之老师远赴伯克利，思绪万千。想起老师带我们学 R
-的那一年，想起第一次看到 LaTeX 黑压压地编译，想起……</li>
-<li>yanlinlin 的演讲只能明年听得了，期待</li>
-<li>如果不是6日晚上还有事，肯定去火车站陪张翔去了</li>
-</ol>
-<h1 id="月-14-日上海场">12 月 14 日上海场</h1>
-<p>很早以前就听人说过，北有北师，南有华师，不过因为专业和地理原因，一直以为自己不会和华师有什么关系。这次承蒙张翔和焦静的辛苦组织，华师的资环和金统学院联合主办中国
-R 语言会议（上海）。在华师不但让我见识了 LaTeX 、R
-界的前辈——汤银才教授，还结识了一大批业界精英、青年学者，倍感荣幸。</p>
-<p>华师的大门和我想象的差不多，里面古朴的建筑风格也别具一格。无奈天公不作美，上海这几日阴雨霏霏，没有好好的在华师内仔细转转。</p>
-<p>最后是趣闻几则：</p>
-<ul>
-<li>中芯国际的林光启博士，演讲时提到自己生长于德州，然后马上注解了一句：“不是山东的德州啊，是美国的那个！”额……</li>
-<li>周六晚上大家一起聚餐，席间汤银才老师提到当年他和吴凌云的学术交流，Oh，那可是传说中的人物。汤老师还提到，他给统计系讲
-R 的时候，会和大家说：“有问题就去 COS 上问，肯定有人回答！”啊.....</li>
-<li>回到住处，准备再补几张演讲材料，结果发现笔记本电力不足，遂向前台借插线板（notebook是欧货，需要欧标插头），被告知“对不起，没有！”于是乎，要补的材料，一概没加。第二天，大家发现演讲时间严重不足，还好没有插线板，不然……罪过！</li>
-<li>周日上午，林桢舜师兄做最后总结，说到：“我们一定要与时俱进……”，还不忘强调一下：“这是党说的！”我当时几乎翻了，因为林师兄是台湾人，博士期间来的大陆。不知道说的这个是不是我朝，OMG！</li>
-<li>傍晚同中南一行地铁内转车，路上一直在说上海地铁的自动门很恐怖，发生过很多次事故……在某一站换乘时，人太多，自动门发出警告时，刚好我是外面的最后一个，额！下意识退后一步，哈哈，隔着自动门和大家
-goodbye !</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/14/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/16/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -971,7 +963,7 @@ goodbye !</li>
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

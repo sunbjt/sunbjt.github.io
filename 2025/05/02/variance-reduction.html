@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-lite-webfont@1.1.0/style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"bjt.name","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":true,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 前序知识 话说实施 AB 实验有一个非常关键的点就是可靠的统计分析，当然这个分析会涉及非常多的统计学知识，比如：  统计结果的理解是否正确：置信度、区间估计、显著性、Power 值、MDE、样本量…… 实验分析的过程是否正确：AA 实验、反转实验、DID、幸存者偏差、辛普森悖论、CUPED、局部到全局……  这些概念构成了 AB 实验分析的基础框架，比如置信度和显著性帮助我们判断实验结果的可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AB 实验之方差缩减技术">
+<meta property="og:url" content="http://bjt.name/2025/05/02/variance-reduction.html">
+<meta property="og:site_name" content="Beta">
+<meta property="og:description" content="1. 前序知识 话说实施 AB 实验有一个非常关键的点就是可靠的统计分析，当然这个分析会涉及非常多的统计学知识，比如：  统计结果的理解是否正确：置信度、区间估计、显著性、Power 值、MDE、样本量…… 实验分析的过程是否正确：AA 实验、反转实验、DID、幸存者偏差、辛普森悖论、CUPED、局部到全局……  这些概念构成了 AB 实验分析的基础框架，比如置信度和显著性帮助我们判断实验结果的可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://bjt.name/upload/pic/cuped.svg">
+<meta property="article:published_time" content="2025-05-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-04T09:24:44.160Z">
+<meta property="article:author" content="刘思喆">
+<meta property="article:tag" content="数据科学">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://bjt.name/upload/pic/cuped.svg">
+
+
+<link rel="canonical" href="http://bjt.name/2025/05/02/variance-reduction.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://bjt.name/2025/05/02/variance-reduction.html","path":"2025/05/02/variance-reduction.html","title":"AB 实验之方差缩减技术"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AB 实验之方差缩减技术 | Beta</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><link rel="alternate" href="/atom.xml" title="Beta" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Beta</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">It’s a beautiful thing when free data meets free algorithm.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-todo"><a href="/todo" rel="section"><i class="fa fa-sitemap fa-fw"></i>ToDo</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">刘思喆</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/sunbjt" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;sunbjt" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:sunbjt@gmail.com" title="E-Mail → mailto:sunbjt@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2025/05/02/variance-reduction.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AB 实验之方差缩减技术 | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AB 实验之方差缩减技术
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-05-02 00:00:00" itemprop="dateCreated datePublished" datetime="2025-05-02T00:00:00+08:00">2025-05-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/" itemprop="url" rel="index"><span itemprop="name">因果推断</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="前序知识">1. 前序知识</h1>
+<p>话说实施 AB
+实验有一个非常关键的点就是可靠的统计分析，当然这个分析会涉及非常多的统计学知识，比如：</p>
+<ol type="1">
+<li><p>统计结果的理解是否正确：置信度、区间估计、显著性、Power
+值、MDE、样本量……</p></li>
+<li><p>实验分析的过程是否正确：AA
+实验、反转实验、DID、幸存者偏差、辛普森悖论、CUPED、局部到全局……</p></li>
+</ol>
+<p>这些概念构成了 AB
+实验分析的基础框架，比如置信度和显著性帮助我们判断实验结果的可信度，而
+Power 值和样本量则确保实验有足够的灵敏度检测到真实的效应。</p>
+<p>有一个名词估计大家有点眼生，那就是 CUPED，这个方法的全称是
+Controlled-experiment Using Pre-Experiment
+Data，中文翻译为：使用预实验数据进行控制的实验。CUPED 的核心目标是提升
+AB
+实验的统计显著性。其关键在于利用预实验数据调整指标，通过缩减方差来增强检测效果。</p>
+<span id="more"></span>
+<h1 id="基本原理">2. 基本原理</h1>
+<p>为了验证 AB 实验是否显著，我们经常使用 t 检验，t
+检验的基本思想是：</p>
+<ol type="1">
+<li>计算实验中两个组的均值差异；</li>
+<li>计算均值差异的标准误差；</li>
+<li>计算 t
+值；如果大于临界值，则拒绝原假设，认为实验结果显著；否则，不拒绝原假设，认为实验结果不显著。</li>
+</ol>
+<p>t 值的构建公式如下（以总体方差相等情况为例）：</p>
+<p><span class="math display">\[
+\begin{equation}
+t=\frac{\bar{X}_1-\bar{X}_2}{\sqrt{s_c^2\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}
+\end{equation}
+\]</span></p>
+<p>其中，<span class="math inline">\(\bar{X}_1\)</span> 和 <span
+class="math inline">\(\bar{X}_2\)</span> 分别为两组的样本均值，<span
+class="math inline">\(s_c^2\)</span> 是合并方差（pooled
+variance），<span class="math inline">\(n_1\)</span> 和 <span
+class="math inline">\(n_2\)</span> 为样本量。</p>
+<p>从 t 值的公式我们可以观察到，要想实验结果有显著性，有三个思路：</p>
+<ol type="1">
+<li>指标的变动较大（<span
+class="math inline">\(\bar{X}_1-\bar{X}_2\)</span>），策略非常有效，然而多数情况下这种情况可遇而不可求；</li>
+<li>增加实验的样本量（<span
+class="math inline">\(n\)</span>），可通过提高实验流量配比或者让实验持续更长时间来实现；</li>
+<li>缩减指标的方差（<span
+class="math inline">\(s_c^2\)</span>），指标的方差越小，t 值越大；</li>
+</ol>
+<p>在 1、2
+两种方式基本不太现实的情况下，方差缩减一种技术上很值得尝试的技术策略。它的基本思想是通过某种方法，将实验中的多个样本组合成一个样本，从而减少实验结果的方差。</p>
+<p>在一个在线广告点击率的研究为例，<span
+class="math inline">\(y\)</span>
+可能是用户在实验期间对新广告设计的点击行为，而 <span
+class="math inline">\(x\)</span>
+则可能是用户在过去一个月内的平均点击次数或者购买次数。</p>
+<p><span class="math display">\[
+\hat{Y}=Y-\theta(X-E[X])
+\]</span></p>
+<p>这里</p>
+<ol type="1">
+<li><span class="math inline">\(Y\)</span>
+是原始的目标变量（实验结果）。</li>
+<li><span class="math inline">\(X\)</span> 预实验协变量（pre-experiment
+data），实验前就存在的数据。</li>
+<li><span class="math inline">\(𝐸[𝑋]\)</span> 是协变量 <span
+class="math inline">\(X\)</span> 的期望值或均值。</li>
+<li><span class="math inline">\(\theta\)</span>：待估计参数，表示 <span
+class="math inline">\(X\)</span> 对 <span
+class="math inline">\(Y\)</span> 的影响程度</li>
+</ol>
+<h1 id="推导过程">3. 推导过程</h1>
+<p>推导过程并不复杂，有基本的概率论和高等数学知识即可完成。</p>
+<p>我们可以找到一个协变量 <span
+class="math inline">\(X\)</span>，对于每个数对 <span
+class="math inline">\((y_i, x_i)\)</span> 都有 <span
+class="math inline">\(\hat{y_i}=y_i - \theta x_i + \theta
+E(x)\)</span>，其中 <span class="math inline">\(\theta\)</span>
+是一个未知参数。很容易确定 <span
+class="math inline">\(\hat{y_i}\)</span> 是 <span
+class="math inline">\(y_i\)</span> 的无偏估计量，因为：</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(\hat{Y_i}) &amp;= E(Y_i - \theta X_i + \theta E(X)) \\
+             &amp;= E(Y_i) - \theta E(X_i) + \theta E(X) \\
+             &amp;= E(Y_i) - \theta (E(X_i) - E(X)) \\
+             &amp;= E(Y_i)
+\end{aligned}
+\]</span></p>
+<p>计算 <span class="math inline">\(\hat{Y}_i\)</span> 的方差：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Var}(\hat{Y}_i) &amp;= \text{Var}(Y_i - \theta(X_i - E[X])) \\
+&amp;= \text{Var}(Y_i - \theta X_i + \theta E[X]) \\
+&amp;= \text{Var}(Y_i - \theta X_i) \quad \text{(因为 } \theta E[X]
+\text{ 是常数)} \\
+&amp;= \text{Var}(Y_i) - 2\theta \cdot \text{Cov}(Y_i, X_i) + \theta^2
+\cdot \text{Var}(X_i)
+\end{aligned}
+\]</span></p>
+<p>我们希望找到一个 <span class="math inline">\(\theta\)</span>，使得
+<span class="math inline">\(\text{Var}(\hat{Y}_i)\)</span>
+最小。对上述表达式关于 <span class="math inline">\(\theta\)</span>
+求导，并令导数为0，可找到最优的 <span
+class="math inline">\(\theta^*\)</span> 值：</p>
+<p><span class="math display">\[
+\frac{d}{d\theta} \text{Var}(\hat{Y}_i) = -2 \cdot \text{Cov}(Y_i, X_i)
++ 2\theta \cdot \text{Var}(X_i) = 0
+\]</span></p>
+<p>解得：</p>
+<p><span class="math display">\[
+\theta^* = \frac{\text{Cov}(Y_i, X_i)}{\text{Var}(X_i)}= \beta_{OLS}
+\]</span></p>
+<p>这就是最优的 <span class="math inline">\(\theta\)</span> 值 ——
+<strong>最小二乘回归系数</strong>。</p>
+<p>将 <span class="math inline">\(\theta^* =
+\frac{\text{Cov}(Y,X)}{\text{Var}(X)}\)</span> 代入原方差公式：</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Var}(\hat{Y})
+&amp;= \text{Var}(Y) - 2\theta \text{Cov}(Y,X) + \theta^2 \text{Var}(X)
+\\
+&amp;= \text{Var}(Y) - 2 \cdot \frac{\text{Cov}(Y,X)}{\text{Var}(X)}
+\cdot \text{Cov}(Y,X) + \left( \frac{\text{Cov}(Y,X)}{\text{Var}(X)}
+\right)^2 \cdot \text{Var}(X) \\
+&amp;= \text{Var}(Y) - \frac{\text{Cov}^2(Y,X)}{\text{Var}(X)}
+\end{aligned}
+\]</span></p>
+<p>因此：</p>
+<p><span class="math display">\[
+\text{Var}(\hat{Y}) = \text{Var}(Y)(1 - \rho^2) \le \text{Var}(Y)
+\]</span></p>
+<p>其中 <span class="math inline">\(\rho = \text{Corr}(Y,
+X)\)</span>，是 <span class="math inline">\(Y\)</span> 和 <span
+class="math inline">\(X\)</span> 的相关系数。所以只要 <span
+class="math inline">\(X\)</span> 和 <span
+class="math inline">\(Y\)</span>
+存在非零相关性，调整后的方差就会小于原始方差。因此这个方法可以提升实验的统计功效。</p>
+<p>注：<span class="math inline">\(X\)</span> 不能受到 treatment
+的影响。</p>
+<h1 id="模拟">4. 模拟</h1>
+<p>模拟一些数据来看下结果是否如我们所想。</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>tidyverse<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置随机种子</span></span><br><span class="line">set.seed<span class="punctuation">(</span><span class="number">0</span><span class="punctuation">)</span></span><br><span class="line">N <span class="operator">&lt;-</span> 10000 <span class="comment"># 样本大小</span></span><br><span class="line">tau <span class="operator">&lt;-</span> 0.2 <span class="comment"># 真实的 treatment 影响</span></span><br><span class="line">theta_true <span class="operator">&lt;-</span> 0.6 <span class="comment"># x 和 y 之间的相关系数</span></span><br><span class="line">treatment <span class="operator">&lt;-</span> rbinom<span class="punctuation">(</span>N<span class="punctuation">,</span> <span class="number">1</span><span class="punctuation">,</span> <span class="number">0.5</span><span class="punctuation">)</span> <span class="comment"># treatment</span></span><br><span class="line">x <span class="operator">&lt;-</span> rnorm<span class="punctuation">(</span>N<span class="punctuation">)</span> <span class="comment"># 实验前变量</span></span><br><span class="line">y <span class="operator">&lt;-</span> theta_true <span class="operator">*</span> x <span class="operator">+</span> treatment <span class="operator">*</span> tau <span class="operator">+</span> rnorm<span class="punctuation">(</span>N<span class="punctuation">)</span> <span class="comment"># 响应变量</span></span><br><span class="line">df <span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>y <span class="operator">=</span> y<span class="punctuation">,</span> t <span class="operator">=</span> treatment<span class="punctuation">,</span> x <span class="operator">=</span> x<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 计算 \theta 使用 OLS 回归</span></span><br><span class="line">model <span class="operator">&lt;-</span> lm<span class="punctuation">(</span>y <span class="operator">~</span> x<span class="punctuation">,</span> data <span class="operator">=</span> df<span class="punctuation">)</span></span><br><span class="line">theta_hat <span class="operator">&lt;-</span> coef<span class="punctuation">(</span>model<span class="punctuation">)</span><span class="punctuation">[</span><span class="number">2</span><span class="punctuation">]</span> <span class="comment"># 获取 x 的回归系数</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 应用 CUPED 调整</span></span><br><span class="line">df <span class="operator">&lt;-</span> df <span class="operator">|&gt;</span></span><br><span class="line">  mutate<span class="punctuation">(</span>y_adj <span class="operator">=</span> y <span class="operator">-</span> theta_hat <span class="operator">*</span> <span class="punctuation">(</span>x <span class="operator">-</span> mean<span class="punctuation">(</span>x<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进行后续分析，如评估 treatment 效应</span></span><br><span class="line">model_adjusted <span class="operator">&lt;-</span> lm<span class="punctuation">(</span>y_adj <span class="operator">~</span> t<span class="punctuation">,</span> data <span class="operator">=</span> df<span class="punctuation">)</span></span><br><span class="line">summary<span class="punctuation">(</span>model_adjusted<span class="punctuation">)</span></span><br><span class="line"><span class="comment"># 观察原始的参数估计得方差变化</span></span><br><span class="line">summary<span class="punctuation">(</span>lm<span class="punctuation">(</span>y <span class="operator">~</span> t<span class="punctuation">,</span> data <span class="operator">=</span> df<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p>可以观察到对 treatment 的效应估计，t 值从 8.213 提高到了
+10.103；同时也可以看到方差变小的现象：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">data_long <span class="operator">&lt;-</span> df <span class="operator">%&gt;%</span></span><br><span class="line">  mutate<span class="punctuation">(</span>Group <span class="operator">=</span> ifelse<span class="punctuation">(</span>t <span class="operator">==</span> <span class="number">1</span><span class="punctuation">,</span> <span class="string">&quot;Treatment&quot;</span><span class="punctuation">,</span> <span class="string">&quot;Control&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  select<span class="punctuation">(</span>Group<span class="punctuation">,</span> y<span class="punctuation">,</span> y_adj<span class="punctuation">)</span> <span class="operator">%&gt;%</span></span><br><span class="line">  tidyr<span class="operator">::</span>gather<span class="punctuation">(</span>key <span class="operator">=</span> <span class="string">&quot;Metric&quot;</span><span class="punctuation">,</span> value <span class="operator">=</span> <span class="string">&quot;Value&quot;</span><span class="punctuation">,</span> <span class="operator">-</span>Group<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">ggplot<span class="punctuation">(</span>data_long<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> Group<span class="punctuation">,</span> y <span class="operator">=</span> Value<span class="punctuation">,</span> fill <span class="operator">=</span> Metric<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span>alpha <span class="operator">=</span> <span class="number">0.7</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  labs<span class="punctuation">(</span></span><br><span class="line">    title <span class="operator">=</span> <span class="string">&quot;CUPED 调整前后的指标分布&quot;</span><span class="punctuation">,</span></span><br><span class="line">    subtitle <span class="operator">=</span> <span class="string">&quot;调整后（Y_adj）的方差更小，更容易检测效应&quot;</span><span class="punctuation">,</span></span><br><span class="line">    y <span class="operator">=</span> <span class="string">&quot;指标值&quot;</span><span class="punctuation">,</span></span><br><span class="line">    x <span class="operator">=</span> <span class="string">&quot;实验分组&quot;</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme_minimal<span class="punctuation">(</span>base_family <span class="operator">=</span> <span class="string">&#x27;Noto Sans SC&#x27;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+<p><img src="/upload/pic/cuped.svg" /></p>
+<p>如图所示，调整后的指标（y_adj）的箱体更紧凑，说明方差明显减小。这种分布变化使得实验组和对照组的差异更容易被检测到。</p>
+<h1 id="经验谈">5. 经验谈</h1>
+<p>根据微软 2013 年的实验研究，协变量的选择应遵循以下原则：</p>
+<ol type="1">
+<li>选择实验运行之前的指标数据最好；</li>
+<li>时间粒度较长的历史数据（如30天）比短期数据（如7天）更稳定。</li>
+</ol>
+<p>实验前数据并不是 <span class="math inline">\(X\)</span>
+的唯一选择，只要是不会被实验干预影响的变量，都可以选择。比如用户加入实验的日期。</p>
+<h1 id="扩展机器学习">6. 扩展机器学习</h1>
+<p>在 CUPAC（Controlled-experiment Using Predicted Pre-Experiment
+Data）框架中，我们并不直接估计一个单一的 <span
+class="math inline">\(\theta\)</span>
+值，而是通过训练机器学习模型来预测每个个体的潜在结果（即基线表现）。这种方法与传统的
+CUPED 有所不同，在 CUPED 中，<span class="math inline">\(\theta\)</span>
+是基于协变量和目标变量之间的线性关系计算出来的。而在 CUPAC
+中，我们使用机器学习模型来捕捉更复杂的模式，并利用这些预测值作为调整目标变量的基础。</p>
+<p>在CUPAC中，关键步骤是训练一个机器学习模型来预测每个个体在没有实验干预情况下的潜在结果。以下是具体步骤：</p>
+<ol type="1">
+<li>使用历史数据（预实验数据）作为训练集。这些数据应该包含所有相关的特征（如用户的浏览历史、购买记录等），以及目标变量的历史表现。</li>
+<li>选择合适的机器学习模型进行训练。可以是线性回归、随机森林、梯度提升树（GBM）、神经网络等。选择哪种模型取决于数据的特性和复杂性。</li>
+<li>使用历史数据训练模型，以预测每个个体在没有实验干预情况下的表现。假设我们的目标是预测点击率（CTR），则训练的目标是让模型能够根据历史行为预测未来的
+CTR。</li>
+<li>使用训练好的模型对实验期间的数据进行预测，得到每个个体的基线表现
+<span class="math inline">\(\hat{Y}_{pre}\)</span>。</li>
+<li>利用预测的基线表现 <span
+class="math inline">\(\hat{Y}_{pre}\)</span> 来调整实际观察到的目标变量
+<span class="math inline">\(Y\)</span>。调整后的目标变量 <span
+class="math inline">\(\hat{Y}\)</span> 可以表示为：</li>
+</ol>
+<p><span class="math display">\[
+\hat{Y} = Y - \hat{Y}_{pre}
+\]</span></p>
+<p>相比于单一的 <span class="math inline">\(\theta\)</span>
+值，机器学习模型能够捕捉到更复杂的非线性关系和交互作用，提供更加个性化的预测。这意味着对于每个个体，我们可以更准确地估计其基线表现，从而更精确地调整目标变量
+<span
+class="math inline">\(Y\)</span>，显著提升实验设计的精度和可靠性。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_channel.jpg">
+      </div>
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/10/27/prof-wu.html" rel="prev" title="统计之魂，人生之师 —— 祝吴喜之老师八十寿辰快乐">
+                  <i class="fa fa-angle-left"></i> 统计之魂，人生之师 —— 祝吴喜之老师八十寿辰快乐
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  
+  <div class="comments giscus-container">
+  </div>
+  
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">刘思喆</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="giscus" type="application/json">{"enable":true,"repo":"sunbjt/sunbjt.github.io","repo_id":"R_kgDOLBq4Mw","category":"Announcements","category_id":"DIC_kwDOLBq4M84CcZd2","mapping":"url","reactions_enabled":1,"emit_metadata":1,"theme":"transparent_dark","lang":"zh-CN","crossorigin":"anonymous"}</script>
+
+<script>
+document.addEventListener('page:loaded', () => {
+  if (!CONFIG.page.comments) return;
+
+  NexT.utils.loadComments('.giscus-container')
+    .then(() => NexT.utils.getScript('https://giscus.app/client.js', {
+      attributes: {
+        async                   : true,
+        crossOrigin             : 'anonymous',
+        'data-repo'             : CONFIG.giscus.repo,
+        'data-repo-id'          : CONFIG.giscus.repo_id,
+        'data-category'         : CONFIG.giscus.category,
+        'data-category-id'      : CONFIG.giscus.category_id,
+        'data-mapping'          : CONFIG.giscus.mapping,
+        'data-reactions-enabled': CONFIG.giscus.reactions_enabled,
+        'data-emit-metadata'    : CONFIG.giscus.emit_metadata,
+        'data-theme'            : CONFIG.giscus.theme,
+        'data-lang'             : CONFIG.giscus.lang,
+        'data-input-position'   : CONFIG.giscus.input_position,
+        'data-loading'          : CONFIG.giscus.loading
+      },
+      parentNode: document.querySelector('.giscus-container')
+    }));
+});
+</script>
+
+</body>
+</html>

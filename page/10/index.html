@@ -127,13 +127,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-count">98</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -163,6 +163,97 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2012/07/06/parallel-computing-r.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2012/07/06/parallel-computing-r.html" class="post-title-link" itemprop="url">并行化你的运算-初识 parallel 包</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2012-07-06 00:00:00" itemprop="dateCreated datePublished" datetime="2012-07-06T00:00:00+08:00">2012-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/R-%E6%8A%80%E5%B7%A7/" itemprop="url" rel="index"><span itemprop="name">R 技巧</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>R 2.14.0 版本以后，parallel 包被作为核心包引入 R，这个包主要建立在
+multicore 和 snow
+包的工作基础之上，包含了这两个包大部分功能函数，以及集成了随机数发生器。</p>
+<p>实际上对于R来说，并行化可以在不同的层级上实现：比如，在最底层，现在的多核CPU可以实现一些基础的数值运算（比如整数和浮点算数）；
+高级一点的，一些扩展 BLAS
+包使用多线程并行处理向量和矩阵的操作，甚至有些R扩展包，通过调用
+OpenMP（注释1）或 pthreads 来使用C 级别的多线程方式。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2012/07/06/parallel-computing-r.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -598,115 +689,6 @@ RAP，进行数据预处理，避免在R中数据清洗占用大量内存。</p>
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2012/03/19/text-mining-in-r.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2012/03/19/text-mining-in-r.html" class="post-title-link" itemprop="url">R语言环境下的文本挖掘</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2012-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2012-03-19T00:00:00+08:00">2012-03-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>上一篇文章说道最近我在做文本挖掘方面的一些工作，到今天为止暂告一段落。刚好也整理了一份针对中文的《R语言环境下的文本挖掘》，
-供感兴趣的童鞋参考（见文章底部）。</p>
-<p>自然语言处理（Nature Language
-Process）是一个非常让人着迷的领域，应用范围非常广泛，
-比如去年人机大战中大出风头的IBM Watson，iPhone 4S的语音助理模块Siri，
-以及针对于社会热点的舆情分析，这些应用都使用了自然语言处理技术。
-当然，统计背景的分析类科研人员更关注于舆情分析这类的文本挖掘技术。</p>
-<p>很多统计软件都提供了文本挖掘的功能，比如常见的数据分析软件SAS、SPSS等，以及一些语言如Python、Java，侧重点有所不同。
-但对于一般文本挖掘主要包括：</p>
-<ul>
-<li>Preprocess：数据准备、导入、清洗以及一般性的预处理</li>
-<li>Associate：关联分析，根据同时出现的频率找出关联规则</li>
-<li>Cluster：将相似的文档（词条）进行聚类</li>
-<li>Categorize：将文本划分到预先定义的类别里</li>
-<li>API：可扩展的应用编程接口</li>
-</ul>
-<p>至少在2008年，商业和开源软件的功能特性差不多 （但我不确认Latent
-Semantic Analysis、Latent Dirichlet Allocation这类的模型是否支持），
-只是由于众所周知的缘故，对于API的扩展支持有所差异。</p>
-<p>对于中文环境下的文本挖掘，无外乎要解决如下几个问题：</p>
-<ul>
-<li>较为精确的中文分词（可能还需要支持个性化题库，甚至词性分析）</li>
-<li>生成词条-文档矩阵，甚至矩阵的运算</li>
-<li>后续的挖掘算法支撑（传统的以及语义类的）</li>
-<li>其他</li>
-</ul>
-<p>在R语言环境下，有众多的包支撑解决上述问题。 Ingo Feinerer开发维护的<a
-target="_blank" rel="noopener" href="http://ftp.ctex.org/mirrors/CRAN/web/packages/tm/index.html">tm</a>包提供了完整的文本挖掘的框架，
-借助辅助工具及R包，甚至还可以处理word、pdf文档的读入，文档处理并行化运算，文件数据库的语料处理等问题。</p>
-<p>闲话不多说，最下面链接给出了一份基于《Introduction to the tm
-Package》整理的，基于tm包的中文文本挖掘的介绍性文档，内容包含</p>
-<ul>
-<li>互联网网页处理：XML包的简介</li>
-<li>中文分词</li>
-<li>tm包的完整介绍：读写、语料库构建、过滤、转化、元数据、文档-词条矩阵等</li>
-<li>文本挖掘技术及应用等</li>
-</ul>
-<p>当然，作为非正式发布文档还有很多地方不尽完善，后续可能会有较大更新，请关注博客上的to
-do list。</p>
-<p>文档下载：<a
-target="_blank" rel="noopener" href="https://github.com/sunbjt/sunbjt.github.com/blob/master/upload/pdf/">R语言环境下的文本挖掘</a></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -719,7 +701,7 @@ target="_blank" rel="noopener" href="https://github.com/sunbjt/sunbjt.github.com
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>

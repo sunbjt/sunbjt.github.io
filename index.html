@@ -127,13 +127,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">97</span>
+          <span class="site-state-item-count">98</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -163,6 +163,107 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2025/05/02/variance-reduction.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/05/02/variance-reduction.html" class="post-title-link" itemprop="url">AB 实验之方差缩减技术</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-05-02 00:00:00" itemprop="dateCreated datePublished" datetime="2025-05-02T00:00:00+08:00">2025-05-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/" itemprop="url" rel="index"><span itemprop="name">因果推断</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前序知识">1. 前序知识</h1>
+<p>话说实施 AB
+实验有一个非常关键的点就是可靠的统计分析，当然这个分析会涉及非常多的统计学知识，比如：</p>
+<ol type="1">
+<li><p>统计结果的理解是否正确：置信度、区间估计、显著性、Power
+值、MDE、样本量……</p></li>
+<li><p>实验分析的过程是否正确：AA
+实验、反转实验、DID、幸存者偏差、辛普森悖论、CUPED、局部到全局……</p></li>
+</ol>
+<p>这些概念构成了 AB
+实验分析的基础框架，比如置信度和显著性帮助我们判断实验结果的可信度，而
+Power 值和样本量则确保实验有足够的灵敏度检测到真实的效应。</p>
+<p>有一个名词估计大家有点眼生，那就是 CUPED，这个方法的全称是
+Controlled-experiment Using Pre-Experiment
+Data，中文翻译为：使用预实验数据进行控制的实验。CUPED 的核心目标是提升
+AB
+实验的统计显著性。其关键在于利用预实验数据调整指标，通过缩减方差来增强检测效果。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2025/05/02/variance-reduction.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -303,7 +404,7 @@ R 语言命令行来获得，没有任何可以点选操作的图形界面；作
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+          <a href="/categories/%E5%9B%A0%E6%9E%9C%E6%8E%A8%E6%96%AD/" itemprop="url" rel="index"><span itemprop="name">因果推断</span></a>
         </span>
     </span>
 
@@ -592,106 +693,6 @@ WGS84
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2023/05/20/synthetic-did.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/20/synthetic-did.html" class="post-title-link" itemprop="url">合成双重差分法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-05-20 00:00:00" itemprop="dateCreated datePublished" datetime="2023-05-20T00:00:00+08:00">2023-05-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="研究背景">1. 研究背景</h1>
-<p>1988 年 11 月，California 发起了一项名为”99
-号提案“的选民倡议，该提案是美国第一个现代大规模烟草控制项目（次年 1
-月正式生效）。在该法案的有两项主要内容：</p>
-<ol type="1">
-<li>California 的每包香烟香烟的消费税（cigarette excise tax）提高了 25
-美分；</li>
-<li>法案的所得收入专项用于控烟的教育与媒体宣传。</li>
-</ol>
-<p>P.S. California 香烟消费税现在是每包 87
-美分，为美国最高的州之一。</p>
-<p>该法案在后续引发了一系列关于室内清洁空气的地方立法。那问题来了：</p>
-<blockquote>
-<p>在 California
-该项法案的实施，对烟草控制是积极的还是消极的？影响有多大？</p>
-</blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/05/20/synthetic-did.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -704,7 +705,7 @@ WGS84
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2024</span>
+    <span itemprop="copyrightYear">2025</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
