@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-count">99</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,130 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2011/05/11/sas-end.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2011/05/11/sas-end.html" class="post-title-link" itemprop="url">SAS 一个华丽时代的结束</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2011-05-11 00:00:00" itemprop="dateCreated datePublished" datetime="2011-05-11T00:00:00+08:00">2011-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%97%A7%E9%97%BB/" itemprop="url" rel="index"><span itemprop="name">旧闻</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前几天COS论坛上还在说中科大的R镜像还<a href="http://cos.name/cn/topic/104268" target="_blank">没弄好</a>，今天再看<a href="http://cran.r-project.org/mirrors.html" target="_blank">CRAN</a>，中科大的镜像已然可以正式使用。</p>
+<p>中国的 R
+语言镜像近几年来变化比较大，最早是东南大学，但不知道什么原因消失了。而后国内镜像主要集中在香港的
+geoexpat
+和厦门大学，再后来加入了中科院的两个所（包括CTeX），到今日加入中科大镜像。个人一直觉得，人大作为中国R语言的倡导者，却一直没有提供镜像，挺遗憾的（人大文科氛围太浓烈）。</p>
+<h1 id="sas">SAS</h1>
+<p>4月30日，dapangmao 在 <a
+target="_blank" rel="noopener" href="http://www.mysas.net/sns/index.php">SAS圈子</a>更新了一篇博客——<a
+target="_blank" rel="noopener" href="http://cos.name/cn/topic/104242/">SAS,一个华丽时代的结束</a>，具体内容见文末。不过有些奇怪的是，评论没有硝烟，不知道是因为
+SAS 太封闭还是大家争累了。</p>
+<h1 id="mysql">MySQL</h1>
+<p>以前工作环境一般都是直接面对服务器上的Oracle、DB2，数据库安装、调试甚至数据源这些一般不用考虑。这两天项目需要，导了一些数据在本地。说来数据量也不大，1.5GB。一般的分析软件还不能直接搞定，于是乎倒腾上了MySQL。这个轻量级数据库挺有意思，注释和R是一样的(<code>#</code>)，其前端工具
+<strong>heidisql</strong> 不支持查询结果直接粘贴到word，却支持
+<code>Copy selected rows as LaTeX table</code>，大大的逗了我一下。以前我老说
+R 和 LaTeX 是天然的搭档，现看来 MySQL 也是 ^_^</p>
+<h1 id="sas-一个华丽时代的结束">SAS 一个华丽时代的结束</h1>
+<p>来源：http://www.mysas.net/sns/space.php?uid=808&amp;do=blog&amp;id=853</p>
+<p>我是从 2000 年左右开始接触 SAS
+的。当时还是本科生，带我的师兄要发表英文文章，杂志要求用SAS，所以需要用SAS做几个ANOVA和t-test。那时候用的SAS是存在十几张软盘上的一个dos程序，还请了高手帮我们破解，很是花了一番功夫。印象深刻的是，第一SAS的data
+step有一个内循环，初学者不需要基本的循环知识就可以上手，第二可以把数据直接考到程序里面，不需要像其他软件那样需要指定路径，读取硬盘上的文件。所以SAS尤其适合像大胖猫这样不是出身计算机相关领域，但是又想要做一些统计分析的业余选手。后来认真学SAS是05年以后的事情了，来到美国可以用正版的SAS，学习SAS也方便很多了。这时候的SAS是8.2版本了，该有的都有了，Proc
+SQL也变得很流行。再以后，变化就不大了，9.1有了hash
+object，9.2有了画图的SG
+procedures，SAS的老本行，广义线性模式，也升级到了Proc
+GLIMMIX。今年下半年，9.3也应该面世了。</p>
+<p>一直在 SAS-L
+潜水，觉得最近几年邮件组里人气掉的厉害，讨论的话题也一直没有什么变化，倒是跟oloolo这样的新生代大侠学到了一些新的编程风格。Oloolo大侠把一些新的算法和数据挖掘方法整合进SAS，让人耳目一新。还有经常出没SAS-L的
+Liu
+Wensui大侠，也是华人中间的SAS高手。刘大侠的Blog也是学习SAS的好地方，他用macro封装输入-计算-输出的模式是我们规范SAS编程的好榜样，而且他很早就开始使用SAS和R的混合编程（可惜他的blog最近关门了，无缘瞻仰了）。</p>
+<p>SAS的疲软，一部分原因是因为SAS自身的因素。SAS开发过SAS/AF和SCL，后来都失败了。一个有经验的SAS
+Programmer没法转变成为一个SAS Developer。
+把所有的模块（Base/STAT/ETS/IML
+等等）和系统（PC，UNIX，z/OS）弄过一遍就没有什么好学的了。想自己在SAS里面开发自定义模块，困难重重。另外有很大一部分原因是因为R的挑战。R最近几年的发展让人目不暇接，已经成为定量金融，生物信息学和网络分析领域的行业标准。而这三个领域恰恰是发展最快的三个领域。学习R，很快就能开发自己的package，放到CRAN上面就可以扬名立万。所以从职业生涯考虑。有能力的新人不愿意学习SAS，造成了好的SAS
+Programmer青黄不接。</p>
+<p>R
+的突飞猛进，一个方面因为它是开源的，学习起来很方便，不像SAS要考虑买许可证或者满世界找盗版。想用什么package，敲几个指令就行了。另外一个方面是因为原来制约R发展的内存瓶颈消失了。像Matlab和R这样的矩阵语言，里面的garbage
+collector不能像通用型编程语言（Java，Python等等）那样快的清空物件，所以内存很容易不够用。现在是64位时代了，买个4G以上的内存不贵。流行的分布式计算（Map/Reduce,
+Hadoop,
+Hive）和云计算也帮助解决了这个矛盾。在Amazon，Facebook，Google的数据中心里面，很容易从几千台机器里面集中几T的内存，跑跑R没有问题。大胖猫用过Amazon的EC2服务，价格很公道，也不用掏钱买另外的机器。而SAS对于比较大的数据，则只有望洋兴叹了。</p>
+<p>SAS
+每年的营业额大概是20亿美元，人数只有它1/3的Teradata的营业额也是这么多。要想提高营业额和利润，把注意力集中在电信，银行，保险，医药这些高端客户，是SAS必然的选择。SAS和Teradata都是历史悠久的老公司，SAS从60年代一个做田间统计的小软件发展到现在横跨各个领域的大家伙，的确不易；Teradata是关系型数据库的开创者，Oracle和Sun都是
+这个领域的后起之秀。SAS和Teradata的确也有互补之处；也许未来两者合并，更加符合股东的利益。SAS正在开发的并行procedure就是为Teradata专门设计的。SAS的老板，Dr.
+Goodnight或者不愿意失去对SAS的控制权，但现实上现在的市场恐怕容不下专门的分析软件公司了。统计软件界另一个和Goodnight齐名的传奇人物，Dr.
+Nie，果断卖掉SPSS是一个正确的选择，借助IBM的国际影响力，SPSS在世界其他国家卖的还不错。将近七十岁的老聂看到R的潜力，重新创业，现在他的Revolution
+R看上去发展势头不错。如果他还呆在SPSS，现在的情况就很难说了。</p>
+<p>由于 SAS
+是行读入的，所以特别适合整数据，我经常没事到各个论坛找些题换几种做法做做，其实跟电脑游戏一样好玩。感谢SAS帮我学会了统计和编程，伴我度过异国他乡的漫漫长夜。虽然属于SAS的华丽时代不会再有，但我仍会纪念开创那个时代的伟大的SAS程序员。Old
+SAS programmers never die, they just fade away.</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -660,118 +784,6 @@ target="_blank" rel="noopener" href="https://cran.r-project.org/doc/Rnews/Rnews_
 <li>尽量使用S3体系，除非有足够的理由使用S4</li>
 <li>绝对要避免混合使用 S3 和 S4 的情况</li>
 </ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2010/10/12/r-cartoon-batch.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2010/10/12/r-cartoon-batch.html" class="post-title-link" itemprop="url">R之不务正业-批处理漫画</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2010-10-12 00:00:00" itemprop="dateCreated datePublished" datetime="2010-10-12T00:00:00+08:00">2010-10-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/" itemprop="url" rel="index"><span itemprop="name">不务正业的 R</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>声明1：估计这篇博文的受众会很少很少……</p>
-<p>声明2：请将下载的漫画于24小时内删除，balabala……</p>
-<p>话说到，为了保护我已经不太好的视力，前几天购置了一台Kindle
-DX，用来阅读电脑上大量存在电脑中的的pdf格式电子书。这个东东确实比较强悍，除了对这些pdf文字书籍支持比较不错外（当然有些书籍需要进行一些处理），对pdf格式的漫画支持更赞。</p>
-<p>而我是一个彻底的漫粉，闲暇之余，从网上下载jpg格式的漫画（推荐下载工具ComicAiII），悠然自得看漫画，实在惬意的很～～</p>
-<p>不过，有些下载的漫画有些问题，比如下面的这种的：</p>
-<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/10/Naruto_04_086.jpg"><img class="aligncenter size-full wp-image-10682" title="Naruto_04_086" src="http://bjt.cos.name/wp-content/uploads/2010/10/Naruto_04_086.jpg" alt="" width="644" height="503" /></a>
-<p style="text-align: left;">
-如果直接合并为pdf在Kindle
-DX上阅读，纵向显示的话，上下各有很大一块白边，画面非常小；
-<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/10/Naruto_04_086_1.jpg"><img class="aligncenter size-full wp-image-10682" style="border: 1px solid black;" title="Naruto_04_086_1" src="http://bjt.cos.name/wp-content/uploads/2010/10/Naruto_04_086_1.jpg" alt="" width="430" height="630" /></a>
-</p>
-<p>如果横向显示，效果更差，底部有一部分不能显示。想看完两页漫画的话，需要向上下翻页反复操作：
-<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/2010/10/Naruto_04_086_2.jpg"><img class="aligncenter size-full wp-image-10682" style="border: 1px solid black;" title="Naruto_04_086_2" src="http://bjt.cos.name/wp-content/uploads/2010/10/Naruto_04_086_2.jpg" alt="" width="644" height="503" /></a></p>
-<p>琢磨来琢磨去，还是得手动把漫画裁剪为适合Kindle阅读的大小（Kindle
-DX的标准9英寸屏显示区域和32开纸大小接近），并且把裁剪后的漫画顺序调换（日本漫画的阅读习惯是从左向右）。</p>
-说白了需要对每页jpg漫画做两件事：
-<ul>
-<li>
-从中间分割，将一张jpg图片变为两张；
-</li>
-<li>
-为左右两张子图的增加顺序标记。
-</li>
-</ul>
-<p>如果将分割的两张图片，右边图增加_0，左边图增加_1，即可满足要求。拿上面的086.jpg举例：170页（即右边部分）会被命名为086_0.jpg，171页会被命名为086_1.jpg，由于有了0、1标记，这样所有更新过的jpg合并为pdf文件的话，即可保证顺序的正确。</p>
-<p>这一过程使用<a href="http://www.imagemagick.technocozy.com/" target="_blank">ImageMagick</a>和<a href="http://www.r-project.org" target="_blank">R</a>来实现(Windows
-XP平台)：</p>
-<p>假如你的火影忍者的目录为D:/漫画/Naruto04，文件为001.jpg、002.jpg……，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">setwd(&quot;D:/漫画/Naruto04&quot;)</span><br><span class="line">dd &lt;- dir()</span><br><span class="line">ff &lt;- function(x)&#123;</span><br><span class="line">    convert &amp;lt;- paste(&quot;convert &quot; , x ,</span><br><span class="line">                     &quot; -crop 2x1@ +repage +adjoin &quot;,</span><br><span class="line">                     &quot;%d_&quot;,substr(x,1,3),&quot;.jpg&quot;,sep = &#x27;&#x27;)</span><br><span class="line">    shell(convert)</span><br><span class="line">    reverse0 &amp;lt;- paste(&quot;convert &quot; , &quot;0_&quot;, x ,</span><br><span class="line">                      &quot; &quot;, substr(x,1,3), &quot;_1.jpg&quot;, sep = &#x27;&#x27;)</span><br><span class="line">    reverse1 &amp;lt;- paste(&quot;convert &quot; , &quot;1_&quot;, x ,</span><br><span class="line">                      &quot; &quot;, substr(x,1,3), &quot;_0.jpg&quot;, sep = &#x27;&#x27;)</span><br><span class="line">    shell(reverse0)</span><br><span class="line">    shell(reverse1)</span><br><span class="line">    shell(paste(&quot;del &quot; ,&quot;0_&quot;, x , sep = &#x27;&#x27;))</span><br><span class="line">    shell(paste(&quot;del &quot; ,&quot;1_&quot;, x , sep = &#x27;&#x27;))</span><br><span class="line">    shell(paste(&quot;del &quot; , x , sep = &#x27;&#x27;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (j in dd) ff(j)</span><br><span class="line">shell(paste(&#x27;convert *.jpg &#x27;, &#x27;1.pdf&#x27;,sep = &#x27;&#x27;))</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意：目标文件夹的所有文件将被替换！</p>
-</blockquote>
-<p>最后要强调的是，虽然 Kindle
-没有辐射，和一般的纸质书区别不大，但看多了仍然有损视力 ^_^</p>
 
       
     </div>

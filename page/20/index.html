@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-count">99</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,89 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2008/12/20/chinese-ring-puzzle.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2008/12/20/chinese-ring-puzzle.html" class="post-title-link" itemprop="url">n 连环的解法与实际步骤数</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2008-12-20 00:00:00" itemprop="dateCreated datePublished" datetime="2008-12-20T00:00:00+08:00">2008-12-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>九连环这个玩具，最早在高中的时候摸过，记得解它的时候因为很多重复步骤，所以恨不得要把它拆掉，还好最后解开了，
+不然我又得加条"亵渎古人智力"的罪名，呵呵。闲话少扯，下面是 n
+连环实际步骤数的求法：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ggg <span class="operator">&lt;-</span> <span class="keyword">function</span><span class="punctuation">(</span>n<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  a <span class="operator">&lt;-</span> numeric<span class="punctuation">(</span>n<span class="punctuation">)</span></span><br><span class="line">  a<span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="number">1</span></span><br><span class="line">  a<span class="punctuation">[</span><span class="number">2</span><span class="punctuation">]</span> <span class="operator">&lt;-</span> <span class="number">1</span></span><br><span class="line">  <span class="keyword">for</span> <span class="punctuation">(</span>i <span class="keyword">in</span> <span class="number">3</span><span class="operator">:</span>n<span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">    a<span class="punctuation">[</span>i<span class="punctuation">]</span> <span class="operator">&lt;-</span> a<span class="punctuation">[</span>i <span class="operator">-</span> <span class="number">1</span><span class="punctuation">]</span> <span class="operator">+</span> <span class="number">2</span> <span class="operator">*</span> a<span class="punctuation">[</span>i <span class="operator">-</span> <span class="number">2</span><span class="punctuation">]</span> <span class="operator">+</span> <span class="number">1</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="built_in">return</span><span class="punctuation">(</span>a<span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>比如九连环的实际步骤：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gg<span class="punctuation">(</span><span class="number">9</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">]</span>   <span class="number">1</span>   <span class="number">1</span>   <span class="number">4</span>   <span class="number">7</span>  <span class="number">16</span>  <span class="number">31</span>  <span class="number">64</span> <span class="number">127</span> <span class="number">256</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

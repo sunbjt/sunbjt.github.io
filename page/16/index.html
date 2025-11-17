@@ -127,7 +127,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">98</span>
+          <span class="site-state-item-count">99</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -163,6 +163,112 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/12/26/mandelbrot-set.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="刘思喆">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Beta">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Beta">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2009/12/26/mandelbrot-set.html" class="post-title-link" itemprop="url">曼德布洛特集</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2009-12-26 00:00:00" itemprop="dateCreated datePublished" datetime="2009-12-26T00:00:00+08:00">2009-12-26</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>前一段时间，John Baez 在自己的主页上更新了一篇文章名为<a
+target="_blank" rel="noopener" href="http://math.ucr.edu/home/baez/roots/">he Beauty of Roots</a>
+，这篇文章之后在“科学松鼠会”上被<a
+target="_blank" rel="noopener" href="http://songshuhui.net/archives/23604.html">《多项式的根之美》</a>
+转载。上面提到了<a
+target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Mandelbrot_set">曼德布洛特集</a>，根据其发明者法国数学家<a
+target="_blank" rel="noopener" href="http://commons.wikimedia.org/wiki/Beno%C3%AEt_Mandelbrot">Benoît
+Mandelbrot</a> 而命名。</p>
+<p>曼德布洛特集是一种分形，从一般分形性质来说：</p>
+<blockquote>
+<p>客观自然界中许多事物，具有自相似的“层次”结构，在理想情况下，甚至具有无穷层次。适当的放大或缩小几何尺寸，整个结构并不改变。不少复杂的物理现象，背后就是反映着这类层次结构的分形几何学。</p>
+</blockquote>
+<p>常见的曼德布洛特集是这个样子（分辨率原因，部分细节显示不够）：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/scale1.png" /></p>
+<p>假如我们把这个集合的下半部分（最下边的小块）分割出来，就是这个样子（8倍放大）：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/scale2.png" /></p>
+<p>由于分辨率的提高，所以显示了第一幅图中并没有显示的细节。</p>
+<p>继续放大，上图的左上部分的那个小枝（6倍放大）：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/scale4.png" /></p>
+<p>再把上图最靠近左边的那个小枝——放大（50/3倍放大）：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/scale5.png" /></p>
+<p>继续放大最左边的小枝，似乎在末端又出现了一个类似的小枝（5倍放大）：</p>
+<p><img
+src="https://pic-1300049111.cos.ap-beijing.myqcloud.com/img/scale6.png" /></p>
+<p>如果继续放大下去可能还是这个样子 ：）</p>
+<p>注释：</p>
+<ol type="1">
+<li>最后一张图相比第一张图来说相当于局部放大了 4000 倍。</li>
+<li>高质量的矢量绘图数据量比较大，R
+处理起来有些问题，只好使用局部放大的方式。</li>
+<li>更多的使用其他软件绘制图形可以见：http://commons.wikimedia.org/wiki/Mandelbrot_set</li>
+</ol>
+<p>附代码：</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">setwd<span class="punctuation">(</span><span class="string">&quot;D:\\doc\\Mandelbrot\\pic&quot;</span><span class="punctuation">)</span></span><br><span class="line"><span class="comment"># Another neat animation of Mandelbrot Set</span></span><br><span class="line">jet.colors <span class="operator">&lt;-</span></span><br><span class="line">  colorRampPalette<span class="punctuation">(</span></span><br><span class="line">    <span class="built_in">c</span><span class="punctuation">(</span></span><br><span class="line">      <span class="string">&quot;#00007F&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;blue&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;#007FFF&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;cyan&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;#7FFF7F&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;yellow&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;#FF7F00&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;red&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;#7F0000&quot;</span></span><br><span class="line">    <span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="comment"># define &quot;jet&quot; palette</span></span><br><span class="line">m <span class="operator">=</span> <span class="number">400</span></span><br><span class="line">C <span class="operator">=</span> complex<span class="punctuation">(</span>real <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.8</span><span class="punctuation">,</span> <span class="number">0.6</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            imag <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.2</span><span class="punctuation">,</span> <span class="number">1.2</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">C <span class="operator">=</span> matrix<span class="punctuation">(</span>C<span class="punctuation">,</span> m<span class="punctuation">,</span> m<span class="punctuation">)</span></span><br><span class="line">Z <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">20</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Z <span class="operator">=</span> Z <span class="operator">^</span> <span class="number">2</span> <span class="operator">+</span> C</span><br><span class="line">  X <span class="operator">=</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span><span class="built_in">abs</span><span class="punctuation">(</span>Z<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">png<span class="punctuation">(</span><span class="string">&quot;scale1.png&quot;</span><span class="punctuation">)</span></span><br><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">image<span class="punctuation">(</span>X<span class="punctuation">,</span> col <span class="operator">=</span> jet.colors<span class="punctuation">(</span><span class="number">1000</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">dev.off<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m <span class="operator">=</span> <span class="number">400</span></span><br><span class="line">C <span class="operator">=</span> complex<span class="punctuation">(</span>real <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.6</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.3</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            imag <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">0.15</span><span class="punctuation">,</span> <span class="number">0.15</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span>      m<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">C <span class="operator">=</span> matrix<span class="punctuation">(</span>C<span class="punctuation">,</span> m<span class="punctuation">,</span> m<span class="punctuation">)</span></span><br><span class="line">Z <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">20</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Z <span class="operator">=</span> Z <span class="operator">^</span> <span class="number">2</span> <span class="operator">+</span> C</span><br><span class="line">  X <span class="operator">=</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span><span class="built_in">abs</span><span class="punctuation">(</span>Z<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">png<span class="punctuation">(</span><span class="string">&quot;scale2.png&quot;</span><span class="punctuation">)</span></span><br><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">image<span class="punctuation">(</span>X<span class="punctuation">,</span> col <span class="operator">=</span> jet.colors<span class="punctuation">(</span><span class="number">1000</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">dev.off<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">####</span></span><br><span class="line"></span><br><span class="line">m <span class="operator">=</span> <span class="number">400</span></span><br><span class="line">C <span class="operator">=</span> complex<span class="punctuation">(</span>real <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.4</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.3</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            imag <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">0.15</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">0.05</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span>      m<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">C <span class="operator">=</span> matrix<span class="punctuation">(</span>C<span class="punctuation">,</span> m<span class="punctuation">,</span> m<span class="punctuation">)</span></span><br><span class="line">Z <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">20</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Z <span class="operator">=</span> Z <span class="operator">^</span> <span class="number">2</span> <span class="operator">+</span> C</span><br><span class="line">  X <span class="operator">=</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span><span class="built_in">abs</span><span class="punctuation">(</span>Z<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">png<span class="punctuation">(</span><span class="string">&quot;scale3.png&quot;</span><span class="punctuation">)</span></span><br><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">image<span class="punctuation">(</span>X<span class="punctuation">,</span> col <span class="operator">=</span> jet.colors<span class="punctuation">(</span><span class="number">1000</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">dev.off<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m <span class="operator">=</span> <span class="number">400</span></span><br><span class="line">C <span class="operator">=</span> complex<span class="punctuation">(</span>real <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.35</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.30</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            imag <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">0.13</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">0.08</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span>      m<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">C <span class="operator">=</span> matrix<span class="punctuation">(</span>C<span class="punctuation">,</span> m<span class="punctuation">,</span> m<span class="punctuation">)</span></span><br><span class="line">Z <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">20</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Z <span class="operator">=</span> Z <span class="operator">^</span> <span class="number">2</span> <span class="operator">+</span> C</span><br><span class="line">  X <span class="operator">=</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span><span class="built_in">abs</span><span class="punctuation">(</span>Z<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">png<span class="punctuation">(</span><span class="string">&quot;scale4.png&quot;</span><span class="punctuation">)</span></span><br><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">image<span class="punctuation">(</span>X<span class="punctuation">,</span> col <span class="operator">=</span> jet.colors<span class="punctuation">(</span><span class="number">1000</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">dev.off<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m <span class="operator">=</span> <span class="number">400</span></span><br><span class="line">C <span class="operator">=</span> complex<span class="punctuation">(</span>real <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.3280</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.3250</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            imag <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">0.1225</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">0.1195</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span>      m<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">C <span class="operator">=</span> matrix<span class="punctuation">(</span>C<span class="punctuation">,</span> m<span class="punctuation">,</span> m<span class="punctuation">)</span></span><br><span class="line">Z <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">20</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Z <span class="operator">=</span> Z <span class="operator">^</span> <span class="number">2</span> <span class="operator">+</span> C</span><br><span class="line">  X <span class="operator">=</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span><span class="built_in">abs</span><span class="punctuation">(</span>Z<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">png<span class="punctuation">(</span><span class="string">&quot;scale5.png&quot;</span><span class="punctuation">)</span></span><br><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">image<span class="punctuation">(</span>X<span class="punctuation">,</span> col <span class="operator">=</span> jet.colors<span class="punctuation">(</span><span class="number">1000</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">dev.off<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m <span class="operator">=</span> <span class="number">400</span></span><br><span class="line">C <span class="operator">=</span> complex<span class="punctuation">(</span>real <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">1.3276</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">1.3270</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span> each <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">            imag <span class="operator">=</span> <span class="built_in">rep</span><span class="punctuation">(</span>seq<span class="punctuation">(</span><span class="operator">-</span><span class="number">0.1221</span><span class="punctuation">,</span> <span class="operator">-</span><span class="number">0.1215</span><span class="punctuation">,</span> length.out <span class="operator">=</span> m<span class="punctuation">)</span><span class="punctuation">,</span>      m<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">C <span class="operator">=</span> matrix<span class="punctuation">(</span>C<span class="punctuation">,</span> m<span class="punctuation">,</span> m<span class="punctuation">)</span></span><br><span class="line">Z <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> <span class="punctuation">(</span>j <span class="keyword">in</span> <span class="number">1</span><span class="operator">:</span><span class="number">20</span><span class="punctuation">)</span> <span class="punctuation">&#123;</span></span><br><span class="line">  Z <span class="operator">=</span> Z <span class="operator">^</span> <span class="number">2</span> <span class="operator">+</span> C</span><br><span class="line">  X <span class="operator">=</span> <span class="built_in">exp</span><span class="punctuation">(</span><span class="operator">-</span><span class="built_in">abs</span><span class="punctuation">(</span>Z<span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br><span class="line">png<span class="punctuation">(</span><span class="string">&quot;scale6.png&quot;</span><span class="punctuation">)</span></span><br><span class="line">par<span class="punctuation">(</span>mar <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">image<span class="punctuation">(</span>X<span class="punctuation">,</span> col <span class="operator">=</span> jet.colors<span class="punctuation">(</span><span class="number">1000</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br><span class="line">dev.off<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -580,146 +686,6 @@ he is deeply passionate about making Statistics better with R.
 <p>和作者一样，我瞪了5秒居然没找到那个<strong>隐形人</strong>，很是巧妙。其他类似的图请移步<a target="_blank" rel="noopener" href="http://visualfunhouse.com/uncategorized/the-invisible-man-optical-illusion.html">这里</a>。<a target="_blank" rel="noopener" href="http://visualfunhouse.com/">visualfunhouse</a>上还有很多有意思的
 <a target="_blank" rel="noopener" href="http://visualfunhouse.com/body_paint/invisible-man-body-paint.html" title="Invisible Man Body Paint">Body
 Paint</a>，作者是Liu Bolin（译音）。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://bjt.name/2009/09/05/r-cran-package-networks.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="刘思喆">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Beta">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Beta">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2009/09/05/r-cran-package-networks.html" class="post-title-link" itemprop="url">数量庞大的包，复杂的网络</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2009-09-05 00:00:00" itemprop="dateCreated datePublished" datetime="2009-09-05T00:00:00+08:00">2009-09-05</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%B8%8D%E5%8A%A1%E6%AD%A3%E4%B8%9A%E7%9A%84-R/" itemprop="url" rel="index"><span itemprop="name">不务正业的 R</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><a target="_blank" rel="noopener" href="http://www.r-project.org">R</a> 各个镜像中的
-<a href="http://ftp.ctex.org/mirrors/CRAN/web/packages/" target="_blank">Contributed
-Packages</a> 越来越多，截至今日，已经达到1950个，单单拉动鼠标把所有的
-包名 从 A 到 Z 过一遍也得 10 几秒。随便考你一道：最后一个 R 包是啥？</p>
-<p>zoo？</p>
-<p>呵呵，我的印象里一直是它，仔细瞧了瞧发现是个叫
-<a target="_blank" rel="noopener" href="http://ftp.ctex.org/mirrors/CRAN/web/packages/zyp/index.html">zyp</a>
-的包。</p>
-<p>又一次领略了 R
-强大的扩展能力撒？这个特点给我们带来了一些烦恼，因为人类的大脑能够理解的概念是有限的，对于没有任何关联的概念，我们的识别能力一般不超过
-7，而且 R 的涵盖范围实在太广。从我们的有限性（7个概念）和 R
-的无限性这一角度讲，逐一认识这些包几乎是不可能的！不过还好，至少我们可以可以参考
-<a href="http://cran.r-project.org/mirrors.html" target="_blank">CRAN</a>
-上的
-<a href="http://ftp.ctex.org/mirrors/CRAN/web/views/" target="_blank">Task
-Views</a>，大致了解 R 包的使用方向。</p>
-<p>我们换个思路，不是从 R 的使用方向上，而是从 R 包的依赖关系上？</p>
-<p>这些 R 包并不是相互独立的。比如说，MASS 包依赖于 R (&gt;= 2.5.0),
-grDevices, graphics, stats, utils 这些基础包；而又会有包依赖于 MASS
-包，比如 <a href="http://yihui.name/" target="_blank">yihui</a> 的
-<a target="_blank" rel="noopener" href="http://ftp.ctex.org/mirrors/CRAN/web/packages/animation/index.html">animation
-</a>，当然还有可能有包依赖于
-<a target="_blank" rel="noopener" href="http://ftp.ctex.org/mirrors/CRAN/web/packages/animation/index.html">animation</a>
-……</p>
-<p>遍历所有的包，我们就看到了一个网络，一个
-<a target="_blank" rel="noopener" href="http://www.r-project.org">R</a> 包的网络。</p>
-<p>为了简化起见，这里忽略了同其他包没有关系的包（当然并不是完全没有关系，所有的包都和
-<a target="_blank" rel="noopener" href="http://www.r-project.org">R</a> 或
-<a target="_blank" rel="noopener" href="http://www.r-project.org">R</a>
-的基础包有关，如果这样计量的话，会导致所有的包都会指向 R）。</p>
-<p>首先截取了这个庞大网络的一部分：</p>
-<p><img src="/upload/pic/sna.png" /></p>
-<p>从上图我们可以看到，标记点为215、271的两个包是我们研究的包网络中的两个关键点，这两个包分别是lattice、mvtnorm。</p>
-关于这两个包：
-<ol>
-<li>
-<div>
-lattice：网格绘图的基础包。很多包基于它扩展并不惊讶吧；
-</div>
-</li>
-<li>
-<div>
-mvtnorm：多元正态分布和t分布的概率密度函数、累计分布函数、分位数函数、分布随机数。多元分布的基础。
-</div>
-</li>
-</ol>
-<p>从
-271（mvtnorm）向左上，又会有一个小的聚集。那个小的聚集中心（110），是
-fBasics 包，如果各位对金融领域关注的话，应该知道它在其中的地位吧。</p>
-<p>当然，由于抽取的是一个子网络，很多的连接都被生硬地隔断，因此出现了大量的孤立点。</p>
-<p>如果我们把 CRAN 上的1950个包都放到我们的网络中会是这样：</p>
-<p><img src="/upload/pic/sna_black.png" /></p>
-最后说明：
-<ol>
-<li>
-第一张图的 包 id 换成 包名称 会导致 演示的视觉效果很差，网页又不支持 pdf
-直接显示，只好把带包名的图放这（<a target="_blank" rel="noopener" href="http://bjt.cos.name/wp-content/uploads/sna300.pdf">pdf</a>）。
-</li>
-<li>
-带包名的 ，1950 个包的全图就算了吧，单绘图就得 2 分钟，更别提调整参数了
-……
-</li>
-</ol>
 
       
     </div>
